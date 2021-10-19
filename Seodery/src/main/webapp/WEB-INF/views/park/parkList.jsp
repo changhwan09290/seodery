@@ -326,7 +326,7 @@ footer > .foot > nav > a{
  	$.ajax({	//jquery의 ajax함수 호출  
 //  		url: "http://data.seoul.go.kr/dataList/OA-394/S/1/datasetView.do?"
 // 					+"KEY=58446e7a71616b643239487a427157&TYPE=json&SERVICE=SearchParkInfoService&START_INDEX=1&END_INDEX=10", //접속 주소
-		url : "/apitest",
+		url : "apitest",
 		type: "get",	//전송 방식
  		dataType:"json",	//받아올 데이터 형태 
 //  		data : sendData,	//보낼 데이터(문자열 형태)
@@ -336,6 +336,7 @@ footer > .foot > nav > a{
  			//drawPaging(res.pb);
  		},
  		error: function(request, status, error){	//실패 시 다음 함수 실행 
+ 			console.log(request);
  			console.log(error);
  		}
  	});
@@ -343,7 +344,7 @@ footer > .foot > nav > a{
 
 
 //목록 그리기 
- /* function drawList(list){
+  function drawList(list){
 	var html="";
 	
 	 for(var  data of list) {
@@ -356,7 +357,7 @@ footer > .foot > nav > a{
 	}
 
 	$("tbody").html(html);
-} */
+} 
  
 /* function drawPaging(pb){
 	var html ="";
