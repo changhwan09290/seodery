@@ -51,8 +51,7 @@ public class ParkController {
 	public String callApiData() throws IOException {
 	
 //		StringBuffer result = new StringBuffer();
-		String urlStr = "http://data.seoul.go.kr/dataList/OA-394/S/1/datasetView.do?";
-		  	urlStr += "KEY=58446e7a71616b643239487a427157&TYPE=json&SERVICE=SearchParkInfoService&START_INDEX=1&END_INDEX=10";
+		String urlStr = "http://openAPI.seoul.go.kr:8088/58446e7a71616b643239487a427157/json/SearchParkInfoService/1/5/";
 		
 	  	String vStringLine = "";
 	  	try {
