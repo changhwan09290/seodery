@@ -282,6 +282,11 @@ footer > .foot > nav > a{
 	text-decoration: none;
 	color: black;
 }
+
+.paging_wrap{
+	margin-top : 5%;;
+	margin-left: 40%;
+}
 </style>
 <script type="text/javascript"
 		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
@@ -329,7 +334,7 @@ footer > .foot > nav > a{
 	
 	//페이징
 	 $(".paging_wrap").on("click","span",function(){
-		$("#page").val($(this).attr("page"));
+		 $("#page").val($(this).attr("page"));
 		 /* $("#searchTxt").val($("#oldTxt").val());  */
 		
 		reloadList();
@@ -390,7 +395,8 @@ footer > .foot > nav > a{
          		+ '</td><td>'+ rows[idx].P_ADMINTEL + '</td><td>' + '<input type="button" value="상세보기" id="DtlBtn">' + '</td></tr>';
       }
       
-      $('#table').append($data);
+      $("#table").html($data);
+     
    }
  
  
@@ -529,10 +535,10 @@ footer > .foot > nav > a{
             <table style="text-align:center;">
             	<thead>
 			<tr>
-				<th>P_IDX(번호)</th>
-				<th>P_PARK(공원이름)</th>
-				<th>P_ADDR(공원 주소)</th>
-				<th>P_ADMINTEL(전화번호)</th>
+				<th>번호</th>
+				<th>공원이름</th>
+				<th>공원 주소</th>
+				<th>전화번호</th>
 				<th>상세보기</th>
 			</tr>
 		</thead>

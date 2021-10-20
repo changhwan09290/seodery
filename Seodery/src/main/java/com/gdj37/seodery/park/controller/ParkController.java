@@ -64,8 +64,18 @@ public class ParkController {
 		
 		int cnt = 132;	//총 게시글 개수 
 		
+		int viewCnt = 15; // 페이지당 게시글 개수
+		
 		PagingBean pb = iPagingService.getPagingBean(page, cnt, 15, 5);
-	
+		//PagingBean pb = iPagingService.getPagingBean(page, cnt, 15, 5);
+		
+		/*
+		 * if(page > viewCnt) {
+		 * 
+		 * 
+		 * }
+		 */
+		
 		//데이터 시작, 종료 번호 추가 
 		params.put("startCnt", Integer.toString(pb.getStartCount()));
 		params.put("endCnt", Integer.toString(pb.getEndCount()));
