@@ -395,7 +395,7 @@ footer > .foot > nav > a{
 	
 	$(".paging_wrap").html(html);
 }
- 
+ */
 </script>
 </head>
 <body>

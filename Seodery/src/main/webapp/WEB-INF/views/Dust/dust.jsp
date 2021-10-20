@@ -284,25 +284,44 @@ footer > .foot > nav > a{
 		padding: 5px;
 	}
 	
-	#controll_Dust button:hover {
-		color: white;
-		background: green;
-	}
 	
-	.Dust_Dtl {
-		width: 200px;
-		height: 150px;
-		background-color: rgb(188, 228, 164);
+	.detail-info{
+		border: 1px solid black;
+	 	background-color: rgb( 195, 222,230);    
+	 	text-align: left;
+	 	width: 200px;
+		height: 150px;	
 		margin:5px;
 		top: 38%;
 		left: 75%;
-		transform:translate(-50%, -25%); 
+		transform:translate(-50%, 100%); 
 		position: absolute;
-		border: 1px
+		display: inline;
 	}
-	
-	.tit{
-		font-size: 20px;	
+	.good {
+		border: 1px solid black;
+	 	background-color: rgb( 66, 167, 255);    
+	 	width:30%;
+    	box-sizing: border-box;
+	}
+	.normal {
+		border: 1px solid black;
+	 	background-color: rgb( 66, 255,162);    
+	 	width:30%;
+    	box-sizing: border-box;
+	}
+	.bad {
+		border: 1px solid black;
+	 	background-color: rgb( 250, 222,230);    
+	 	width:30%;
+    	box-sizing: border-box;
+	}
+	.worst {
+		border: 1px solid black;
+	 	background-color: rgb( 250, 61,48);    
+	 	width:30%;
+    	box-sizing: border-box;
+	 	
 	}
 </style>
 <script type="text/javascript">
@@ -544,23 +563,17 @@ footer > .foot > nav > a{
    		<button id="Btn_UFDust" onclick="">초미세먼지</button>
     </div>
     
-    <!--미세먼지 상세보기  -->
-	<div id="Dust_Dtl" class="Dust_Dtl">
-		<table>
-			<tr>
-				<th class="tit">초미세먼지</th>
-				<td class="unit"></td>
-				<td class="result"><span id='pm25El'></span>㎍/㎥</td>
-			    <td class="status" id='pm25Stat'></td>
-			</tr>
-			<tr>
-				<th class="tit">미세먼지</th>
-				<td class="unit"></td>
-				<td class="result"><span id='pm10El'></span>㎍/㎥</td>
-				<td class="status" id='pm10Stat'></td>
-			</tr>
-		</table>
-	</div>
+    <!--미세먼지 기준  -->  
+	<div class="detail-info">
+						<dl>
+							<dd><em>등급</em><em>지수범위</em></dd>
+							<dd><span class="good">좋음</span>0~0.030</dd>
+							<dd><span class="normal">보통</span>0.031~0.090</dd>
+							<dd><span class="bad">나쁨</span>0.091~0.150</dd>
+							<dd><span class="worst">매우나쁨</span>0.151~</dd>
+							<dd><span>점검중</span>-</dd>
+						</dl>			
+					</div>			
     
     <footer>
        <div class="foot">
