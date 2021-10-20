@@ -37,58 +37,76 @@ public class ParkController {
 			@RequestParam HashMap<String, String> params,
 			ModelAndView mav) {
 		
-		String page = "1";
 		
-		if(params.get("page")!= null) {
-			page = params.get("page");
-		}
-		
-		mav.addObject("page",page);
+		 String page = "1";
+		 
+		 if(params.get("page")!= null) { // 넘어오는 현재 p데이터가 존재 시 page =
+			 page = params.get("page");
+			 }
+		 
+		 mav.addObject("page",page);
+		 
 		
 		mav.setViewName("park/parkList");
 		return mav;
 	}
+	
 	
 	@RequestMapping(value="/apitest", method=RequestMethod.GET, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String callApiData(@RequestParam HashMap<String, String> params) throws IOException {
 	
 		ObjectMapper mapper = new ObjectMapper();	//jackson 객체
+		Map<String, Object> modelMap = new HashMap<String, Object>();	//데이터를 담을 map
+		
+		
+		int page = Integer.parseInt(params.get("page"));
+		
+		int cnt = 132;	//총 게시글 개수 
+		
+		PagingBean pb = iPagingService.getPagingBean(page, cnt, 15, 5);
+	
+		//데이터 시작, 종료 번호 추가 
+		params.put("startCnt", Integer.toString(pb.getStartCount()));
+		params.put("endCnt", Integer.toString(pb.getEndCount()));
+		
 		
 		// 임시코드
-		params.put("S_START_PAGE", "1"); // 삭제
+		//params.put("S_START_PAGE", "1"); // 삭제
 		
-		int selectStartPage = Integer.parseInt(params.get("S_START_PAGE").toString()); // 선택 페이지 번호(파라미터)
-		int selectMaxPage = selectStartPage*5; // 페이징 5개씩 하는거임
-		int viewCnt = 15; // 페이지당 게시글 개수
-		int startPage = 1; // data 시작번호 - 계산필요
-		int endPage = 15; // data 끝번호 - 계산필요
+		//int selectStartPage = Integer.parseInt(params.get("S_START_PAGE").toString()); // 선택 페이지 번호(파라미터)
+		//int selectMaxPage = selectStartPage*5; // 페이징 5개씩 하는거임
+		//int viewCnt = 15; // 페이지당 게시글 개수
+		//int startPage = 1; // data 시작번호 - 계산필요
+		//int endPage = 15; // data 끝번호 - 계산필요
 		
 //		StringBuffer result = new StringBuffer();
 //		String urlStr = "http://openAPI.seoul.go.kr:8088/58446e7a71616b643239487a427157/json/SearchParkInfoService/1/132?";
+		
 		String urlStr = "http://openAPI.seoul.go.kr:8088/58446e7a71616b643239487a427157/json/SearchParkInfoService/";
-		urlStr += startPage + "/" + endPage;
+		urlStr += params.get("startCnt") + "/" + params.get("endCnt");
 		
 		
 	  	String vStringLine = "";
 	  	//페이지 취득
-	  	int page = selectStartPage;
+	  	//int page = selectStartPage;
 	  	
 	  	//개수 취득 
-	  	int cnt = 132;
+	  	//int cnt = 132;
 	  	
 	  	//페이징 정보 취득
-	  	PagingBean pb = iPagingService.getPagingBean(page, cnt, viewCnt, selectMaxPage);
+	  	//PagingBean pb = iPagingService.getPagingBean(page, cnt, viewCnt, selectMaxPage);
 	  	
 	  	//데이터 시작, 종료값 할당 
-	  	params.put("startCnt", String.valueOf(startPage));
-	  	params.put("endCnt", String.valueOf(endPage));
+	  	//params.put("startCnt", String.valueOf(startPage));
+	  	//params.put("endCnt", String.valueOf(endPage));
 //			params.put("startCnt", Integer.toString(pb.getStartCount()));
 //			params.put("endCnt", Integer.toString(pb.getEndCount()));
 	  	
-	  	Map<String, Object> modelMap = new HashMap<String, Object>();	//데이터를 담을 map
-	  	modelMap.put("pb", pb);
 	  	
+	  	//modelMap.put("urlStr", urlStr);
+	  	modelMap.put("pb", pb);
+	  	modelMap.put("page", page);
 	  	try {
 	  		
 	  		StringBuilder vStringBuilder = new StringBuilder();
@@ -131,7 +149,6 @@ public class ParkController {
 	  	
 	  	//데이터를 문자열화 
 	  	return mapper.writeValueAsString(modelMap);
-		  	
 	}
 		
 	

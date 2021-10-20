@@ -212,8 +212,40 @@ main > .Cpage {
 	font-weight: 900;
 }
 
+/* 상세보기 버튼 */
+#DtlBtn {
+	/* border : none; */
+	border-radius: 5px;
+	background-color:rgb(3, 104, 115);
+	font-size: 1.1rem;
+	color : white;
+	font-family: '고딕';
+	cursor: pointer;
+	padding: 4px 17px 4px 17px;
+	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
+}
+
+
+
+/* 표 */
+#table {
+	/* width: 85%;
+	height : 50%; */
+	border-collapse: collapse;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: '고딕';
+	font-size: 1.1rem;
+}
+
+
+
 main > table > tr,td {
-	border: 1px solid black;
+	border-top: 1px solid black;
+}
+
+th {
+	padding: 5px;
 }
 
 
@@ -228,7 +260,7 @@ main > table > tr,td {
 footer { 
 	width: 85%;
 	height: 110px;
-	position: fixed;				
+	position: relative;				
 	bottom : 0px; 
 	/* position: relative;				
 	top:580px;
@@ -298,7 +330,7 @@ footer > .foot > nav > a{
 	//페이징
 	 $(".paging_wrap").on("click","span",function(){
 		$("#page").val($(this).attr("page"));
-		$("#searchTxt").val($("#oldTxt").val());
+		 /* $("#searchTxt").val($("#oldTxt").val());  */
 		
 		reloadList();
 	}); 
@@ -324,13 +356,14 @@ footer > .foot > nav > a{
  			,"START_INDEX" : 1
  			,"END_INDEX" : 10
  	}; */
-	
+	var params = $("#actionForm").serialize();
  	$.ajax({	//jquery의 ajax함수 호출  
 //  		url: "http://data.seoul.go.kr/dataList/OA-394/S/1/datasetView.do?"
 // 					+"KEY=58446e7a71616b643239487a427157&TYPE=json&SERVICE=SearchParkInfoService&START_INDEX=1&END_INDEX=10", //접속 주소
 		url : "apitest", 
 		type: "get",	//전송 방식
  		dataType:"json",	//받아올 데이터 형태 
+ 		data: params,
 //  		data : sendData,	//보낼 데이터(문자열 형태)
  		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
  			console.log(res);
@@ -354,7 +387,7 @@ footer > .foot > nav > a{
       
       for (var idx in rows) {
          $data += '<tr><td>' + rows[idx].P_IDX + '</td><td>' + rows[idx].P_PARK + '</td><td>'+ rows[idx].P_ADDR 
-         		+ '</td><td>'+ rows[idx].P_ADMINTEL + '</td><td>' + <input type="button" value="상세보기"> + '</td></tr>';
+         		+ '</td><td>'+ rows[idx].P_ADMINTEL + '</td><td>' + '<input type="button" value="상세보기" id="DtlBtn">' + '</td></tr>';
       }
       
       $('#table').append($data);
@@ -493,7 +526,7 @@ footer > .foot > nav > a{
 	</form>
 </div>
 <div align="center">
-            <table style="border:3px solid; text-align:center;">
+            <table style="text-align:center;">
             	<thead>
 			<tr>
 				<th>P_IDX(번호)</th>
