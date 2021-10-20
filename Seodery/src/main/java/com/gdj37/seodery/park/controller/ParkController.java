@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gdj37.seodery.common.bean.PagingBean;
 import com.gdj37.seodery.common.service.IPagingService;
 import com.gdj37.seodery.park.service.IParkService;
 
@@ -48,13 +51,46 @@ public class ParkController {
 	
 	@RequestMapping(value="/apitest", method=RequestMethod.GET, produces = "text/json;charset=UTF-8")
 	@ResponseBody
-	public String callApiData() throws IOException {
+	public String callApiData(@RequestParam HashMap<String, String> params) throws IOException {
 	
+		ObjectMapper mapper = new ObjectMapper();	//jackson 객체
+		
+		// 임시코드
+		params.put("S_START_PAGE", "1"); // 삭제
+		
+		int selectStartPage = Integer.parseInt(params.get("S_START_PAGE").toString()); // 선택 페이지 번호(파라미터)
+		int selectMaxPage = selectStartPage*5; // 페이징 5개씩 하는거임
+		int viewCnt = 15; // 페이지당 게시글 개수
+		int startPage = 1; // data 시작번호 - 계산필요
+		int endPage = 15; // data 끝번호 - 계산필요
+		
 //		StringBuffer result = new StringBuffer();
-		String urlStr = "http://openAPI.seoul.go.kr:8088/58446e7a71616b643239487a427157/json/SearchParkInfoService/1/5/";
+//		String urlStr = "http://openAPI.seoul.go.kr:8088/58446e7a71616b643239487a427157/json/SearchParkInfoService/1/132?";
+		String urlStr = "http://openAPI.seoul.go.kr:8088/58446e7a71616b643239487a427157/json/SearchParkInfoService/";
+		urlStr += startPage + "/" + endPage;
+		
 		
 	  	String vStringLine = "";
+	  	//페이지 취득
+	  	int page = selectStartPage;
+	  	
+	  	//개수 취득 
+	  	int cnt = 132;
+	  	
+	  	//페이징 정보 취득
+	  	PagingBean pb = iPagingService.getPagingBean(page, cnt, viewCnt, selectMaxPage);
+	  	
+	  	//데이터 시작, 종료값 할당 
+	  	params.put("startCnt", String.valueOf(startPage));
+	  	params.put("endCnt", String.valueOf(endPage));
+//			params.put("startCnt", Integer.toString(pb.getStartCount()));
+//			params.put("endCnt", Integer.toString(pb.getEndCount()));
+	  	
+	  	Map<String, Object> modelMap = new HashMap<String, Object>();	//데이터를 담을 map
+	  	modelMap.put("pb", pb);
+	  	
 	  	try {
+	  		
 	  		StringBuilder vStringBuilder = new StringBuilder();
 
 	  		URL vURL = new URL(urlStr);
@@ -74,17 +110,17 @@ public class ParkController {
 		  		vBufferedReader.close();
 		  		
 		  		System.out.println("요청성공");
-		  		System.out.println(">>>" + vHttpURLConnection.getResponseCode());
-		  		System.out.println(">>>" + vHttpURLConnection.getResponseMessage());
-		  		System.out.println(">>>" + vStringBuilder.toString());
+//		  		System.out.println(">>>" + vHttpURLConnection.getResponseCode());
+//		  		System.out.println(">>>" + vHttpURLConnection.getResponseMessage());
+//		  		System.out.println(">>>" + vStringBuilder.toString());
 		  		vStringLine = vStringBuilder.toString();
-		  		
+		  		modelMap.put("resData", vStringLine);
 		  		
 	  		} else {
 	  			System.out.println("요청실패");
-	  			System.out.println(">>>" + vHttpURLConnection.getResponseCode());
-		  		System.out.println(">>>" + vHttpURLConnection.getResponseMessage());
-		  		System.out.println(">>>" + vStringBuilder.toString());
+//	  			System.out.println(">>>" + vHttpURLConnection.getResponseCode());
+//		  		System.out.println(">>>" + vHttpURLConnection.getResponseMessage());
+//		  		System.out.println(">>>" + vStringBuilder.toString());
 		  		vStringLine = vStringBuilder.toString();
 	  		}
 	  		
@@ -93,7 +129,8 @@ public class ParkController {
 			e.printStackTrace();
 		}
 	  	
-	  	return vStringLine;
+	  	//데이터를 문자열화 
+	  	return mapper.writeValueAsString(modelMap);
 		  	
 	}
 		
