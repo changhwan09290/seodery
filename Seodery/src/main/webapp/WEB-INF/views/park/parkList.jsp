@@ -29,7 +29,7 @@
        header { /*헤더 %로 단위변경*/
             width: 100%;
             height: 155px;
-            background-image :url("/images/park/logo.png");
+            background-image :url("resources/images/park/logo.png");
             background-size: 320px 164px;
             background-repeat : no-repeat;
             background-position : center;
@@ -74,7 +74,7 @@
 .pencil{
 	width: 30px;
 	height: 30px;
-	background-image: url("../images/pencil.png");
+	background-image: url("resources/images/park/pencil.png");
 	background-repeat: no-repeat;
 	margin-right: 9px;
 	margin-left : 7px;
@@ -210,8 +210,10 @@ main > .Cpage {
 	margin-left: 1.5%;
 	font-family: '고딕';
 	font-weight: 900;
-	
-	
+}
+
+main > table > tr,td {
+	border: 1px solid black;
 }
 
 
@@ -258,84 +260,86 @@ footer > .foot > nav > a{
 	} */
 	reloadList();
 	
-	/* //글작성
-	$("#addBtn").on("click",function(){
+	 //글작성
+	/* $("#addBtn").on("click",function(){
 		$("#searchTxt").val($("#oldTxt").val());	//취소했을시 검색어유지
 		
 		$("#actionForm").attr("action","testABAdd");
 		$("#actionForm").submit();
-	});
+	}); */
 	
 	//로그인 
-	$("#loginBtn").on("click",function(){
+	/* $("#loginBtn").on("click",function(){
 		location.href = "testLogin";
 	});
-	
+	 */
+	 
 	//로그아웃 
-	$("#logoutBtn").on("click",function(){
+	/* $("#logoutBtn").on("click",function(){
 		location.href = "testLogout";
-	});
+	}); */
 	
 	//검색
-	$("#searchBtn").on("click",function(){
+	/* $("#searchBtn").on("click",function(){
 		$("#oldTxt").val($("#searchTxt").val());
 		$("#page").val("1");
 		
 		reloadList();
-	});
+	}); */
 	
 	//검색창 엔터치면 검색이 되게 한다. 
-	$("#searchTxt").on("keypress",function(event){
+	/* $("#searchTxt").on("keypress",function(event){
 		if(event.keyCode ==13 ){
 			$("#searchBtn").click();
 			return false;
 		}
-	});
+	}); */
 	
 	//페이징
-	$(".paging_wrap").on("click","span",function(){
+	 $(".paging_wrap").on("click","span",function(){
 		$("#page").val($(this).attr("page"));
 		$("#searchTxt").val($("#oldTxt").val());
 		
 		reloadList();
-	});
+	}); 
 	
 	//tr을 클릭했을 때 이벤트 
-	$("tbody").on("click", "tr", function(){
+	/* $("tbody").on("click", "tr", function(){
 		$("#no").val($(this).attr("no"));
 		
 		$("#actionForm").attr("action","testAB");
 		$("#actionForm").submit();
-	}); */
+	});  */
 	
 });
- 
 
 
 
 //데이터 취득
  function reloadList(){
-// 	var sendData = {
-// 			"KEY" : "58446e7a71616b643239487a427157"
-// 			,"TYPE" : "json"
-// 			,"SERVICE" : "SearchParkInfoService"
-// 			,"START_INDEX" : 1
-// 			,"END_INDEX" : 10
-// 	};
+ 	/* var sendData = {
+ 			"KEY" : "58446e7a71616b643239487a427157"
+ 			,"TYPE" : "json"
+ 			,"SERVICE" : "SearchParkInfoService"
+ 			,"START_INDEX" : 1
+ 			,"END_INDEX" : 10
+ 	}; */
 	
  	$.ajax({	//jquery의 ajax함수 호출  
 //  		url: "http://data.seoul.go.kr/dataList/OA-394/S/1/datasetView.do?"
 // 					+"KEY=58446e7a71616b643239487a427157&TYPE=json&SERVICE=SearchParkInfoService&START_INDEX=1&END_INDEX=10", //접속 주소
-		url : "/apitest",
+		url : "apitest", 
 		type: "get",	//전송 방식
  		dataType:"json",	//받아올 데이터 형태 
 //  		data : sendData,	//보낼 데이터(문자열 형태)
  		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
  			console.log(res);
+ 			makeTable(JSON.parse(res.resData));
  			//drawList(res.list);
- 			//drawPaging(res.pb);
+ 			drawPaging(res.pb);
  		},
  		error: function(request, status, error){	//실패 시 다음 함수 실행 
+ 			console.log(request);
  			console.log(error);
  		}
  	});
@@ -343,22 +347,24 @@ footer > .foot > nav > a{
 
 
 //목록 그리기 
- /* function drawList(list){
-	var html="";
-	
-	 for(var  data of list) {
-		 html += "<tr>   ";
-         html += "<td>" + list.P_IDX + "</td>      ";
-         html += "<td>" + list.P_PARK + "</td>      ";
-         html += "<td>" + list.P_ADDR + "</td>      ";
-         html += "<td>" + list.P_ADMINTEL + "</td>      ";
-         html += "</tr>";
-	}
-
-	$("tbody").html(html);
-} */
+  function makeTable(jsonData) {
+      var rows = jsonData.SearchParkInfoService.row;
+      
+      $data = "";
+      
+      for (var idx in rows) {
+         $data += '<tr><td>' + rows[idx].P_IDX + '</td><td>' + rows[idx].P_PARK + '</td><td>'+ rows[idx].P_ADDR 
+         		+ '</td><td>'+ rows[idx].P_ADMINTEL + '</td><td>' + <input type="button" value="상세보기"> + '</td></tr>';
+      }
+      
+      $('#table').append($data);
+   }
  
-/* function drawPaging(pb){
+ 
+ /* 페이징 */
+ function drawPaging(pb){
+	console.log("pb", pb);
+	 
 	var html ="";
 	
 	html += "<span page=\"1\">처음</span>      " ;
@@ -481,12 +487,30 @@ footer > .foot > nav > a{
 		<input type="hidden" name="no" id="no"/>
 		<input type="button" value="검색" id="searchBtn"/>
 		<!-- 로그인한 상태라면 작성버튼 -->
-		<c:if test="${!empty sMNo}">
+		<%-- <c:if test="${!empty sMNo}">
 			<input type="button" value="작성" id="addBtn"/>
-		</c:if>
+		</c:if> --%>
 	</form>
 </div>
-<div>
+<div align="center">
+            <table style="border:3px solid; text-align:center;">
+            	<thead>
+			<tr>
+				<th>P_IDX(번호)</th>
+				<th>P_PARK(공원이름)</th>
+				<th>P_ADDR(공원 주소)</th>
+				<th>P_ADMINTEL(전화번호)</th>
+				<th>상세보기</th>
+			</tr>
+		</thead>
+               <colgroup><col width="200"/><col width="200"/></colgroup>
+               <tbody id="table">
+               
+               </tbody>   
+            </table>
+</div>
+
+<!-- <div>
 	<table>
 		<thead>
 			<tr>
@@ -499,7 +523,7 @@ footer > .foot > nav > a{
 		<tbody>
 		</tbody>
 	</table>
-</div>
+</div> -->
 
 <div class="paging_wrap"></div>
     </main>
