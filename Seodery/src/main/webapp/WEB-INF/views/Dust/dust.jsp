@@ -256,7 +256,7 @@ footer > .foot > nav > a{
 		transform:translate(-50%, -30%); 
 		position: absolute;
 		}
-		
+
 	.controll_Dust {
 		top: 30%;
 		left: 35%;
@@ -284,45 +284,74 @@ footer > .foot > nav > a{
 		padding: 5px;
 	}
 	
-	
-	.detail-info{
-		border: 1px solid black;
-	 	background-color: rgb( 195, 222,230);    
-	 	text-align: left;
-	 	width: 200px;
-		height: 150px;	
-		margin:5px;
-		top: 38%;
-		left: 75%;
-		transform:translate(-50%, 100%); 
+
+	.dust-info {
+        width:200px;
+        height:200px;
+        border : 1px solid;
+        margin: 5px;
+        top: 45%;
+		left: 25%;
+		transform:translate(-50%, -30%); 
 		position: absolute;
-		display: inline;
-	}
-	.good {
-		border: 1px solid black;
+    	}
+    	
+    .udust-info {
+        width:200px;
+        height:200px;
+        border : 1px solid;
+        margin: 5px;
+        top: 70%;
+		left: 25%;
+		transform:translate(-50%, -30%); 
+		position: absolute;
+    	}   
+    	
+    .good {	
 	 	background-color: rgb( 66, 167, 255);    
 	 	width:30%;
     	box-sizing: border-box;
 	}
-	.normal {
-		border: 1px solid black;
+	.normal {		
 	 	background-color: rgb( 66, 255,162);    
 	 	width:30%;
     	box-sizing: border-box;
 	}
-	.bad {
-		border: 1px solid black;
-	 	background-color: rgb( 250, 222,230);    
+	.bad {	
+	 	background-color: yellow;    
 	 	width:30%;
     	box-sizing: border-box;
 	}
-	.worst {
-		border: 1px solid black;
+	.worst {		
 	 	background-color: rgb( 250, 61,48);    
 	 	width:30%;
     	box-sizing: border-box;
 	 	
-	}
+	}    
+    .sys {	
+
+	 	background-color: gray;    
+	 	width:30%;
+    	box-sizing: border-box;	 	
+	} 
+	
+	.timedust{
+	    width:100px;
+		height:20px;
+		border : 1px solid;
+		margin: 5px;
+		top: 30%;
+		left: 70%;
+		transform:translate(140%, -50%); 
+		position: absolute;
+	     	}
+	     	
+	 .names-dust{
+		 top: 30%;	
+		 left: 75%;
+		 position: absolute;
+	     	}
+	     	
 </style>
 <script type="text/javascript">
 	
@@ -473,6 +502,34 @@ footer > .foot > nav > a{
 	});
 	
 
+    function dust() {
+        $('#names-dust').empty(); 
+          $.ajax({ 
+              type: "GET",
+              url: "http://openapi.seoul.go.kr:8088/6d6d62644373647436327074734965/json/RealtimeCityAir/1/25/",
+              data: {}, 
+              success: function (response) { 
+                  let rows = response['RealtimeCityAir']['row']
+                  for(let i = 0 ;i<rows.length;i++){
+                    let gu_time = rows[i]['MSRDT']
+                    let gu_name = rows[i]['MSRSTE_NM']
+                    let gu_dust = rows[i]['PM10']
+                    let gu_udust = rows[i]['PM25']
+                    let temp_html = ``
+                        if(gu_dust>70){
+                           temp_html = `<li>${gu_name}:${gu_dust}</li>`
+                        }
+                        else{
+                           temp_html = `<li>${gu_name}-${gu_dust}-${gu_udust}:${gu_time}</li>`
+                           
+                        }
+                        $('#names-dust').append(temp_html);
+                      }
+                  }
+              });
+          }
+    
+    
 		</script>
 </head>
 <body>
@@ -551,6 +608,7 @@ footer > .foot > nav > a{
 	</header>
 		
 	<main> 
+	<div class="Cpage"><h4>미세먼지</h4></div>	
 <div class="paging_wrap"></div>
     </main>
     
@@ -564,17 +622,35 @@ footer > .foot > nav > a{
     </div>
     
     <!--미세먼지 기준  -->  
-	<div class="detail-info">
-						<dl>
-							<dd><em>등급</em><em>지수범위</em></dd>
-							<dd><span class="good">좋음</span>0~0.030</dd>
-							<dd><span class="normal">보통</span>0.031~0.090</dd>
-							<dd><span class="bad">나쁨</span>0.091~0.150</dd>
-							<dd><span class="worst">매우나쁨</span>0.151~</dd>
-							<dd><span>점검중</span>-</dd>
-						</dl>			
-					</div>			
-    
+					<div class="dust-info">
+						     <h3 style="text-align:center";>미세먼지</h3>
+						    	<dl>
+						            <dd><em>등급</em><em>지수범위</em></dd>
+						            <dd><span class="good">좋음</span>0~15</dd>
+						            <dd><span class="normal">보통</span>16~35</dd>
+						            <dd><span class="bad">나쁨</span>36~75</dd>
+						            <dd><span class="worst">매우나쁨</span>76~</dd>
+						            <dd><span class="sys">점검중</span>-</dd>
+								</dl>			
+					    </div>		
+					    					
+       <!--초미세먼지 기준  -->
+				   
+						<div class="udust-info">
+							  <h3 style="text-align:center";>초미세먼지</h3>
+								<dl>
+									<dd><em>등급</em><em>지수범위</em></dd>
+									<dd><span class="good">좋음</span>0~30</dd>
+									<dd><span class="normal">보통</span>31~80</dd>
+									<dd><span class="bad">나쁨</span>81~150</dd>
+									<dd><span class="worst">매우나쁨</span>151~</dd>
+									<dd><span>점검중</span>-</dd>
+								</dl>	
+						</div>			
+			   <!--실시간 미세먼지 출력  -->		
+						    <button onclick="dust()" class="timedust">업데이트</button>
+						    <ul id="names-dust" class="names-dust"></ul>
+
     <footer>
        <div class="foot">
 			<nav>
