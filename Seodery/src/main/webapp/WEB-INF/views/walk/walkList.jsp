@@ -162,7 +162,7 @@
        header { /*헤더 %로 단위변경*/
             width: 100%;
             height: 155px;
-            background-image :url("resources/images/logo.png");
+            background-image :url("resources/images/park/logo.png");
             background-size: 320px 164px;
             background-repeat : no-repeat;
             background-position : center;
@@ -207,7 +207,7 @@
 .pencil{
 	width: 30px;
 	height: 30px;
-	background-image: url("resources/images/pencil.png");
+	background-image: url("resources/images/park/pencil.png");
 	background-repeat: no-repeat;
 	margin-right: 9px;
 	margin-left : 7px;
