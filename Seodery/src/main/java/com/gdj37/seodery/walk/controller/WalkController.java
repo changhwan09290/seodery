@@ -56,14 +56,14 @@ public class WalkController {
 	  return mav; 
 	  }
 	  
-	  @RequestMapping(value = "/walkDtl") 
-	  public ModelAndView walkDtl(ModelAndView mav) { 
+//	  @RequestMapping(value = "/walkDtl") 
+//	  public ModelAndView walkDtl(ModelAndView mav) { 
 		  
 		  
-      mav.setViewName("walk/walkDtl");
+//      mav.setViewName("walk/walkDtl");
 	  
-	  return mav; 
-	  }
+//	  return mav; 
+//	  }
 	 
 	
 	  @RequestMapping(value="/apitest", method=RequestMethod.GET, produces = "text/json;charset=UTF-8")

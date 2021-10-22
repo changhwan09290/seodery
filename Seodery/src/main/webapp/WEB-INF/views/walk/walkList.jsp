@@ -103,7 +103,7 @@
 		      $("tbody").html(html);
 		   }
 	   
-	   function drawPaging(pb){
+	   /* function drawPaging(pb){
 			var html ="";
 			
 			html += "<span page=\"1\">처음</span>        ";
@@ -131,7 +131,7 @@
 			html += "<span page=\""+ pb.maxPcount + "\">마지막</span>";
 			
 			$(".paging_wrap").html(html);
-		}
+		} */
 	
 </script>
     <style>
