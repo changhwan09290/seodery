@@ -6,5 +6,4 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class WalkDao implements IWalkDao {
 	@Autowired
 	public SqlSession sqlSession;
-	/* public SqlSession sqlSession; */
 }

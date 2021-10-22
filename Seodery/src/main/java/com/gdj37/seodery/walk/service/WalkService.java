@@ -7,6 +7,5 @@ import com.gdj37.seodery.walk.dao.IWalkDao;
 public class WalkService implements IWalkService {
 	@Autowired
 	public IWalkDao iwalkDao;
-	//iwalkDao
 
 }
