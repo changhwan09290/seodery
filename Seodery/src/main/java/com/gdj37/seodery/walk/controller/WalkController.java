@@ -66,9 +66,9 @@ public class WalkController {
 	  }
 	 
 	
-	  @RequestMapping(value="/apitest", method=RequestMethod.GET, produces = "text/json;charset=UTF-8")
+	  @RequestMapping(value="/apiwalk", method=RequestMethod.GET, produces = "text/json;charset=UTF-8")
       @ResponseBody
-      public String apitest(Model model) throws Exception {
+      public String apiwalk(Model model) throws Exception {
            
 		  String urlStr = "http://openapi.seoul.go.kr:8088/534b517a6f6e617931307348487965/json/SeoulGilWalkCourse/1/13/";
 		  //URL url = new URL("http://openapi.seoul.go.kr:8088/534b517a6f6e617931307348487965/json/SeoulGilWalkCourse/1/13/");

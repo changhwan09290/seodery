@@ -75,7 +75,7 @@
 	function reloadList(){
 	
 	$.ajax({   
-    url : "apitest",
+    url : "apiwalk",
     type: "get",   
     dataType:"json",
      success : function(res){   
