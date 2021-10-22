@@ -251,13 +251,16 @@ footer > .foot > nav > a{
 }
 
 	.map {
+		width:800px;
+		height:500px;
+	 	border : 1px solid;
 		top: 50%;
 		left: 50%;
 		transform:translate(-50%, -30%); 
 		position: absolute;
 		}
 
-	.controll_Dust {
+	.controll_Dust {	
 		top: 30%;
 		left: 35%;
 		transform:translate(-60%, -30%); 
@@ -351,7 +354,17 @@ footer > .foot > nav > a{
 		 left: 75%;
 		 position: absolute;
 	     	}
-	     	
+	 .map_circle {
+   		display: inline-block;
+	    width: 25px;
+	    height: 25px;
+	    border-radius: 25px;
+	    line-height: 50px;
+	    text-align: center;
+	    border: 2px solid green;
+	    background-color: yellow;
+	    opacity: 0.7;
+	     	}
 </style>
 <script type="text/javascript">
 	
@@ -419,16 +432,46 @@ footer > .foot > nav > a{
 		    
 		    polygons.push(polygon);            //폴리곤 제거하기 위한 배열
 		
-		    //원 도형
-		    var circle = new kakao.maps.Circle({
-		        map: map,
-		        center: new kakao.maps.LatLng(37.565994, 126.977496),
-		        radius: 1000,	
-		        strokeOpacity: 0,
-		        fillColor : 'yellowgreen',
-		        fillOpacity: 0.1
-
-		    });
+		    var Locs = ['중구', '용산구','은평구','서대문구','마포구','광진구','성동구','중랑구',
+			     '동대문구','성북구','도봉구','강북구','노원구','강서구','구로구','영등포구','동작구','관악구','금천구','양천구' ,'서초구','송파구','강동구','강남구','종로구'];  
+		    var circleLocs = [
+		    	 new kakao.maps.LatLng(37.562368, 126.994337),
+		    	 new kakao.maps.LatLng(37.530788, 126.980108),
+		    	 new kakao.maps.LatLng(37.622929, 126.924228),
+		    	 new kakao.maps.LatLng(37.576761, 126.937031),
+		    	 new kakao.maps.LatLng(37.559806, 126.898465),
+		    	 new kakao.maps.LatLng(37.546251, 127.091018),
+		    	 new kakao.maps.LatLng(37.554394, 127.039176),
+		    	 new kakao.maps.LatLng(37.599985, 127.091837),
+		    	 new kakao.maps.LatLng(37.581922, 127.053984),
+		    	 new kakao.maps.LatLng(37.603368, 127.011140),
+		    	 new kakao.maps.LatLng(37.673821, 127.031243),
+		    	 new kakao.maps.LatLng(37.639221, 127.007821),
+		    	 new kakao.maps.LatLng(37.649826, 127.074220),
+		    	 new kakao.maps.LatLng(37.568567, 126.823401),
+		    	 new kakao.maps.LatLng(37.493266, 126.839458),
+		    	 new kakao.maps.LatLng(37.525442, 126.908517),
+		    	 new kakao.maps.LatLng(37.504990, 126.952272),
+		    	 new kakao.maps.LatLng(37.464280, 126.940805),
+		    	 new kakao.maps.LatLng(37.448795, 126.906071),
+		    	 new kakao.maps.LatLng(37.517080, 126.852273),
+		    	 new kakao.maps.LatLng(37.477033, 127.017967),
+		    	 new kakao.maps.LatLng(37.510105, 127.109649),
+		    	 new kakao.maps.LatLng(37.554159, 127.146360),
+		    	 new kakao.maps.LatLng(37.493893, 127.071649),
+		    	 new kakao.maps.LatLng(37.601722, 126.972595)
+		    	];
+		    
+		    for (var i = 0; i < circleLocs.length; i ++) {
+		    	  var circleHtml = "<div class=\"map_circle\">" + Locs[i] + "</div>";
+		    	   var customOverlay = new kakao.maps.CustomOverlay({
+		    			    	map: map,
+		    			    	position:circleLocs[i],
+		    			    	content:circleHtml,
+		    			    	zIndex:1000
+		    	    });
+		    	}
+		    	
 		    
 		    // 다각형에 mouseover 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 변경합니다 
 		    // 지역명을 표시하는 커스텀오버레이를 지도위에 표시합니다
@@ -613,7 +656,7 @@ footer > .foot > nav > a{
     </main>
     
     <!--지도 크기  -->
-  <div id="map" class="map" style="width:800px;height:500px;"></div>
+  <div id="map" class="map"></div>
    	
    	<!--미세, 초미세 버튼  -->
        <div id="controll_Dust" class="controll_Dust">
