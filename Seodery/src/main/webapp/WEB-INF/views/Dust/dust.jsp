@@ -361,9 +361,8 @@ footer > .foot > nav > a{
 	    border-radius: 25px;
 	    line-height: 50px;
 	    text-align: center;
-	    border: 2px solid green;
-	    background-color: yellow;
-	    opacity: 0.7;
+	    background-color: skyblue;
+	    opacity: 0.9;
 	     	}
 </style>
 <script type="text/javascript">
@@ -431,11 +430,14 @@ footer > .foot > nav > a{
 		    });
 		    
 		    polygons.push(polygon);            //폴리곤 제거하기 위한 배열
-		
-		    var Locs = ['중구', '용산구','은평구','서대문구','마포구','광진구','성동구','중랑구',
-			     '동대문구','성북구','도봉구','강북구','노원구','강서구','구로구','영등포구','동작구','관악구','금천구','양천구' ,'서초구','송파구','강동구','강남구','종로구'];  
+		    
+		  //지역 배열
+		    var Locs = ['중구','종로구', '용산구','은평구','서대문구','마포구','광진구','성동구','중랑구',
+			     '동대문구','성북구','도봉구','강북구','노원구','강서구','구로구','영등포구','동작구','관악구','금천구','양천구','강남구' ,'서초구','송파구','강동구','강남구'];  
+		  //지역별 좌표	    
 		    var circleLocs = [
 		    	 new kakao.maps.LatLng(37.562368, 126.994337),
+		    	 new kakao.maps.LatLng(37.601722, 126.972595),
 		    	 new kakao.maps.LatLng(37.530788, 126.980108),
 		    	 new kakao.maps.LatLng(37.622929, 126.924228),
 		    	 new kakao.maps.LatLng(37.576761, 126.937031),
@@ -455,13 +457,13 @@ footer > .foot > nav > a{
 		    	 new kakao.maps.LatLng(37.464280, 126.940805),
 		    	 new kakao.maps.LatLng(37.448795, 126.906071),
 		    	 new kakao.maps.LatLng(37.517080, 126.852273),
+		    	 new kakao.maps.LatLng(37.493893, 127.071649),
 		    	 new kakao.maps.LatLng(37.477033, 127.017967),
 		    	 new kakao.maps.LatLng(37.510105, 127.109649),
-		    	 new kakao.maps.LatLng(37.554159, 127.146360),
-		    	 new kakao.maps.LatLng(37.493893, 127.071649),
-		    	 new kakao.maps.LatLng(37.601722, 126.972595)
+		    	 new kakao.maps.LatLng(37.554159, 127.146360)
 		    	];
 		    
+		    //지역 들어간 원을 좌표에 생성
 		    for (var i = 0; i < circleLocs.length; i ++) {
 		    	  var circleHtml = "<div class=\"map_circle\">" + Locs[i] + "</div>";
 		    	   var customOverlay = new kakao.maps.CustomOverlay({
@@ -473,18 +475,6 @@ footer > .foot > nav > a{
 		    	}
 		    	
 		    
-		    // 다각형에 mouseover 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 변경합니다 
-		    // 지역명을 표시하는 커스텀오버레이를 지도위에 표시합니다
-		    kakao.maps.event.addListener(polygon, 'mouseover', function(mouseEvent) {
-		        polygon.setOptions({
-		            fillColor : '#09f'
-		        });
-		 
-		        customOverlay.setContent('<div class="area">' + name + '</div>');
-		 
-		        customOverlay.setPosition(mouseEvent.latLng);
-		        customOverlay.setMap(map);
-		    });
 		 
 		    // 다각형에 mousemove 이벤트를 등록하고 이벤트가 발생하면 커스텀 오버레이의 위치를 변경합니다 
 		    kakao.maps.event.addListener(polygon, 'mousemove', function(mouseEvent) {
@@ -691,9 +681,7 @@ footer > .foot > nav > a{
 								</dl>	
 						</div>			
 			   <!--실시간 미세먼지 출력  -->		
-						    <button onclick="dust()" class="timedust">업데이트</button>
-						    <ul id="names-dust" class="names-dust"></ul>
-
+					
     <footer>
        <div class="foot">
 			<nav>
