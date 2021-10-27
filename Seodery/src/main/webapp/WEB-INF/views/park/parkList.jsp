@@ -347,7 +347,6 @@ footer > .foot > nav > a{
 		
 		$("#no").val($(this).parents('tr').find('td[name="pIdx"]').text());
 		
-		alert($("#no").val());
 		$("#actionForm").attr("action","parkDtl");
 		$("#actionForm").submit();
 	});  

@@ -437,7 +437,6 @@ $(document).ready(function(){
 		// 0：svg  1：Font class  2：Unicode
 		type: 0,
 		
-		
 		// the number of stars
 		length: 5,
 		
