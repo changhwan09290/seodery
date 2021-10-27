@@ -5,7 +5,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="resources/script/jquery/fxss-rate/rate.css">
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="resources/script/jquery/fxss-rate/rate.js"></script>
+<script src="resources/script/jquery/fxss-rate/need/iconfont.js"></script>
+<script src="//code.jquery.com/jquery.min.js"></script>
 <style type="text/css">
  /* 웹 폰트 적용 */
  @font-face {
@@ -232,15 +239,18 @@ main > .Cpage {
 	/* width: 85%;
 	height : 50%; */
 	border-collapse: collapse;
-	margin-left: auto;
+	margin-left: 0;
 	margin-right: auto;
 	font-family: '고딕';
 	font-size: 1.1rem;
 }
 
+table > tr,td{
+	
+	width: 700px;
+}
 
 main > table > tr,td {
-	border-top: 1px solid black;
 }
 
 th {
@@ -287,11 +297,68 @@ footer > .foot > nav > a{
 	margin-left: 40%;
 }
 
+/* 별점 */
+
+.starR1{
+    background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat -52px 0;
+    background-size: auto 100%;
+    width: 15px;
+    height: 30px;
+    float:left;
+    text-indent: -9999px;
+    cursor: pointer;
+}
+.starR2{
+    background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
+    background-size: auto 100%;
+    width: 15px;
+    height: 30px;
+    float:left;
+    text-indent: -9999px;
+    cursor: pointer;
+}
+.starR1.on{background-position:0 0;}
+.starR2.on{background-position:-15px 0;}
+
+/* 탭버튼 스타일 */
+.tab{
+	overflow: hidden;
+	border: 1px solid #ccc;
+	background-color: #f1f1f1;
+}
+
+/*탭 버튼 */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+/* 마우스 호버시 버튼 색 */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button:active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
 </style>
 <script type="text/javascript"
 		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
- $(document).ready(function(){
+$(document).ready(function(){
 	/* if("${param.searchGbn}"!=""){
 		$("#searchGbn").val("${param.searchGbn}");
 	} */
@@ -332,59 +399,104 @@ footer > .foot > nav > a{
 	}); */
 	
 	//페이징
-	 $(".paging_wrap").on("click","span",function(){
-		 $("#page").val($(this).attr("page"));
+	// $(".paging_wrap").on("click","span",function(){
+	//	 $("#page").val($(this).attr("page"));
 		 /* $("#searchTxt").val($("#oldTxt").val());  */
 		
-		reloadList();
-	}); 
+	//	reloadList();
+	//}); 
 	
 	//상세보기 버튼을 클릭했을 때 이벤트 
-	 $("tbody").on("click", "input", function(){
-		console.log("no >>" + $(this).parents('tr').find('td[name="pIdx"]').text());
+	/*  $("tbody").on("click", "input", function(){
+		$("#no").val($(this).attr("rows[idx].P_IDX"));
 		
-		//$("#no").attr($(this).parents('tr').find('td[name="pIdx"]').text()); 
-		
-		$("#no").val($(this).parents('tr').find('td[name="pIdx"]').text());
-		
-		alert($("#no").val());
 		$("#actionForm").attr("action","parkDtl");
 		$("#actionForm").submit();
-	});  
+	});   */
 	
+	 /* 별점 구현 */
+	$('.starRev span').click(function(){
+		  $(this).parent().children('span').removeClass('on');
+		  $(this).addClass('on').prevAll('span').addClass('on');
+		  return false;
+		});
 	
-	
-});
+	/* 기본등급 시스템 */
+	$("#rateBox").rate({
+		  // options here
+		});
 
-/*  var getIndex = function() {
-	  var select = document.querySelector('.select');
-	  var index = select.rowIndex;
-	  alert(index);
-	}; */
+	/* 콜백함수 현재 등급 가져오기 */
+	$("#rateBox").rate({
+		  callback:function(object){
+		    console.log(object)
+		  }
+		});
+
+	$("#rateBox").rate({
+		// 0：svg  1：Font class  2：Unicode
+		type: 0,
+		
+		
+		// the number of stars
+		length: 5,
+		
+		// initial value
+		value: 3.5,
+		
+		// allows half star
+		half:true,
+		
+		// supports decimal?
+		decimal:true,
+		
+		// is readonly?
+		readonly:true,
+		
+		// shows the current rating value on hover
+		hover:false
+		
+		// shows rating text
+		text:true,
+		
+		// an array of rating text
+		textList: ['Bad','Poor','Medium','Good','Perfect'],
+		// color
+		theme:'#FFB800',
+		// text/star size
+		size:'20px',
+		// space between stars
+		gutter:'3px',
+		// default CSS classes
+		selectClass:'fxss_rate_select',
+		
+		incompleteClass:'',
+		
+		customClass:''
+		});
+
+	
+ });
+
+
 
 //데이터 취득
  function reloadList(){
- 	/* var sendData = {
- 			"KEY" : "58446e7a71616b643239487a427157"
- 			,"TYPE" : "json"
- 			,"SERVICE" : "SearchParkInfoService"
- 			,"START_INDEX" : 1
- 			,"END_INDEX" : 10
- 	}; */
+	
 	var params = $("#actionForm").serialize();
  	$.ajax({	//jquery의 ajax함수 호출  
-//  		url: "http://data.seoul.go.kr/dataList/OA-394/S/1/datasetView.do?"
+//  		url: "http://data.seoul.go.kr/dataList/OA-394/S/1/datasetView.do?" 
 // 					+"KEY=58446e7a71616b643239487a427157&TYPE=json&SERVICE=SearchParkInfoService&START_INDEX=1&END_INDEX=10", //접속 주소
-		url : "apitest", 
+		url : "apiDtl", 
 		type: "get",	//전송 방식
  		dataType:"json",	//받아올 데이터 형태 
- 		data: params,
+ 		data: params, 
 //  		data : sendData,	//보낼 데이터(문자열 형태)
  		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
  			console.log(res);
  			makeTable(JSON.parse(res.resData));
  			//drawList(res.list);
- 			drawPaging(res.pb);
+ 			//drawPaging(res.pb);
  		},
  		error: function(request, status, error){	//실패 시 다음 함수 실행 
  			console.log(request);
@@ -397,20 +509,62 @@ footer > .foot > nav > a{
 //목록 그리기 
   function makeTable(jsonData) {
       var rows = jsonData.SearchParkInfoService.row;
+
       $data = "";
       
+      /* for (var idx in rows) {
+         $data += '<tr><td>' + rows[idx].P_IDX + '</td><tr><td>' + rows[idx].P_PARK + '</td></tr><tr><td>'+'<img src="resources/images/park/phone-call.png">'+rows[idx].P_ADMINTEL 
+         + '</td></tr><td>'+'<img src="resources/images/park/location.png">' + "공원 주소 : " + rows[idx].P_ADDR + '</td><tr><td>'+ '<img src="resources/images/park/right.png">' + "개원일 : " + rows[idx].OPEN_DT + '</td></tr><tr><td>' 
+         + '<img src="resources/images/park/right.png">' + "주요 시설 : " + rows[idx].MAIN_EQUIP 
+         + '</td></tr><tr><td>' + "주요 식물 : " + rows[idx].MAIN_PLANTS + '</td></tr><tr><td>'
+         + '<img src=\"' + rows[idx].P_IMG + '\"></td><tr>';
+         
+      } */
+      
       for (var idx in rows) {
-         $data += '<tr><td name="pIdx">'+ rows[idx].P_IDX + '</td><td>' + rows[idx].P_PARK + '</td><td>'+ rows[idx].P_ADDR 
-         		+ '</td><td>'+ rows[idx].P_ADMINTEL + '</td><td>' + '<input type="button" value="상세보기" id="DtlBtn">' + '</td></tr>';
-      }
+          $data += '<tr><td>' + rows[idx].P_IDX + '</td><tr><td>' + rows[idx].P_PARK + '</td></tr><tr><td>'+'<img src="resources/images/park/phone-call.png">'+rows[idx].P_ADMINTEL 
+          + '</td></tr><td>'+'<img src="resources/images/park/location.png">' + "공원 주소 : " + rows[idx].P_ADDR + '</td><tr><td>'+ '<img src="resources/images/park/right.png">' + "개원일 : " + rows[idx].OPEN_DT + '</td></tr><tr><td>' 
+          + '<img src="resources/images/park/right.png">' + "주요 시설 : " + rows[idx].MAIN_EQUIP 
+          + '</td></tr><tr><td>' + "주요 식물 : " + rows[idx].MAIN_PLANTS + '</td></tr><tr><td>'
+          + '<img src=\"' + rows[idx].P_IMG + '\"></td><tr>';
+          
+       }
+      
       
       $("#table").html($data);
      
    }
  
  
+ 
+  /* 탭 메뉴 이벤트 */
+	function openTab(evt, tabName) {
+		  // Declare all variables
+		  var i, tabcontent, tablinks;
+
+		  // Get all elements with class="tabcontent" and hide them
+		  tabcontent = document.getElementsByClassName("tabcontent");
+		  for (i = 0; i < tabcontent.length; i++) {
+		    tabcontent[i].style.display = "none";
+		  }
+
+		  // Get all elements with class="tablinks" and remove the class "active"
+		  tablinks = document.getElementsByClassName("tablinks");
+		  for (i = 0; i < tablinks.length; i++) {
+		    tablinks[i].className = tablinks[i].className.replace("active", "");
+		  }
+
+		  // Show the current tab, and add an "active" class to the button that opened the tab
+		  document.getElementById(tabName).style.display = "block";
+		  evt.currentTarget.className += " active";
+		}
+ 
+ 
+ 
+ 
+ 
  /* 페이징 */
- function drawPaging(pb){
+/*  function drawPaging(pb){
 	console.log("pb", pb);
 	 
 	var html ="";
@@ -442,7 +596,7 @@ footer > .foot > nav > a{
 	html += "<span page=\""+pb.maxPcount +"\">마지막</span>      ";
 	
 	$(".paging_wrap").html(html);
-}
+} */
  
 </script>
 </head>
@@ -451,7 +605,7 @@ footer > .foot > nav > a{
  <div id="wrapper">
         <header id="header">
 			<div id="logo">
-				<form action="#" method="post" id="Loginform" >
+				<form action="#" method="post" >
 					<div class="logout">
 						{000}님 환영합니다.
 						<div class="pencil"></div>
@@ -522,42 +676,63 @@ footer > .foot > nav > a{
 	</header>
 		
 	<main>
-      	<div class="Cpage"><h4>공원 > 공원찾기</h4></div>
-      	<div>
-	<form action="#" id="actionForm" method="get">
-		<select name="searchGbn" id="searchGbn">
-			<option value="0">지역</option>
-		</select>
-		<input type="text" name="searchTxt" id="searchTxt" value="${param.searchTxt}"/>
-		<input type="hidden" name="oldTxt" value="${param.searchTxt}"/>
-		<input type="hidden" name="page" id="page" value="${page}"/>
-		<input type="hidden" name="no" id="no"/>
-		<input type="button" value="검색" id="searchBtn"/>
-		<!-- 로그인한 상태라면 작성버튼 -->
-		<%-- <c:if test="${!empty sMNo}">
-			<input type="button" value="작성" id="addBtn"/>
-		</c:if> --%>
-	</form>
-</div>
-<div align="center">
-            <table style="text-align:center;">
-            	<thead>
-			<tr>
-				<th>번호</th>
-				<th>공원이름</th>
-				<th>공원 주소</th>
-				<th>전화번호</th>
-				<th>상세보기</th>
-			</tr>
-		</thead>
-               <colgroup><col width="200"/><col width="200"/></colgroup>
-               <tbody id="table">
-               
-               </tbody>   
-            </table>
-</div>
+		      	<div class="Cpage"><h4>공원 > 공원찾기> 상세페이지 ${no}번</h4></div>
+			      	<div>
+					<form action="#" id="actionForm" method="get">
+							<input type="hidden" name="searchGbn"  value="${param.searchGbn}"/>
+							<input type="hidden" name="searchTxt"  value="${param.searchTxt}"/>
+							<input type="hidden" name="page"  value="${param.page}"/>
+							<input type="hidden" name="no"  value="${param.no}"/>
+							<!-- 로그인한 상태라면 작성버튼 -->
+							<%-- <c:if test="${!empty sMNo}">
+								<input type="button" value="작성" id="addBtn"/>
+							</c:if> --%>
+					</form>
+					</div>
+				<div >
+			            <table>
+			            	<thead>
+								
+							</thead>
+				              <!--  <colgroup><col width="600"/><col width="600"/></colgroup> -->
+				               <tbody id="table">
+				               
+				               </tbody>   
+				            </table>
+				</div>
+				
+				<div class="tab">
+				  <button class="tablinks" onclick="openTab(event, 'Comm')">댓글</button>
+				  <button class="tablinks" onclick="openTab(event, 'parklot')">주차장</button>
+				</div>
+				
+				<section id="Comm" class="tabcontent">
+					<h2>댓글</h2>	
+						
+						<div class="starRev">
+						  <span class="starR1 on" value="0.5">별1_왼쪽</span>
+						  <span class="starR2" value="1">별1_오른쪽</span>
+						  <span class="starR1" value="1.5">별2_왼쪽</span>
+						  <span class="starR2" value="2">별2_오른쪽</span>
+						  <span class="starR1" value="2.5">별3_왼쪽</span>
+						  <span class="starR2" value="3">별3_오른쪽</span>
+						  <span class="starR1" value="3.5">별4_왼쪽</span>
+						  <span class="starR2" value="4">별4_오른쪽</span>
+						  <span class="starR1" value="4.5">별5_왼쪽</span>
+						  <span class="starR2" value="5">별5_오른쪽</span>
+						</div>
+						
+						<div id="rateBox"></div>
 
-<div class="paging_wrap"></div>
+						<input type="text" />
+						<input type="button" value="작성" id=""/>
+				</section>
+				
+				<section id="parklot" class="tabcontent">
+					<h2>주차장</h2>
+				</section>
+				
+			<div class="paging_wrap"></div>
     </main>
     
     

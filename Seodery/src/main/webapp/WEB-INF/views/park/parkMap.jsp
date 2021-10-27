@@ -6,13 +6,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
+<!-- <script src="//code.jquery.com/jquery.min.js"></script> -->
+<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c953a065c47d3eb731f9ab037fd520fa"></script> -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c953a065c47d3eb731f9ab037fd520fa&libraries=services,clusterer,drawing"></script>
 <style type="text/css">
  /* 웹 폰트 적용 */
  @font-face {
     font-family: 'Cafe24Ssurround';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
     font-weight: normal;
-    font-style: normal;
+    font-style: normal;https://apis.map.kakao.com/web/wizard
 } 
    
    @font-face {
@@ -212,48 +215,9 @@ main > .Cpage {
 	font-weight: 900;
 }
 
-/* 상세보기 버튼 */
-#DtlBtn {
-	/* border : none; */
-	border-radius: 5px;
-	background-color:rgb(3, 104, 115);
-	font-size: 1.1rem;
-	color : white;
-	font-family: '고딕';
-	cursor: pointer;
-	padding: 4px 17px 4px 17px;
-	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
+table{
+	margin-right: 8%;
 }
-
-
-
-/* 표 */
-#table {
-	/* width: 85%;
-	height : 50%; */
-	border-collapse: collapse;
-	margin-left: auto;
-	margin-right: auto;
-	font-family: '고딕';
-	font-size: 1.1rem;
-}
-
-
-main > table > tr,td {
-	border-top: 1px solid black;
-}
-
-th {
-	padding: 5px;
-}
-
-
-/* body 전체 */
-/* #wrap{
-	min-height: 100vh;
- 	position: relative;
-	width: 86%;
-} */
 
 /* footer */
 footer { 
@@ -281,55 +245,15 @@ footer > .foot > nav > a{
 	text-decoration: none;
 	color: black;
 }
-
+/* 페이징 div  */
 .paging_wrap{
 	margin-top : 5%;;
 	margin-left: 40%;
 }
-
 </style>
-<script type="text/javascript"
-		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
- $(document).ready(function(){
-	/* if("${param.searchGbn}"!=""){
-		$("#searchGbn").val("${param.searchGbn}");
-	} */
-	reloadList();
-	 //글작성
-	/* $("#addBtn").on("click",function(){
-		$("#searchTxt").val($("#oldTxt").val());	//취소했을시 검색어유지
-		
-		$("#actionForm").attr("action","testABAdd");
-		$("#actionForm").submit();
-	}); */
-	
-	//로그인 
-	/* $("#loginBtn").on("click",function(){
-		location.href = "testLogin";
-	});
-	 */
-	 
-	//로그아웃 
-	/* $("#logoutBtn").on("click",function(){
-		location.href = "testLogout";
-	}); */
-	
-	//검색
-	/* $("#searchBtn").on("click",function(){
-		$("#oldTxt").val($("#searchTxt").val());
-		$("#page").val("1");
-		
-		reloadList();
-	}); */
-	
-	//검색창 엔터치면 검색이 되게 한다. 
-	/* $("#searchTxt").on("keypress",function(event){
-		if(event.keyCode ==13 ){
-			$("#searchBtn").click();
-			return false;
-		}
-	}); */
+$(document).ready(function(){
+	gnbSlideInit();
 	
 	//페이징
 	 $(".paging_wrap").on("click","span",function(){
@@ -339,78 +263,95 @@ footer > .foot > nav > a{
 		reloadList();
 	}); 
 	
-	//상세보기 버튼을 클릭했을 때 이벤트 
-	 $("tbody").on("click", "input", function(){
-		console.log("no >>" + $(this).parents('tr').find('td[name="pIdx"]').text());
-		
-		//$("#no").attr($(this).parents('tr').find('td[name="pIdx"]').text()); 
-		
-		$("#no").val($(this).parents('tr').find('td[name="pIdx"]').text());
-		
-		alert($("#no").val());
-		$("#actionForm").attr("action","parkDtl");
-		$("#actionForm").submit();
-	});  
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+	mapOption = { 
+	    center: new kakao.maps.LatLng(37.5501402, 126.9903773), // 지도의 중심좌표
+	    level: 7 // 지도의 확대 레벨
+	}; 
+
+	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 	
+	// 마커 만들기
+	 function makeMakers(list) {
+		
+		var positions = [];
+		
+		for( var i=0; i<list.length; i++) {
+		    var data = list[i];
+			
+			var marker = new kakao.maps.Marker({
+		        map: map, // 마커를 표시할 지도
+		        position: new kakao.maps.LatLng(data.LATITUDE, data.LONGITUDE), // 마커를 표시할 위치
+		        title : data.P_PARK // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+		    });
+		}
+	 } 
 	
+	reloadList();
+	reloadMap();
+	//데이터 취득
+	function reloadMap(){
+		
+		console.log("reload ##########");
+		
+		var params = $("#actionForm").serialize();
+		$.ajax({	//jquery의 ajax함수 호출  
+	// 		url: "http://data.seoul.go.kr/dataList/OA-394/S/1/datasetView.do?"
+	//					+"KEY=58446e7a71616b643239487a427157&TYPE=json&SERVICE=SearchParkInfoService&START_INDEX=1&END_INDEX=10", //접속 주소
+			url : "apitestall", 
+			type: "get",	//전송 방식
+			dataType:"json",	//받아올 데이터 형태 
+			data: params,
+	// 		data : sendData,	//보낼 데이터(문자열 형태)
+			success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
+				makeMakers(JSON.parse(res.resData).SearchParkInfoService.row); // 좌표목록 만듬
+				//drawList(res.list);
+				//drawPaging(res.pb);
+			},
+			error: function(request, status, error){	//실패 시 다음 함수 실행 
+				console.log(request);
+				console.log(error);
+			}
+		});
+	}
 	
 });
 
-/*  var getIndex = function() {
-	  var select = document.querySelector('.select');
-	  var index = select.rowIndex;
-	  alert(index);
-	}; */
-
-//데이터 취득
- function reloadList(){
- 	/* var sendData = {
- 			"KEY" : "58446e7a71616b643239487a427157"
- 			,"TYPE" : "json"
- 			,"SERVICE" : "SearchParkInfoService"
- 			,"START_INDEX" : 1
- 			,"END_INDEX" : 10
- 	}; */
+function reloadList(){
+	
 	var params = $("#actionForm").serialize();
- 	$.ajax({	//jquery의 ajax함수 호출  
-//  		url: "http://data.seoul.go.kr/dataList/OA-394/S/1/datasetView.do?"
-// 					+"KEY=58446e7a71616b643239487a427157&TYPE=json&SERVICE=SearchParkInfoService&START_INDEX=1&END_INDEX=10", //접속 주소
+	$.ajax({	//jquery의 ajax함수 호출  
 		url : "apitest", 
 		type: "get",	//전송 방식
- 		dataType:"json",	//받아올 데이터 형태 
- 		data: params,
-//  		data : sendData,	//보낼 데이터(문자열 형태)
- 		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
- 			console.log(res);
- 			makeTable(JSON.parse(res.resData));
- 			//drawList(res.list);
- 			drawPaging(res.pb);
- 		},
- 		error: function(request, status, error){	//실패 시 다음 함수 실행 
- 			console.log(request);
- 			console.log(error);
- 		}
- 	});
- }
-
+		dataType:"json",	//받아올 데이터 형태 
+		data: params,
+		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
+			makeTable(JSON.parse(res.resData)); // 목록 만듬
+			drawPaging(res.pb);
+		},
+		error: function(request, status, error){	//실패 시 다음 함수 실행 
+			console.log(request);
+			console.log(error);
+		}
+	});
+}
 
 //목록 그리기 
-  function makeTable(jsonData) {
-      var rows = jsonData.SearchParkInfoService.row;
-      $data = "";
-      
-      for (var idx in rows) {
-         $data += '<tr><td name="pIdx">'+ rows[idx].P_IDX + '</td><td>' + rows[idx].P_PARK + '</td><td>'+ rows[idx].P_ADDR 
-         		+ '</td><td>'+ rows[idx].P_ADMINTEL + '</td><td>' + '<input type="button" value="상세보기" id="DtlBtn">' + '</td></tr>';
-      }
-      
-      $("#table").html($data);
-     
-   }
- 
- 
- /* 페이징 */
- function drawPaging(pb){
+function makeTable(jsonData) {
+    var rows = jsonData.SearchParkInfoService.row;
+    $data = "";
+    
+    for (var idx in rows) {
+       $data += '<tr><td>'+ rows[idx].P_IDX + '</td><td>' + rows[idx].P_PARK + '</td><td>'+ rows[idx].P_ADDR 
+       		+ '</td><td>'+ rows[idx].P_ADMINTEL + '</td><td>' + '<input type="button" value="상세보기" id="DtlBtn">' + '</td></tr>';
+    }
+    
+    $("#table").html($data);
+    
+ }
+
+/* 페이징 */
+function drawPaging(pb){
 	console.log("pb", pb);
 	 
 	var html ="";
@@ -443,15 +384,14 @@ footer > .foot > nav > a{
 	
 	$(".paging_wrap").html(html);
 }
- 
+
 </script>
 </head>
 <body>
-
- <div id="wrapper">
+    <div id="wrapper">
         <header id="header">
 			<div id="logo">
-				<form action="#" method="post" id="Loginform" >
+				<form action="#" method="post" >
 					<div class="logout">
 						{000}님 환영합니다.
 						<div class="pencil"></div>
@@ -522,24 +462,17 @@ footer > .foot > nav > a{
 	</header>
 		
 	<main>
-      	<div class="Cpage"><h4>공원 > 공원찾기</h4></div>
-      	<div>
-	<form action="#" id="actionForm" method="get">
-		<select name="searchGbn" id="searchGbn">
-			<option value="0">지역</option>
-		</select>
-		<input type="text" name="searchTxt" id="searchTxt" value="${param.searchTxt}"/>
-		<input type="hidden" name="oldTxt" value="${param.searchTxt}"/>
-		<input type="hidden" name="page" id="page" value="${page}"/>
-		<input type="hidden" name="no" id="no"/>
-		<input type="button" value="검색" id="searchBtn"/>
-		<!-- 로그인한 상태라면 작성버튼 -->
-		<%-- <c:if test="${!empty sMNo}">
-			<input type="button" value="작성" id="addBtn"/>
-		</c:if> --%>
-	</form>
-</div>
-<div align="center">
+      	<div class="Cpage"><h4>공원 > 길 찾기</h4></div>
+      	<form action="#" id="actionForm" method="get">
+			<input type="text" name="searchTxt" id="searchTxt" value="${param.searchTxt}" placeholder="검색어를 입력해주세요"/>
+			<input type="hidden" name="oldTxt" value="${param.searchTxt}"/>
+			<input type="hidden" name="page" id="page" value="${page}"/>
+			<input type="hidden" name="no" id="no"/>
+			<input type="button" value="검색" id="searchBtn"/>
+		</form>
+		
+      	<div id="map" style="width:800px;height:400px;margin-left:auto;margin-right:auto;"></div>
+    		<div align="center">
             <table style="text-align:center;">
             	<thead>
 			<tr>
@@ -555,9 +488,8 @@ footer > .foot > nav > a{
                
                </tbody>   
             </table>
-</div>
-
-<div class="paging_wrap"></div>
+	</div>
+    	<div class="paging_wrap"></div>
     </main>
     
     
@@ -576,16 +508,13 @@ footer > .foot > nav > a{
 				</p>
 		</div>
     </footer>
+    
     </div>
     
     
     
     <script>
 	/* 네비게이션 바 마우스 포커스 이벤트 */
-	$(function(){
-		gnbSlideInit();
-	});
-	
 	
 	function gnbSlideInit() {
 		//gnb (상위메뉴에 마우스 포커스)
@@ -616,7 +545,46 @@ footer > .foot > nav > a{
 	    });
 	} 
 	
+
+	
+
+	
+	
+	/* function callKakaoAPI(X,Y){
+	     wtmX = X , // 변환할 WTM X 좌표 입니다
+	     wtmY = Y; // 변환할 WTM Y 좌표 입니다
+	 
+	    // WTM 좌표를 WGS84 좌표계의 좌표로 변환합니다
+	    geocoder.transCoord(wtmX, wtmY, transCoordCB, {
+	        input_coord: kakao.maps.services.Coords.WTM, // 변환을 위해 입력한 좌표계 입니다
+	        output_coord: kakao.maps.services.Coords.WGS84 // 변환 결과로 받을 좌표계 입니다 
+	    });
+	} */
+
+
+	//좌표 변환 결과를 받아서 처리할 콜백함수 입니다.
+	/* function transCoordCB(result) {
+
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    mapOption = {
+	        center: new kakao.maps.LatLng(result[0].y, result[0].x), // 지도의 중심좌표
+	        level: 3 // 지도의 확대 레벨
+	    };
+	   
+	   // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+	   var map = new kakao.maps.Map(mapContainer, mapOption);
+
+	    // 마커를 변환된 위치에 표시합니다
+	    var marker = new kakao.maps.Marker({
+	        position: new kakao.maps.LatLng(result[0].y, result[0].x), // 마커를 표시할 위치입니다
+	        map: map // 마커를 표시할 지도객체입니다
+	    });
+	} */
+
+	
 </script>
     
+    
 </body>
+
 </html>
