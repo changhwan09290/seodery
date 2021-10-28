@@ -1,0 +1,289 @@
+/* 웹 폰트 적용 */
+@font-face {
+    font-family: 'Cafe24Ssurround';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+} 
+   
+   @font-face {
+    font-family: 'twayair';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+} 
+    
+        #wrapper { /*85%로 너비값*/
+            width: 85%;
+            margin: 0 auto;
+        }
+       header { /*헤더 %로 단위변경*/
+            width: 100%;
+            height: 155px;
+            /* background-image :url("../../images/login/logo.png"); */
+             background-size: 320px 164px; 
+            background-repeat : no-repeat;
+            background-position : center;
+           /*  border-bottom: 2px solid black; */
+    }
+
+        .content { /*본문 %로 단위변경*/
+            float: left;
+            width: 50%;
+            height: 200px;
+            padding: 1.5625%;
+            background-color: #F5F5F5;
+        }
+        .content2 {
+        	width: 100%;
+        	height: 400px;
+        }
+        .right-side { /*사이드바 %로 단위변경*/
+            float: right;
+            width: 45%;
+            height: 200px;
+            padding: 1.5625%;
+            background-color: #F5F5F5;
+        }
+/*         footer{ 푸터 %로 단위변경
+            clear: both; 
+            width: 85%;
+            height: 120px;
+            text-align: center;
+        }
+         */
+ /* 로그아웃 버튼 */
+#LogoutBtn {
+	border : none;
+	border-radius: 5px;
+	background-color:rgb(3, 104, 115);
+	font-size: 1.1rem;
+	color : white;
+	font-family: '고딕';
+	cursor: pointer;
+	padding: 4px 17px 4px 17px;
+	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
+	/* position: fixed;
+	right: 90px;
+	top: 100px; */
+}
+
+
+/* 로그인버튼, 유저 로그인정보 div */
+.logout{
+	white-space : nowrap;
+ 	display : flex;
+ 	position : absolute;
+	right: 8%;
+	top: 93px;
+	align-items: flex-end;
+	
+}
+/* 마이페이지 연필 이미지 */
+.pencil{
+	width: 30px;
+	height: 30px;
+	background-image: url("../images/pencil.png");
+	background-repeat: no-repeat;
+	margin-right: 9px;
+	margin-left : 7px;
+	background-size: contain;
+}
+/* 네비게이션바 전체 */
+.navi{
+	list-style-type: none;
+   	margin-top : -55px;
+    padding: 0px; 
+    display: flex;		/* 가로정렬 */
+     background: white;   
+   /*  background : rgb(150, 210, 90);   */
+    width: 100%;
+   	overflow: auto;
+}
+
+
+/* 관리자 메뉴 없애기 */
+.navi > #manager{
+	display: none;	
+}
+
+/* 메뉴바에 커서 올렸을때 호버이벤트 */
+.navi > .Park:hover{
+	background: rgb(150, 210, 90);
+	color: white;
+}
+
+.navi > .WalkT:hover{
+	background: rgb(150, 210, 90);
+	color: white;
+}
+
+.navi > .Bike:hover{
+	background: rgb(150, 210, 90);
+	color: white;
+}
+.navi > .FDust:hover{
+	background: rgb(150, 210, 90);
+	color: white;
+}
+
+.navi > .Memory:hover{
+	background: rgb(150, 210, 90);
+	color: white;
+}
+.navi > .Notice:hover{
+	background: rgb(150, 210, 90);
+	color: white;
+}
+
+/* 메뉴 */
+.navi > li{
+	line-height: 30px;   	/* 줄간격 */
+	/*text-align: center;		 텍스트 정렬 */ 	
+	padding: 13px;
+	color: black;
+	text-decoration: none;
+	width: 25%; 
+ 	font-size: 1.4rem;
+}
+/* 메뉴바 세로선 */
+.navi > li.sub{
+	text-align: center;		/* 텍스트 정렬 */ 	
+	border-top: 2px solid silver;
+	border-bottom: 2px solid rgb(150, 210, 90); 
+}
+
+
+/* 하위메뉴 글씨 */
+.gnb_sub > li> a{
+	color : black;
+	font-size: 0.9em;
+}
+
+/* 네비메뉴에 있는 a태그 */
+.navi a{
+	text-decoration:none; 
+}
+
+/* dv box */
+.dvbox{
+	border-top: 2px solid silver;
+	border-bottom: 2px solid rgb(150, 210, 90); 
+}
+
+
+/* 메뉴 모양 표시 */
+.dv {
+  width: 35px;
+  height: 5px;
+  background-color: rgb(121,55,55);
+  margin: 6px 0;
+}
+
+/* 메뉴 글씨체 */
+.gnb > .navi > .sub{
+	font-family: 'Cafe24Ssurround';
+}
+
+/* gnb(네비게이션바)의 하위메뉴 */
+.gnb_sub {
+	 display: none; 
+	list-style-type: none;
+	padding-left: 0px;
+}
+
+.navcon {
+	    margin-top: 35px;
+	    position: relative;
+	    z-index: 999;
+}
+/* .navcon{.right-side
+	z-index: 1;
+	padding-top: 193px; 
+	position: absolute; 
+	left:20px; 
+	right:20px;
+	margin-left: 12px;
+	margin-right: 12px;
+} */
+/* 네비게이션바 */
+#nav{
+	margin-left: 5.6%;
+   	margin-right: 5.3%;
+}
+/* 공지사항,공원 best5 목록 글씨 */
+main .li{
+	font-size: 1.6rem;
+	font-family:'twayair';
+}
+
+
+/* body 전체 */
+/* #wrap{
+	min-height: 100vh;
+ 	position: relative;
+	width: 86%;
+} */
+
+/* footer */
+/* footer { 
+	width: 85%;
+	height: 110px;
+	position: fixed;				화면 스크롤올리면 화면에서 안보임
+	padding-top: 15px;
+	color: gray;
+	font-size: 0.8em;
+	text-align: center;
+	border-top: 1px solid black;
+	margin-right: 90px;
+	margin-top: 270px;
+	
+} */
+
+/* footer div */
+/* .foot{
+	border-top: 1px solid black;
+} */
+
+footer > .foot > nav > a{
+	text-decoration: none;
+	color: black;
+}
+
+/* 슬라이드 컨테이너 */
+.swiper-container {
+    margin-top:30px;
+	width : 97%;
+	height: 89%;
+	border:3px solid silver;
+	border-radius:7px;
+	box-shadow:0 0 20px #ccc inset;
+	padding-bottom: 50px;
+	padding-top: 0px;
+	padding-left : 17px;
+	
+}
+.swiper-slide {
+	text-align:center;
+	display:flex; /* 내용을 중앙정렬 하기위해 flex 사용 */
+	align-items:center; /* 위아래 기준 중앙정렬 */
+	justify-content:center; /* 좌우 기준 중앙정렬 */
+}
+.swiper-slide img {
+	box-shadow:0 0 5px #555;
+	max-width:100%;/* 이미지 최대너비를 제한, 슬라이드에 이미지가 여러개가 보여질때 필요 */
+}
+
+/* .swiper-wrapper{
+	margin-bottom: 90px;
+} */
+/* 초기화 */ 
+
+/* 보여줄 구간의 높이와 넓이 설정 */ 
+/*  #slideShow{ 
+	width: 500px; 
+	height: 400px; 
+	position: relative;
+	 margin: 50px auto; 
+	 overflow: hidden; 
+ } */
