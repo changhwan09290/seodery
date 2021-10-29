@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="resources/css/login/login.css">
 	<script src="resources/script/login/login.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
-<script type="text/javascript">
+    <link rel="stylesheet" href="resources/css/login/mainpage.css">
+    <script type="text/javascript">
 	$(function () {
 		$("#loginBtn").on("click",function(){
 			$("#loginForm").attr("action","logins")
@@ -24,6 +25,7 @@
     <div id="wrapper">
         <header id="header">
 			<div id="logo">
+				<img src="resources/images/login/logo.png" alt=""> 
 				<form action="#" method="post" >
 					<div class="login">
 						<input type="button" value="로그인" id="LoginBtn"/>

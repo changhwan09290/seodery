@@ -193,7 +193,7 @@
 }
 
 .navcon {
-	    margin-top: 35px;
+	    margin-top: 36px;
 	    position: relative;
 	    z-index: 999;
 }
@@ -277,7 +277,8 @@ footer > .foot > nav > a{
 /* .swiper-wrapper{
 	margin-bottom: 90px;
 } */
-/* 초기화 */ 
+/* 초기화 */  
+
 
 /* 보여줄 구간의 높이와 넓이 설정 */ 
 /*  #slideShow{ 
