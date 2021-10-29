@@ -5,7 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="css/Mbercss.css">
+<link rel="stylesheet" href="resources/css/login/member.css">
+
 <style>
 
 </style>
@@ -34,6 +35,7 @@
     
 </head>
 <body>
+
     <!-- div 왼쪽, 오른쪽 바깥여백을 auto로 주면 중앙정렬된다.  -->
     <div id="wrap">
     	

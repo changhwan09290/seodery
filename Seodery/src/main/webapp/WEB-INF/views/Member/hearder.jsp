@@ -13,7 +13,7 @@
 			<div class="logo">
 				<img src="resources/images/login/logo.png" alt="">
 			</div> 
-				<c:choose>
+				<%-- <c:choose>
 					<c:when test="${empty sMNo }">
 						<div class="login">
 							<input type="button" value="로그인" id="LoginBtn" onclick="linkGo('login')"/>
@@ -26,7 +26,7 @@
 							<input type="button" value="로그아웃" id="LogoutBtn" onclick="linkGo('logout')"/>
 						</div>
 					</c:otherwise>
-				</c:choose>
+				</c:choose> --%>
 			
 			<div class="navcon">
 				<nav id="nav">

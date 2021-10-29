@@ -63,7 +63,7 @@ public class UrController {
 	
 	@RequestMapping(value="/join")
 	public ModelAndView join (ModelAndView mav) {
-		mav.setViewName("Member/Member");
+		mav.setViewName("Member/member");
 		return mav;
 	}
 	
@@ -82,7 +82,7 @@ public class UrController {
 		
 		if(joinChk == 0) {
 			mav.addObject("msg", "회원가입 실패");
-			mav.setViewName("Member/Member");
+			mav.setViewName("Member/member");
 		}else {
 			mav.setViewName("redirect:login");
 		}
@@ -91,10 +91,5 @@ public class UrController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/Tac")
-	public ModelAndView Tac (ModelAndView mav) {
-		mav.setViewName("Member/Tac");
-		return mav;
-	}
-
+	
 }
