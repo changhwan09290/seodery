@@ -30,7 +30,7 @@
        header { /*헤더 %로 단위변경*/
             width: 100%;
             height: 155px;
-            background-image :url("/images/park/logo.png");
+            background-image :url("resources/images/park/logo.png");
             background-size: 320px 164px;
             background-repeat : no-repeat;
             background-position : center;
@@ -75,7 +75,7 @@
 .pencil{
 	width: 30px;
 	height: 30px;
-	background-image: url("../images/pencil.png");
+	background-image: url("resources/images/park/pencil.png");
 	background-repeat: no-repeat;
 	margin-right: 9px;
 	margin-left : 7px;
@@ -211,8 +211,10 @@ main > .Cpage {
 	margin-left: 1.5%;
 	font-family: '고딕';
 	font-weight: 900;
-	
-	
+}
+
+main > table > tr,td {
+	border: 1px solid black;
 }
 
 
@@ -249,7 +251,33 @@ footer > .foot > nav > a{
 	text-decoration: none;
 	color: black;
 }
-	/*지도 */
+
+.cont{
+  width:720px;
+}
+.container{
+  display:flex;
+  flex-wrap:wrap;
+  width:720px;
+  justify-content:flex-start;
+  text-align: center;
+  top: 45%;
+  left: 50%;
+  transform:translate(-50%, -30%); 
+  position: absolute;
+}
+.single-item{
+  width:200px;
+  height:200px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background-color:#f3f3f3;
+  margin: 20px;
+  border-radius: 10px;
+  color:#888;
+}
+/*지도 */
 	.map {
 		width:800px;
 		height:500px;
@@ -357,6 +385,8 @@ footer > .foot > nav > a{
 }   	
 
 </style>
+<script type="text/javascript"
+		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
 	
 	//지도 표시 div
@@ -668,8 +698,8 @@ footer > .foot > nav > a{
 			</div>
 	</header>
 		
-	<main> 
-	<div class="Cpage"><h4>미세먼지</h4></div>	
+	<main>
+      		<div class="Cpage"><h4>미세먼지</h4></div>	
 <div class="paging_wrap"></div>
     </main>
     
@@ -702,9 +732,10 @@ footer > .foot > nav > a{
 									<dd><span class="worst">매우나쁨</span>76 ~ </dd>
 									<dd><span class="sys">점검중</span> - </dd>
 								</dl>	
-						</div>			
-			   <!--실시간 미세먼지 출력  -->		
-					
+						</div>
+    </main>
+    
+    
     <footer>
        <div class="foot">
 			<nav>
