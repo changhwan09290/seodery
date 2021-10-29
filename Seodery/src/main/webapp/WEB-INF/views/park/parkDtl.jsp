@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -351,8 +353,132 @@ footer > .foot > nav > a{
 .tabcontent {
   display: none;
   padding: 6px 12px;
-  border: 1px solid #ccc;
+ /*  border: 1px solid #ccc; */
   border-top: none;
+  position: relative;
+  height: 100vh;
+  width: 100%;
+}
+
+/* 댓글 */
+
+.pc_wrap {
+	width: 800px;
+	margin: 0px auto;
+	 border: 1px solid #444444; 
+}
+
+.write_area {
+	height: 100px;
+	position: relative;
+}
+
+.user_info {
+	display: inline-table;
+	width: 100px;
+	height: 100px;
+	vertical-align: top;
+}
+
+.user_name {
+	display: table-cell;
+	width: 100px;
+	height: 100px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 12pt;
+}
+
+.write_con_wrap {
+	display: inline-block;
+	width: 550px;
+	height: 100px;
+	vertical-align: top;
+}
+
+.write_con {
+	width: 540px;
+	height: 90px;
+	resize: none;
+	margin: 2px;
+}
+
+.btn_wrap {
+	display: inline-block;
+	width: 150px;
+	height: 100px;
+	vertical-align: top;
+	position: absolute;
+}
+
+.action_btn {
+	width: 128px;
+	height: 97px;
+	margin: 2px;
+	
+}
+
+.action_btn2 {
+	width: 71px;
+	height: 96px;
+	margin: 2px;
+}
+
+.write_area .action_btn2 {
+	display:none;
+}
+
+.login_req_wrap {
+	display: inline-table;
+	width: 800px;
+	height: 100px;
+}
+
+.login_req {
+	display: table-cell;
+	width: 800px;
+	height: 100px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 12pt;
+}
+
+.data_req_wrap {
+	display: inline-table;
+	width: 600px;
+	height: 100px;
+	border-top : 1px solid #444444;
+	margin-bottom: 5px;
+}
+
+.data_req {
+	display: table-cell;
+	width: 600px;
+	height: 100px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 12pt;
+}
+
+.ob_data {
+	border-top : 1px solid #444444;
+	margin-bottom: 5px;
+}
+
+.con_info {
+	display: inline-table;
+	width: 550px;
+	height: 100px;
+	vertical-align: top;
+}
+
+.con {
+	display: table-cell;
+	width: 100px;
+	height: 100px;
+	vertical-align: middle;
+	text-align: left;
+	font-size: 12pt;
 }
 </style>
 <script type="text/javascript"
@@ -362,7 +488,9 @@ $(document).ready(function(){
 	/* if("${param.searchGbn}"!=""){
 		$("#searchGbn").val("${param.searchGbn}");
 	} */
+	gnbSlideInit();
 	reloadList();
+	
 	 //글작성
 	/* $("#addBtn").on("click",function(){
 		$("#searchTxt").val($("#oldTxt").val());	//취소했을시 검색어유지
@@ -406,13 +534,33 @@ $(document).ready(function(){
 	//	reloadList();
 	//}); 
 	
-	//상세보기 버튼을 클릭했을 때 이벤트 
-	/*  $("tbody").on("click", "input", function(){
-		$("#no").val($(this).attr("rows[idx].P_IDX"));
+	
+	/* 지도 */
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+	mapOption = { 
+	    center: new kakao.maps.LatLng(37.5501402, 126.9903773), // 지도의 중심좌표
+	    level: 7 // 지도의 확대 레벨
+	}; 
+
+	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+	
+	// 마커 만들기
+	 function makeMakers(list) {
 		
-		$("#actionForm").attr("action","parkDtl");
-		$("#actionForm").submit();
-	});   */
+		var positions = [];
+		
+		for( var i=0; i<list.length; i++) {
+		    var data = list[i];
+			
+			var marker = new kakao.maps.Marker({
+		        map: map, // 마커를 표시할 지도
+		        position: new kakao.maps.LatLng(data.LATITUDE, data.LONGITUDE), // 마커를 표시할 위치
+		        title : data.P_PARK // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+		    });
+		}
+	 } 
+	
+	
 	
 	 /* 별점 구현 */
 	$('.starRev span').click(function(){
@@ -453,7 +601,7 @@ $(document).ready(function(){
 		readonly:true,
 		
 		// shows the current rating value on hover
-		hover:false
+		hover:false,
 		
 		// shows rating text
 		text:true,
@@ -707,25 +855,64 @@ $(document).ready(function(){
 				
 				<section id="Comm" class="tabcontent">
 					<h2>댓글</h2>	
-						
-						<div class="starRev">
-						  <span class="starR1 on" value="0.5">별1_왼쪽</span>
-						  <span class="starR2" value="1">별1_오른쪽</span>
-						  <span class="starR1" value="1.5">별2_왼쪽</span>
-						  <span class="starR2" value="2">별2_오른쪽</span>
-						  <span class="starR1" value="2.5">별3_왼쪽</span>
-						  <span class="starR2" value="3">별3_오른쪽</span>
-						  <span class="starR1" value="3.5">별4_왼쪽</span>
-						  <span class="starR2" value="4">별4_오른쪽</span>
-						  <span class="starR1" value="4.5">별5_왼쪽</span>
-						  <span class="starR2" value="5">별5_오른쪽</span>
+					
+					<div id="rateBox"></div>
+					<div class="wc_wrap">
+						<div class="write_area">
+							<form action="#" id="wcform" method="post">
+								<input type="hidden" id="no" name="no"/>
+								<input type="hidden" id="mo" name="mo"/>
+								<input type="hidden" id="page" name="page" value="${page}"/>
+								
+								<div class="user_info">
+									<div class="user_name">유저 이름</div>
+								</div>
+								<div class="write_con_wrap">
+									<textarea class="write_con" id="con" name="con">내용작성</textarea>
+								</div>
+								<div class="btn_wrap" no="" mo="" name="mo">
+									<input type="button" value="저장" class="action_btn" id="addBtn"/>
+									<input type="button" value="수정" class="action_btn2" id="updBtn"/>
+									<input type="button" value="취소" class="action_btn2" id="cancelBtn"/>
+								</div>
+							</form>
 						</div>
-						
-						<div id="rateBox"></div>
-
-						<input type="text" />
-						<input type="button" value="작성" id=""/>
+					</div>
+					
+					<div class="pc_list_wrap">
+					<c:choose>
+						<c:when test="${fn:length(list) eq 0}">
+						<!-- 데이터 없을 시 -->
+							<div class="data_req_wrap">
+								<div class="data_req">데이터가 없습니다.</div>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="data" items="${list}">
+							<div class="ob_data">
+								<div class="user_info">
+									<div class="user_name" name="mo">${data.M_NM}</div>
+								</div>
+								<div class="con_info">
+									<div class="con" name="con">${data.CON}</div>
+								</div>
+								<div class="btn_wrap" no="${data.O_NO}" mo="${sMNo}" name="no">
+								<!-- 로그인한 유저만 사용할 수있게 -->
+								<c:if test="${data.M_NO eq sMNo}">
+									<input type="button" value="수정" class="action_btn2" id="updateBtn"/>
+									<input type="button" value="삭제" class="action_btn2" id="deleteBtn"/>
+								</c:if>
+								</div>
+							</div>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+					</div>
+	
 				</section>
+				
+				
+				
 				
 				<section id="parklot" class="tabcontent">
 					<h2>주차장</h2>
@@ -756,9 +943,9 @@ $(document).ready(function(){
     
     <script>
 	/* 네비게이션 바 마우스 포커스 이벤트 */
-	$(function(){
+	/* $(function(){
 		gnbSlideInit();
-	});
+	}); */
 	
 	
 	function gnbSlideInit() {
