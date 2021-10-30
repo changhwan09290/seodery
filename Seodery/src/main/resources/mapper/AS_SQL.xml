@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bicycleAS">
+	<select id="getASCnt" parameterType="hashmap" resultType="integer">
+		SELECT COUNT(*) AS CNT
+		FROM BAS
+		WHERE DELC = 1
+	</select>
+	
+	<select id="getASList" parameterType="hashmap" resultType="hashmap">
+		SELECT B.QS_NUM, B.TITLE, B.ID, B.WRDATE 
+   		FROM (
+            SELECT B.QS_NUM, B.TITLE, U.ID, TO_CHAR(B.WRDATE, 'YYYY-MM-DD') AS WRDATE,
+                ROW_NUMBER() OVER(ORDER BY B.QS_NUM DESC) AS RNUM
+            FROM BAS B INNER JOIN UR U
+                        ON B.MBER_NUM = U.MBER_NUM
+            WHERE B.DELC = 1
+            ) B
+    	WHERE B.RNUM BETWEEN #{startCnt} AND #{endCnt}
+	</select>
+	
+	<insert id="getASAdd" parameterType="hashmap">
+		INSERT INTO BAS(QS_NUM, TITLE, BK_SERIAL_NUM, RENTSH_LOC, CON)
+		VALUES (BAS_SEQ.NEXTVAL, #{title}, #{serialNum}, #{rentsh_loc}, #{con})
+	</insert>
+	
+	<select id="getASDtl" parameterType="hashmap" resultType="hashmap">
+		SELECT B.TITLE, B.BK_SERIAL_NUM, B.RENTSH_LOC, U.ID, B.CON, B.ATACH
+		FROM BAS B INNER JOIN UR U
+                        ON B.MBER_NUM = U.MBER_NUM
+		WHERE 1 = 1
+		AND B.QS_NUM = #{qnum}
+	</select>
+		
+	<update id="getASUpdate" parameterType="hashmap">
+		UPDATE BAS SET TITLE = #{title},
+			BK_SERIAL_NUM = #{serialNum},
+			RENTSH_LOC = #{rentsh_loc},
+            CON = #{con},
+            ATACH = #{dbFile}
+		WHERE 1 = 1
+		AND B.QS_NUM = #{qnum}
+	</update>
+	
+	<update id="getASDelete" parameterType="hashmap">
+		UPDATE BAS SET DELC = 0
+		WHERE QS_NUM = #{qnum}
+	</update>
+</mapper>
