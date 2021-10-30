@@ -17,20 +17,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gdj37.seodery.common.service.IPagingService;
-import com.gdj37.seodery.park.service.IParkService;
+import com.gdj37.seodery.dust.service.IDustService;
+
 
 @Controller
 public class DustController {
 
 	@Autowired
-	public IParkService iDustService;
+	public IDustService iDustService;
 
 	@Autowired
 	public IPagingService iPagingService;
 	
 	
 	@RequestMapping(value="/dust")
-	public ModelAndView parkList(
+	public ModelAndView dust(
 			@RequestParam HashMap<String, String> params,
 			ModelAndView mav) {
 		
