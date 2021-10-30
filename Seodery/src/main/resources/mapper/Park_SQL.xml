@@ -17,4 +17,9 @@
 		WHERE PARK_NUM = #{PARK_NUM}
 	</select> 
 
+
+	<!-- <insert id="addO1" parameterType="hashmap">
+		 INSERT INTO O1(O_NO,M_NO, CON)
+		VALUES (O1_SEQ.NEXTVAL,#{mo},#{con})
+	</insert> -->
 </mapper>
