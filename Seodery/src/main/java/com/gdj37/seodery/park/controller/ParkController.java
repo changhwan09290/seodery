@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,8 +35,10 @@ public class ParkController {
 	public IPagingService iPagingService;
 
 	@RequestMapping(value = "/parkList")
-	public ModelAndView parkList(@RequestParam HashMap<String, String> params,ModelAndView mav) {
+	public ModelAndView parkList(@RequestParam HashMap<String, String> params,HttpServletRequest request,ModelAndView mav) {
 
+		
+		
 		String page = "1";
 		if (params.get("page") != null) { // 넘어오는 현재 p데이터가 존재 시 page =
 			page = params.get("page");
@@ -187,35 +190,28 @@ public class ParkController {
 
 	@RequestMapping(value = "/parkDtl")
 	public ModelAndView parkDtl(@RequestParam HashMap<String, String> params, HttpServletRequest request,
-			ModelAndView mav) {
+			ModelAndView mav) throws Throwable {
 
 		int page = 1;
 
 		if (params.get("page") != null) { // 넘어오는 현재 p데이터가 존재 시 page =
 			page = Integer.parseInt(params.get("page"));
 		}
-
-		// 글 개수
+		
+		//글 개수
+		
+		//int cnt = iParkService.getPDCnt(params);
+		//PagingBean pb = iPagingService.getPagingBean(page, cnt, 10,5);
+		
+		// 조회 시작 및 종료번호 할당
 		/*
-		 * int cnt = iParkService.getPDCnt(params); PagingBean pb=
-		 * iPagingService.getPagingBean(page, cnt, 10,5);
-		 * 
-		 * // 조회 시작 및 종료번호 할당
 		 * params.put("startCnt",Integer.toString(pb.getStartCount()));
 		 * params.put("endCnt",Integer.toString(pb.getEndCount()));
 		 * 
 		 * List<HashMap<String, String>> list = iParkService.getPDList(params);
 		 * System.out.println("list >>>>>>>> " + list);
-		 * 
-		 * 
-		 * HashMap<String, String> data = new HashMap<String, String>();
-		 * 
-		 * 
-		 * data.put("MBER_NUM","1"); data.put("PARK_NUM","1"); data.put("SRATING","5");
-		 * data.put("CON","내용");
 		 */
-		 
-		 
+		
 		 
 		 //list.add(data);
 
@@ -233,6 +229,23 @@ public class ParkController {
 		return mav;
 	}
 
+	
+	/*
+	 * @RequestMapping(value="/parkadd") public ModelAndView testOadd(
+	 * 
+	 * @RequestParam HashMap<String, String> params, ModelAndView mav) throws
+	 * Throwable {
+	 * 
+	 * System.out.println("****************************************"+params);
+	 * 
+	 * //int cnt = iParkService.addP(params);
+	 * 
+	 * if(cnt > 0) { //추가 성공했을 경우 mav.setViewName("redirect:parkDtl"); //목록으로 이동
+	 * }else { mav.addObject("msg","작성에 실패하였습니다.");
+	 * mav.setViewName("testO/failedAction"); //저장에 실패하면 이 페이지로 이동 } return mav; }
+	 */
+	
+	
 	/*
 	 * @RequestMapping(value ="/testO") public ModelAndView testO(@RequestParam
 	 * HashMap<String, String> params, ModelAndView mav) throws Throwable{
@@ -358,6 +371,86 @@ public class ParkController {
 		return mav;
 	}
 
+	
+	
+	
+	/*
+	 * @RequestMapping(value = "/apiParkLot", method = RequestMethod.GET, produces =
+	 * "text/json;charset=UTF-8")
+	 * 
+	 * @ResponseBody public String callParkLotData(@RequestParam HashMap<String,
+	 * String> params) throws IOException {
+	 * 
+	 * ObjectMapper mapper = new ObjectMapper(); // jackson 객체 Map<String, Object>
+	 * modelMap = new HashMap<String, Object>(); // 데이터를 담을 map
+	 * 
+	 * int page = Integer.parseInt(params.get("page"));
+	 * 
+	 * int cnt = 982; // 총 게시글 개수
+	 * 
+	 * // int viewCnt = 15; // 페이지당 게시글 개수
+	 * 
+	 * PagingBean pb = iPagingService.getPagingBean(page, cnt, 15, 5);
+	 * 
+	 * // 데이터 시작, 종료 번호 추가 params.put("startCnt",
+	 * Integer.toString(pb.getStartCount())); params.put("endCnt",
+	 * Integer.toString(pb.getEndCount()));
+	 * 
+	 * // StringBuffer result = new StringBuffer(); // String urlStr =
+	 * "http://openAPI.seoul.go.kr:8088/58446e7a71616b643239487a427157/json/SearchParkInfoService/1/132?";
+	 * 
+	 * String urlStr =
+	 * "http://http://openapi.seoul.go.kr:8088/sample/json/GetParkInfo/"; urlStr +=
+	 * params.get("startCnt") + "/" + params.get("endCnt");
+	 * 
+	 * String vStringLine = "";
+	 * 
+	 * // modelMap.put("urlStr", urlStr); modelMap.put("pb", pb);
+	 * modelMap.put("page", page); try {
+	 * 
+	 * StringBuilder vStringBuilder = new StringBuilder();
+	 * 
+	 * URL vURL = new URL(urlStr);
+	 * 
+	 * HttpURLConnection vHttpURLConnection = (HttpURLConnection)
+	 * vURL.openConnection(); vHttpURLConnection.setRequestMethod("GET");
+	 * vHttpURLConnection.setDoOutput(true);
+	 * 
+	 * if (vHttpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+	 * BufferedReader vBufferedReader = new BufferedReader( new
+	 * InputStreamReader(vHttpURLConnection.getInputStream(), "utf-8"));
+	 * 
+	 * while ((vStringLine = vBufferedReader.readLine()) != null) {
+	 * vStringBuilder.append(vStringLine).append("\n"); }
+	 * 
+	 * vBufferedReader.close();
+	 * 
+	 * System.out.println("요청성공"); // System.out.println(">>>" +
+	 * vHttpURLConnection.getResponseCode()); // System.out.println(">>>" +
+	 * vHttpURLConnection.getResponseMessage()); // System.out.println(">>>" +
+	 * vStringBuilder.toString()); vStringLine = vStringBuilder.toString();
+	 * modelMap.put("resData", vStringLine);
+	 * 
+	 * } else { System.out.println("요청실패"); // System.out.println(">>>" +
+	 * vHttpURLConnection.getResponseCode()); // System.out.println(">>>" +
+	 * vHttpURLConnection.getResponseMessage()); // System.out.println(">>>" +
+	 * vStringBuilder.toString()); vStringLine = vStringBuilder.toString(); }
+	 * 
+	 * } catch (MalformedURLException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); }
+	 * 
+	 * // 데이터를 문자열화 return mapper.writeValueAsString(modelMap); }
+	 */
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/*
 	 * @RequestMapping value : 주소 method : 전송방식 produces : 돌려주는 형식
 	 */

@@ -264,7 +264,8 @@ footer > .foot > nav > a{
 .info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
 .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 .desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
-.info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
+.info .img {position: absolute;top: 6px;left: 5px;width: 73p
+x;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
 .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
 .info .link {color: #5085BB;}
 
@@ -301,13 +302,6 @@ $(document).ready(function(){
 
 	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 	
-	
-	// 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
-	function closeOverlay() {
-	    overlay.setMap(null);     
-	}
-	
-	
 	// 마커 만들기
 	 function makeMakers(list) {
 		console.log("makeMakers###########");
@@ -322,7 +316,7 @@ $(document).ready(function(){
 		        title : data.P_PARK // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 		    });
 			
-			var iwPosition = new kakao.maps.LatLng(data.LATITUDE, data.LONGITUDE); //인포윈도우 표시 위치입니다
+// 			var iwPosition = new kakao.maps.LatLng(data.LATITUDE, data.LONGITUDE); //인포윈도우 표시 위치입니다
 			var iwContent = '<div class="wrap">' + 
             '    <div class="info">' + 
             '        <div class="title">' + 
@@ -343,7 +337,8 @@ $(document).ready(function(){
 				var overlay = new kakao.maps.CustomOverlay({
 				    content: iwContent,
 				    map: map,
-				    position: iwPosition      
+// 				    position: iwPosition      
+				    position: marker.getPosition()  
 				});
 				
 				// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다

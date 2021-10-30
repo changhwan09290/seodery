@@ -534,32 +534,19 @@ $(document).ready(function(){
 	//	reloadList();
 	//}); 
 	
-	
-	/* 지도 */
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-	mapOption = { 
-	    center: new kakao.maps.LatLng(37.5501402, 126.9903773), // 지도의 중심좌표
-	    level: 7 // 지도의 확대 레벨
-	}; 
-
-	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-	
-	// 마커 만들기
-	 function makeMakers(list) {
-		
-		var positions = [];
-		
-		for( var i=0; i<list.length; i++) {
-		    var data = list[i];
-			
-			var marker = new kakao.maps.Marker({
-		        map: map, // 마커를 표시할 지도
-		        position: new kakao.maps.LatLng(data.LATITUDE, data.LONGITUDE), // 마커를 표시할 위치
-		        title : data.P_PARK // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-		    });
-		}
-	 } 
-	
+	//addBtn
+	$(".write_area").on("click","#addBtn",function(){
+		 if(checkVal("#con")) {
+				alert("내용을 입력해 주세요.");
+				$(".write_con").focus();
+			} else {
+				var mo = $(this).parent().attr("mo");
+				
+				$("#mo").val(mo);
+				$("#actionForm").attr("action", "testOadd");
+				$("#actionForm").submit();
+		};
+	});
 	
 	
 	 /* 별점 구현 */
@@ -891,14 +878,14 @@ $(document).ready(function(){
 							<c:forEach var="data" items="${list}">
 							<div class="ob_data">
 								<div class="user_info">
-									<div class="user_name" name="mo">${data.M_NM}</div>
+									<div class="user_name" name="mo">${data.MBER_NUM}</div>
 								</div>
 								<div class="con_info">
 									<div class="con" name="con">${data.CON}</div>
 								</div>
-								<div class="btn_wrap" no="${data.O_NO}" mo="${sMNo}" name="no">
+								<div class="btn_wrap" no="${data.MBER_NUM}" mo="${sMNo}" name="no">
 								<!-- 로그인한 유저만 사용할 수있게 -->
-								<c:if test="${data.M_NO eq sMNo}">
+								<c:if test="${data.MBER_NUM eq sMNo}">
 									<input type="button" value="수정" class="action_btn2" id="updateBtn"/>
 									<input type="button" value="삭제" class="action_btn2" id="deleteBtn"/>
 								</c:if>
