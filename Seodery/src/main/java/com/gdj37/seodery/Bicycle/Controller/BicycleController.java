@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -203,7 +205,7 @@ public class BicycleController {
 			mav.addObject("data", data);
 			mav.setViewName("bicycle/ASUpdate");
 		} else {
-			mav.setViewName("redirect:testABList");
+			mav.setViewName("redirect:AfterServiceList");
 		}
 		return mav;
 	}
@@ -256,5 +258,16 @@ public class BicycleController {
 		modelMap.put("result", result);
 
 		return mapper.writeValueAsString(modelMap);
+	}
+	
+	
+	
+	@RequestMapping(value = "/Logout")
+	public ModelAndView Logout (HttpSession session, ModelAndView mav) {
+		session.invalidate(); //session 정보 초기화
+		
+		mav.setViewName("redirect:Login");
+		
+		return mav;
 	}
 }
