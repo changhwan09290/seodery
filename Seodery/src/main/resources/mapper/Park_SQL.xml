@@ -3,18 +3,18 @@
 <mapper namespace="park">
 
 	<!-- 댓글목록 조회 -->
-	<!-- <select id="getPDList" parameterType="hashmap" resultType="hashmap">
+ 	<select id="getPDList" parameterType="hashmap" resultType="hashmap">
 		select 
-		    comm_num, mber_num, park_num, srating, con, wrdate, delc 
+		    PC_SEQ.nextval, MBER_NUM, park_num, SRATING, CON
 		FROM PC
 		WHERE PARK_NUM = #{PARK_NUM}
-	</select> -->
+	</select> 
 
 	<!-- 댓글 목록 총 건수조회 -->
-	<!-- <select id="getPDCnt" parameterType="hashmap" resultType="Integer">
+	 <select id="getPDCnt" parameterType="hashmap" resultType="Integer">
 		select count(*) as cnt
 		from PC
 		WHERE PARK_NUM = #{PARK_NUM}
-	</select> -->
+	</select> 
 
 </mapper>

@@ -200,30 +200,37 @@ public class ParkController {
 		
 		//글 개수
 		
-		//int cnt = iParkService.getPDCnt(params);
-		//PagingBean pb = iPagingService.getPagingBean(page, cnt, 10,5);
+		int cnt = iParkService.getPDCnt(params);
+		PagingBean pb = iPagingService.getPagingBean(page, cnt, 10,5);
 		
 		// 조회 시작 및 종료번호 할당
-		/*
-		 * params.put("startCnt",Integer.toString(pb.getStartCount()));
-		 * params.put("endCnt",Integer.toString(pb.getEndCount()));
-		 * 
-		 * List<HashMap<String, String>> list = iParkService.getPDList(params);
-		 * System.out.println("list >>>>>>>> " + list);
-		 */
 		
-		 
-		 //list.add(data);
-
+		params.put("startCnt",Integer.toString(pb.getStartCount()));
+		params.put("endCnt",Integer.toString(pb.getEndCount()));
+		
+		List<HashMap<String, String>> list = iParkService.getPDList(params);
+		System.out.println("list >>>>>>>> " + list);
+		
+		HashMap<String, String> data = new HashMap<String, String>();
+		
 		// 상세보기 목록 번호 받아오기
 		String no = request.getParameter("no");
+		
+		data.put("PARK_NUM","no"); data.put("MBER_NUM","1"); data.put("CON","test");
+		data.put("COMM_NUM","1"); data.put("SRATING", "3");
+		
+		
+		mav.addObject("page",page); 
+		mav.addObject("pb",pb);
+		mav.addObject("list",list);
+		
+		 
+		list.add(data);
+
+		
 		System.out.println("목록번호는???" + no);
 		mav.addObject("no", no);
 		mav.addObject("page", page);
-
-		// 댓글
-		// mav.addObject("pb",pb);
-		// mav.addObject("list",list);
 
 		mav.setViewName("park/parkDtl");
 		return mav;

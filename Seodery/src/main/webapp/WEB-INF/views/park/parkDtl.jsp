@@ -540,9 +540,11 @@ $(document).ready(function(){
 				alert("내용을 입력해 주세요.");
 				$(".write_con").focus();
 			} else {
-				var mo = $(this).parent().attr("mo");
+				var no = $(this).parent().attr("no");
 				
-				$("#mo").val(mo);
+				console.log("no>>>>"+ no);
+				
+				$("#no").val(no);
 				$("#actionForm").attr("action", "testOadd");
 				$("#actionForm").submit();
 		};
@@ -612,6 +614,14 @@ $(document).ready(function(){
 	
  });
 
+
+function checkVal(sel) {
+	if($.trim($(sel).val()) == "") {
+		return true;
+	} else {
+		return false;
+	}
+}
 
 
 //데이터 취득
@@ -857,7 +867,7 @@ $(document).ready(function(){
 								<div class="write_con_wrap">
 									<textarea class="write_con" id="con" name="con">내용작성</textarea>
 								</div>
-								<div class="btn_wrap" no="" mo="" name="mo">
+								<div class="btn_wrap" no="${no}" mo="" name="mo">
 									<input type="button" value="저장" class="action_btn" id="addBtn"/>
 									<input type="button" value="수정" class="action_btn2" id="updBtn"/>
 									<input type="button" value="취소" class="action_btn2" id="cancelBtn"/>
@@ -883,7 +893,7 @@ $(document).ready(function(){
 								<div class="con_info">
 									<div class="con" name="con">${data.CON}</div>
 								</div>
-								<div class="btn_wrap" no="${data.MBER_NUM}" mo="${sMNo}" name="no">
+								<div class="btn_wrap" no="${data.P_IDX}" mo="${sMNo}" name="no">
 								<!-- 로그인한 유저만 사용할 수있게 -->
 								<c:if test="${data.MBER_NUM eq sMNo}">
 									<input type="button" value="수정" class="action_btn2" id="updateBtn"/>
