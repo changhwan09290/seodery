@@ -38,9 +38,23 @@
            /*  border-bottom: 2px solid black; */
     }
        
+ /* 로그아웃 버튼 */
+#LoginBtn {
+	border : none;
+	border-radius: 5px;
+	background-color:rgb(3, 104, 115);
+	font-size: 1.1rem;
+	color : white;
+	font-family: '고딕';
+	cursor: pointer;
+	padding: 4px 17px 4px 17px;
+	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
+	/* position: fixed;
+	right: 90px;
+	top: 100px; */
+}
        
-       
- /* 로그인 버튼 */
+ /* 로그아웃 버튼 */
 #LogoutBtn {
 	border : none;
 	border-radius: 5px;
@@ -382,10 +396,11 @@ function drawPaging(pb) {
 								<input type="button" value="로그인" id="LoginBtn" />
 							</c:when>
 							<c:otherwise>
-								${sMNm}님 환영합니다.<input type="button" value="로그아웃" id="LogoutBtn" />
+								${sMNm}님 환영합니다.
+								<div class="pencil"></div>
+								<input type="button" value="로그아웃" id="LogoutBtn" />
 							</c:otherwise>
-						</c:choose>
-						<div class="pencil"></div>
+						</c:choose>						
 						<!-- <input type="button" value="로그아웃" id="LogoutBtn"/> -->
 					</div>
 				</form>

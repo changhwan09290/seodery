@@ -260,7 +260,17 @@ public class BicycleController {
 		return mapper.writeValueAsString(modelMap);
 	}
 	
-	
+	/*
+	 * @RequestMapping(value = {"/login"}) public ModelAndView
+	 * login(HttpServletRequest req, HttpSession session, ModelAndView mav) {
+	 * System.out.println(req.getServletPath());
+	 * 
+	 * if(session.getAttribute("sMNo") != null) { //로그인 상태
+	 * //mav.setViewName("redirect:testList"); mav.setViewName("redirect:testO"); }
+	 * else { //로그인 안된 상태 mav.setViewName("M1/Login"); }
+	 * 
+	 * return mav; }
+	 */
 	
 	@RequestMapping(value = "/Logout")
 	public ModelAndView Logout (HttpSession session, ModelAndView mav) {
