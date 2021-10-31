@@ -44,7 +44,23 @@
        
        
  /* 로그인 버튼 */
-#LogoutBtn {
+#LoginBtn {
+	border : none;
+	border-radius: 5px;
+	background-color:rgb(3, 104, 115);
+	font-size: 1.1rem;
+	color : white;
+	font-family: '고딕';
+	cursor: pointer;
+	padding: 4px 17px 4px 17px;
+	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
+	/* position: fixed;
+	right: 90px;
+	top: 100px; */
+}
+
+ /* 로그아웃 버튼 */
+#LoginBtn {
 	border : none;
 	border-radius: 5px;
 	background-color:rgb(3, 104, 115);
@@ -194,19 +210,20 @@
 #nav{
 	margin-left: 5.6%;
    	margin-right: 5.3%;
+
 }
 /* 공지사항,공원 best5 목록 글씨 */
-/* main .li{
+ main .li{
 	font-size: 1.4rem;
 	font-family:'twayair';
-} */
+}
 
 /* 현재페이지 나타내기 */
 main > .Cpage {
 	width: 100%;
-	padding-top: 3%;
-	padding-left: 8%;
-	font-family: '고딕';
+	margin-top: 5.5%;
+	margin-left: 3.5%;
+	font-family: '고딕'; 
 	font-weight: 900;
 }
 
@@ -248,6 +265,8 @@ footer > .foot > nav > a{
 	#map {
 		margin-left: 15%;
 		margin-bottom: 3%;
+		/* z-index: -1; */
+		z-index: auto;
 	}
 	
  	div .customOverlay {
@@ -317,7 +336,7 @@ $(document).ready(function() {
 
     for (var i=0; i< positions.length; i++) {
     	
-    	bikeLeft = positions[i].title;
+    	let bikeLeft = positions[i].title;
     	if (bikeLeft <= 5) { 
     		var content = '<div class="customOverlay" style="background-color: red;">' + positions[i].title + '</div>';
 		    var redMarker = new kakao.maps.Marker({
@@ -327,7 +346,7 @@ $(document).ready(function() {
 		       	image: redMarkerImage, // 마커이미지 설정 
 		        clickable: true
 			});
-    	} else if (5 < bikeLeft <= 20) {
+    	} else if (5 < bikeLeft && bikeLeft <= 20) { 
     		var content = '<div class="customOverlay" style="background-color: #E6EC1C;">' + positions[i].title + '</div>';
     		var yellowMarker = new kakao.maps.Marker({
 		    	map: map,
@@ -337,7 +356,8 @@ $(document).ready(function() {
 		        clickable: true
 			});
     	} else {
-    		var content = '<div class="customOverlay" style="background-color: green;">' + positions[i].title + '</div>';
+    		/* console.dir('else'); */
+    		var content = '<div class="customOverlay" style="background-color: #49D04C;">' + positions[i].title + '</div>';
     		var greenMarker = new kakao.maps.Marker({
 		    	map: map,
 		    	position: positions[i].latlng,
@@ -487,6 +507,7 @@ $(document).ready(function() {
 				</nav>	
 			</div>
 	</header>
+	
 	<main>
 	<div class="Cpage"><h4>자전거 > 실시간 대여소</h4></div>
 	
