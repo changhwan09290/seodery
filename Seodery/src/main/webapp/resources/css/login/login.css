@@ -1,0 +1,437 @@
+
+/* 웹 폰트 적용 */
+@font-face {
+   font-family: 'Cafe24Ssurround';
+   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+} 
+  
+  @font-face {
+   font-family: 'twayair';
+   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+} 
+   
+       #wrapper { /*85%로 너비값*/
+           width: 85%;
+           margin: 0 auto;
+       }
+      header { /*헤더 %로 단위변경*/
+           width: 100%;
+           height: 155px;
+          /*  background-image :url("resources/images/login/logo.png");  */
+           background-size: 320px 164px;
+           background-repeat : no-repeat;
+           background-position : center;
+          /*  border-bottom: 2px solid black;  */
+   }
+.logo {
+	width: 100%;
+    /* margin-right: 400px; */
+    display: flex;
+    justify-content: center;
+}
+.logo img {
+	display: flex;
+    width: 325px;
+    align-items: center;
+}      
+      
+       footer{ /*푸터 %로 단위변경*/
+           clear: both; 
+           width: 95%;
+           height: 120px;
+           text-align: center;
+       }
+/* 로그인 버튼 */
+#LoginBtn,#LogoutBtn {
+	z-index: 9999;
+   border : none;
+   border-radius: 5px;
+   background-color:rgb(3, 104, 115);
+   font-size: 1.1rem;
+   color : white;
+   font-family: '고딕';
+   cursor: pointer;
+   padding: 4px 17px 4px 17px;
+   box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
+   /* position: fixed;
+   right: 90px;
+   top: 100px; */
+}
+
+/* 로그인버튼, 유저 로그인정보 div */
+.login{
+   white-space : nowrap;
+    position : absolute;
+   right: 8%;
+   top: 93px;
+}
+
+/* 네비게이션바 전체 */
+.navi{
+   list-style-type: none;
+      margin-top : -55px;
+   padding: 0px; 
+   display: flex;		/* 가로정렬 */
+    background: white;   
+  /*  background : rgb(150, 210, 90);   */
+   width: 100%;
+      overflow: auto;
+}
+
+/* 메뉴 */
+.navi > li{
+   line-height: 30px;   	/* 줄간격 */
+   /*text-align: center;		 텍스트 정렬 */ 	
+   padding: 13px;
+   color: black;
+   text-decoration: none;
+   width: 25%; 
+   font-size: 1.4rem;
+}
+/* 네비바 세로선 */
+.navi > li.sub{
+   text-align: center;	
+   border-top: 2px solid silver;
+   border-bottom: 2px solid rgb(150, 210, 90); 
+}		/* 텍스트 정렬 */ 	
+
+
+/* 관리자 메뉴 없애기 */
+.navi > #manager{
+   display: none;	
+}
+
+/* 메뉴바에 커서 올렸을때 호버이벤트 */
+.navi > .Park:hover{
+   background: rgb(150, 210, 90);
+   color: white;
+}
+
+.navi > .WalkT:hover{
+   background: rgb(150, 210, 90);
+   color: white;
+}
+
+.navi > .Bike:hover{
+   background: rgb(150, 210, 90);
+   color: white;
+}
+.navi > .FDust:hover{
+   background: rgb(150, 210, 90);
+   color: white;
+}
+
+.navi > .Memory:hover{
+   background: rgb(150, 210, 90);
+   color: white;
+}
+.navi > .Notice:hover{
+   background: rgb(150, 210, 90);
+   color: white;
+}
+
+
+
+/* 하위메뉴 글씨 */
+.gnb_sub > li> a{
+   color : black;
+   font-size: 0.9em;
+}
+
+/* 네비메뉴에 있는 a태그 */
+.navi a{
+   text-decoration:none; 
+}
+.sival {
+	margin-top: 80px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+/* dv box */
+/* .dvbox{
+   border-top: 2px solid silver;
+   border-bottom: 2px solid rgb(150, 210, 90); 
+} */
+/* 메뉴 모양 표시 */
+.dv {
+ width: 35px;
+ height: 5px;
+ background-color: rgb(121,55,55);
+ margin: 6px 0;
+}
+
+/* 메뉴 글씨체 */
+.gnb > .navi > .sub{
+   font-family: 'Cafe24Ssurround';
+}
+
+/* gnb(네비게이션바)의 하위메뉴 */
+.gnb_sub {
+    display: none; 
+   list-style-type: none;
+   padding-left: 0px;
+}
+
+/* .navcon{
+   margin-top:193px;
+} */
+/* 네비게이션바 */
+#nav{
+   margin-left: 5.6%;
+      margin-right: 5.3%;
+}
+/* 공지사항,공원 best5 목록 글씨 */
+main .li{
+   font-size: 1.4rem;
+   font-family:'twayair';
+}
+
+/* 현재페이지 나타내기 */
+main > .Cpage {
+   /* border: 1px solid black; */
+   width: 100%;
+   margin-top: 5.5%;
+   margin-left: 1.5%;
+   font-family: '고딕';
+   font-weight: 900;
+   
+   
+}
+
+
+/* body 전체 */
+/* #wrap{
+   min-height: 100vh;
+    position: relative;
+   width: 86%;
+} */
+
+/* footer */
+footer { 
+   /* width: 85%;
+   height: 110px; */
+   /* position: fixed;				 */
+   /* bottom : 0px; */ 
+   /* position: relative;				
+   top:580px;
+   bottom : 0px; */
+   padding-top: 15px;
+   /* color: gray;
+   font-size: 0.8em;
+   text-align: center; */
+   margin: 0 auto;
+   
+}
+/* footer div */
+.foot{
+   border-top: 1px solid black;
+   
+}
+
+footer > .foot > nav > a{
+   text-decoration: none;
+   color: black;
+}
+
+
+
+
+/* 로그인 폼 */
+
+body {
+ background: #fff;
+ font-family: arial;
+}
+/* 로그인 h1 글씨  */
+.login-form h1 {
+ font-size: 36px;
+ text-align: center;
+ /* color: rgb(3, 104, 115); */
+ color: white;
+ margin-bottom: 30px;
+ font-weight: normal;
+}
+
+/* .login-form .social-icon {
+   width: 100%;
+   font-size: 20px;
+   padding-top: 20px;
+   color: red;
+   text-align: center;
+   float: left;
+} */
+
+/* 로그인 폼 */
+.login-form {
+   /* background: rgb(232,245,231); */
+  /*  background: rgb(195,255,241); */
+   /*  background: rgb(11,155,16);  */
+   /*  background: rgb(188,228,164); */
+ /*  background : rgb(150, 210, 150);   */
+  background : rgb(3, 104, 115);  
+    
+  /*  background: rgb(213,213,213);  */
+   width: 450px;
+   border-radius: 6px;
+   margin: 0 auto;
+   display: table;
+   padding: 15px 30px 30px;
+   box-sizing: border-box;
+}
+.form-group {
+ float: left;
+ width: 100%;
+ margin: 0 0 15px;
+ position: relative;
+}
+
+.login-form input {
+   width: 100%;
+   padding: 5px;
+   height: 56px;
+   border-radius: 74px;
+   border: 1px solid #ccc;
+   box-sizing: border-box;
+   font-size: 15px;
+   padding-left: 75px;
+   background: white;
+}
+
+/* input[type="text"]{
+    background: white;
+} */
+
+/* 로그인 input창 메뉴바에 안가리게 z-index */
+.login-form .form-group { 
+   
+}
+
+
+
+
+/* id 아이콘 */
+.login-form .form-group .input-icon {
+   font-size: 15px;
+   display: -webkit-box;
+   display: -webkit-flex;
+   display: -moz-box;
+   display: -ms-flexbox;
+   display: flex;
+   align-items: center;
+   position: absolute;
+   border-radius: 25px;
+   bottom: 0;
+   height: 100%;
+   width : 50px; 
+   padding-left: 35px;
+   color: #666;
+   background-image: url("../images/user (1).png");
+   background-repeat: no-repeat;
+   background-size: contain;
+}
+/* 비밀번호 아이콘 */
+.login-form .form-group .input-icon2 {
+   font-size: 15px;
+   display: -webkit-box;
+   display: -webkit-flex;
+   display: -moz-box;
+   display: -ms-flexbox;
+   display: flex;
+   align-items: center;
+   position: absolute;
+   border-radius: 25px;
+   bottom: 0;
+   height: 100%;
+   width : 50px; 
+   padding-left: 35px;
+   color: #666;
+   background-image: url("../images/lock.png");
+   background-repeat: no-repeat;
+   background-size: contain;
+}
+
+
+.login-form .login-btn {
+ background: rgb(3, 104, 115);
+ padding: 11px 50px;
+ border-color: #45aba6;
+ color: #fff;
+ text-align: center;
+ margin: 0 auto;
+ font-size: 20px;
+ border: 1px solid #45aba6;
+ border-radius: 44px;
+ width: 100%;
+ height: 56px;
+ cursor: pointer;
+}
+.login-form .reset-psw {
+ float: left;
+ width: 100%;
+ text-decoration: none;
+  color: white;
+ font-size: 14px;
+ text-align: center;
+ margin-top: 11px;
+}
+
+/* .login-form .social-icon button {
+   font-size: 20px;
+   color: white;
+   height: 50px;
+   width: 50px;
+   background: #45aba6;
+   border-radius: 60%;
+   margin: 0px 10px;
+   border: none;
+   cursor: pointer;
+} */
+/* 로그인폼 안에 로그인 버튼 */
+.login-form .login-btn{
+   background: rgb(205,209,233);
+   color: black;
+   font-weight: 900;
+}
+
+.login-form button:hover{
+ opacity: 0.9;
+}
+.login-form .seperator {
+ float: left;
+ width: 100%;
+ border-top: 1px solid #ccc;
+ text-align: center;
+ margin: 50px 0 0;
+}
+.login-form .seperator b {
+ width: 40px;
+ height: 40px;
+ font-size: 16px;
+ text-align: center;
+ line-height: 40px;
+ background: #fff;
+ display: inline-block;
+ border: 1px solid #e0e0e0;
+ border-radius: 50%;
+ position: relative;
+ top: -22px;
+ z-index: 1;
+}
+.login-form p {
+ float: left;
+ width: 100%;
+ text-align: center;
+ font-size: 16px;
+ margin: 0 0 10px;
+} 
+
+/* @media screen and (max-width:767px) {
+.login-form {
+   width: 90%;
+   padding: 15px 15px 30px;
+} */

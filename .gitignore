@@ -33,3 +33,6 @@ local.properties
 
 ### Project file ###
 CommonProperties.*
+
+#### javascript ####
+*.js

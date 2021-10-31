@@ -212,8 +212,39 @@ main > .Cpage {
 	font-weight: 900;
 }
 
+/* 상세보기 버튼 */
+#DtlBtn {
+	/* border : none; */
+	border-radius: 5px;
+	background-color:rgb(3, 104, 115);
+	font-size: 1.1rem;
+	color : white;
+	font-family: '고딕';
+	cursor: pointer;
+	padding: 4px 17px 4px 17px;
+	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
+}
+
+
+
+/* 표 */
+#table {
+	/* width: 85%;
+	height : 50%; */
+	border-collapse: collapse;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: '고딕';
+	font-size: 1.1rem;
+}
+
+
 main > table > tr,td {
-	border: 1px solid black;
+	border-top: 1px solid black;
+}
+
+th {
+	padding: 5px;
 }
 
 
@@ -228,7 +259,7 @@ main > table > tr,td {
 footer { 
 	width: 85%;
 	height: 110px;
-	position: fixed;				
+	position: relative;				
 	bottom : 0px; 
 	/* position: relative;				
 	top:580px;
@@ -250,6 +281,12 @@ footer > .foot > nav > a{
 	text-decoration: none;
 	color: black;
 }
+
+.paging_wrap{
+	margin-top : 5%;;
+	margin-left: 40%;
+}
+
 </style>
 <script type="text/javascript"
 		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
@@ -259,7 +296,6 @@ footer > .foot > nav > a{
 		$("#searchGbn").val("${param.searchGbn}");
 	} */
 	reloadList();
-	
 	 //글작성
 	/* $("#addBtn").on("click",function(){
 		$("#searchTxt").val($("#oldTxt").val());	//취소했을시 검색어유지
@@ -297,23 +333,33 @@ footer > .foot > nav > a{
 	
 	//페이징
 	 $(".paging_wrap").on("click","span",function(){
-		$("#page").val($(this).attr("page"));
-		$("#searchTxt").val($("#oldTxt").val());
+		 $("#page").val($(this).attr("page"));
+		 /* $("#searchTxt").val($("#oldTxt").val());  */
 		
 		reloadList();
 	}); 
 	
-	//tr을 클릭했을 때 이벤트 
-	/* $("tbody").on("click", "tr", function(){
-		$("#no").val($(this).attr("no"));
+	//상세보기 버튼을 클릭했을 때 이벤트 
+	 $("tbody").on("click", "input", function(){
+		console.log("no >>" + $(this).parents('tr').find('td[name="pIdx"]').text());
 		
-		$("#actionForm").attr("action","testAB");
+		//$("#no").attr($(this).parents('tr').find('td[name="pIdx"]').text()); 
+		
+		$("#no").val($(this).parents('tr').find('td[name="pIdx"]').text());
+		
+		$("#actionForm").attr("action","parkDtl");
 		$("#actionForm").submit();
-	});  */
+	});  
+	
+	
 	
 });
 
-
+/*  var getIndex = function() {
+	  var select = document.querySelector('.select');
+	  var index = select.rowIndex;
+	  alert(index);
+	}; */
 
 //데이터 취득
  function reloadList(){
@@ -324,13 +370,14 @@ footer > .foot > nav > a{
  			,"START_INDEX" : 1
  			,"END_INDEX" : 10
  	}; */
-	
+	var params = $("#actionForm").serialize();
  	$.ajax({	//jquery의 ajax함수 호출  
 //  		url: "http://data.seoul.go.kr/dataList/OA-394/S/1/datasetView.do?"
 // 					+"KEY=58446e7a71616b643239487a427157&TYPE=json&SERVICE=SearchParkInfoService&START_INDEX=1&END_INDEX=10", //접속 주소
 		url : "apitest", 
 		type: "get",	//전송 방식
  		dataType:"json",	//받아올 데이터 형태 
+ 		data: params,
 //  		data : sendData,	//보낼 데이터(문자열 형태)
  		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
  			console.log(res);
@@ -349,15 +396,15 @@ footer > .foot > nav > a{
 //목록 그리기 
   function makeTable(jsonData) {
       var rows = jsonData.SearchParkInfoService.row;
-      
       $data = "";
       
       for (var idx in rows) {
-         $data += '<tr><td>' + rows[idx].P_IDX + '</td><td>' + rows[idx].P_PARK + '</td><td>'+ rows[idx].P_ADDR 
-         		+ '</td><td>'+ rows[idx].P_ADMINTEL + '</td><td>' + <input type="button" value="상세보기"> + '</td></tr>';
+         $data += '<tr><td name="pIdx">'+ rows[idx].P_IDX + '</td><td>' + rows[idx].P_PARK + '</td><td>'+ rows[idx].P_ADDR 
+         		+ '</td><td>'+ rows[idx].P_ADMINTEL + '</td><td>' + '<input type="button" value="상세보기" id="DtlBtn">' + '</td></tr>';
       }
       
-      $('#table').append($data);
+      $("#table").html($data);
+     
    }
  
  
@@ -403,7 +450,7 @@ footer > .foot > nav > a{
  <div id="wrapper">
         <header id="header">
 			<div id="logo">
-				<form action="#" method="post" >
+				<form action="#" method="post" id="Loginform" >
 					<div class="logout">
 						{000}님 환영합니다.
 						<div class="pencil"></div>
@@ -424,8 +471,8 @@ footer > .foot > nav > a{
 							</div>
 							<li class="sub Park">공원</a>	
 								<ul class="gnb_sub">
-									<li><a href="#">공원 찾기</a></li>
-									<li><a href="#">길 찾기</a></li>
+									<li><a href="http://localhost/Seodery/parkList">공원 찾기</a></li>
+									<li><a href="http://localhost/Seodery/parkMap">길 찾기</a></li>
 								</ul>
 							</li>
 							<li class="sub WalkT">산책로</a>
@@ -476,15 +523,17 @@ footer > .foot > nav > a{
 	<main>
       	<div class="Cpage"><h4>공원 > 공원찾기</h4></div>
       	<div>
-	<form action="#" id="actionForm" method="post">
+	<form action="#" id="actionForm" method="get">
 		<select name="searchGbn" id="searchGbn">
-			<option value="0">제목</option>
-			<option value="1">작성자</option>
+			<option value="0">지역</option>
 		</select>
 		<input type="text" name="searchTxt" id="searchTxt" value="${param.searchTxt}"/>
 		<input type="hidden" name="oldTxt" value="${param.searchTxt}"/>
 		<input type="hidden" name="page" id="page" value="${page}"/>
 		<input type="hidden" name="no" id="no"/>
+		<input type="hidden" name="name" id="name"/>
+		<input type="hidden" name="addr" id="addr"/>
+		<input type="hidden" name="phon" id="phon"/>
 		<input type="button" value="검색" id="searchBtn"/>
 		<!-- 로그인한 상태라면 작성버튼 -->
 		<%-- <c:if test="${!empty sMNo}">
@@ -493,13 +542,13 @@ footer > .foot > nav > a{
 	</form>
 </div>
 <div align="center">
-            <table style="border:3px solid; text-align:center;">
+            <table style="text-align:center;">
             	<thead>
 			<tr>
-				<th>P_IDX(번호)</th>
-				<th>P_PARK(공원이름)</th>
-				<th>P_ADDR(공원 주소)</th>
-				<th>P_ADMINTEL(전화번호)</th>
+				<th>번호</th>
+				<th>공원이름</th>
+				<th>공원 주소</th>
+				<th>전화번호</th>
 				<th>상세보기</th>
 			</tr>
 		</thead>
@@ -509,21 +558,6 @@ footer > .foot > nav > a{
                </tbody>   
             </table>
 </div>
-
-<!-- <div>
-	<table>
-		<thead>
-			<tr>
-				<th>P_IDX(번호)</th>
-				<th>P_PARK(공원이름)</th>
-				<th>P_ADDR(공원 주소)</th>
-				<th>P_ADMINTEL(전화번호)</th>
-			</tr>
-		</thead>
-		<tbody>
-		</tbody>
-	</table>
-</div> -->
 
 <div class="paging_wrap"></div>
     </main>

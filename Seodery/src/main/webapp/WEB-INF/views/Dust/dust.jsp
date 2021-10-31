@@ -30,7 +30,7 @@
        header { /*헤더 %로 단위변경*/
             width: 100%;
             height: 155px;
-            background-image :url("/images/park/logo.png");
+            background-image :url("resources/images/park/logo.png");
             background-size: 320px 164px;
             background-repeat : no-repeat;
             background-position : center;
@@ -75,7 +75,7 @@
 .pencil{
 	width: 30px;
 	height: 30px;
-	background-image: url("../images/pencil.png");
+	background-image: url("resources/images/park/pencil.png");
 	background-repeat: no-repeat;
 	margin-right: 9px;
 	margin-left : 7px;
@@ -211,8 +211,10 @@ main > .Cpage {
 	margin-left: 1.5%;
 	font-family: '고딕';
 	font-weight: 900;
-	
-	
+}
+
+main > table > tr,td {
+	border: 1px solid black;
 }
 
 
@@ -250,41 +252,44 @@ footer > .foot > nav > a{
 	color: black;
 }
 
+.cont{
+  width:720px;
+}
+.container{
+  display:flex;
+  flex-wrap:wrap;
+  width:720px;
+  justify-content:flex-start;
+  text-align: center;
+  top: 45%;
+  left: 50%;
+  transform:translate(-50%, -30%); 
+  position: absolute;
+}
+.single-item{
+  width:200px;
+  height:200px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background-color:#f3f3f3;
+  margin: 20px;
+  border-radius: 10px;
+  color:#888;
+}
+/*지도 */
 	.map {
+		width:800px;
+		height:500px;
+	 	border : 1px solid;
 		top: 50%;
 		left: 50%;
 		transform:translate(-50%, -30%); 
 		position: absolute;
 		}
-
-	.controll_Dust {
-		top: 30%;
-		left: 35%;
-		transform:translate(-60%, -30%); 
-		position: absolute;
-		background-color:white;
-		
-	}
 	
-	#Btn_FDust {
-		border-top-left-radius: 5px;
-		border-bottom-left-radius: 5px;
-		margin-right: -4px;
-	}
-	#Btn_UFDust {
-		border-top-right-radius: 5px;
-		border-bottom-right-radius: 5px;
-		margin-right: -2px;
-	}
 	
-	#controll_Dust button {
-		border: 1px solid green;
-		background: white;
-		color: black;
-		padding: 5px;
-	}
-	
-
+	/*미세 등급 */
 	.dust-info {
         width:200px;
         height:200px;
@@ -293,9 +298,14 @@ footer > .foot > nav > a{
         top: 45%;
 		left: 25%;
 		transform:translate(-50%, -30%); 
-		position: absolute;
+		position: absolute;				
+		align-items:center;
+		justify-content:center;
+		border-radius: 10px;
+		background-color:#f3f3f3;
+
     	}
-    	
+    /*초미세 등급 */
     .udust-info {
         width:200px;
         height:200px;
@@ -305,29 +315,37 @@ footer > .foot > nav > a{
 		left: 25%;
 		transform:translate(-50%, -30%); 
 		position: absolute;
+		align-items:center;
+		justify-content:center;
+		border-radius: 10px;
+		background-color:#f3f3f3;
     	}   
-    	
+    /*좋음 */
     .good {	
 	 	background-color: rgb( 66, 167, 255);    
 	 	width:30%;
     	box-sizing: border-box;
 	}
+	/*보통 */
 	.normal {		
 	 	background-color: rgb( 66, 255,162);    
 	 	width:30%;
     	box-sizing: border-box;
 	}
+	/*나쁨 */
 	.bad {	
 	 	background-color: yellow;    
 	 	width:30%;
     	box-sizing: border-box;
 	}
+	/*매우나쁨 */
 	.worst {		
 	 	background-color: rgb( 250, 61,48);    
 	 	width:30%;
     	box-sizing: border-box;
 	 	
 	}    
+	/*점검중 */
     .sys {	
 
 	 	background-color: gray;    
@@ -335,197 +353,270 @@ footer > .foot > nav > a{
     	box-sizing: border-box;	 	
 	} 
 	
-	.timedust{
-	    width:100px;
-		height:20px;
-		border : 1px solid;
-		margin: 5px;
-		top: 30%;
-		left: 70%;
-		transform:translate(140%, -50%); 
-		position: absolute;
+		  /*지도 위 원 */   	
+	 .map_circle {
+   		display: inline-block;
+	    width: 25px;
+	    height: 25px;
+	    border-radius: 25px;
+	    line-height: 50px;
+	    text-align: center;
+	    opacity: 0.9;
+	    font-family: monospace;
 	     	}
-	     	
-	 .names-dust{
-		 top: 30%;	
-		 left: 75%;
-		 position: absolute;
-	     	}
-	     	
+	
+	.area {
+    position: absolute;
+    background: #fff;
+    border: 1px solid #888;
+    border-radius: 3px;
+    font-size: 12px;
+    top: -5px;
+    left: 15px;
+    padding:2px;
+}  
+
+.info {
+    font-size: 15px;
+    padding: 5px;
+}
+.info .title {
+    font-weight: bold;
+}   	
+
 </style>
+<script type="text/javascript"
+		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
 	
 	//지도 표시 div
 	$(document).ready(function() {
-		var container = document.getElementById('map');
-	
-		//지도 중심 좌표
-		var options = {
-			center: new kakao.maps.LatLng(37.565994, 126.977496),
-			level: 9
-		};
 		
-		//지도 생성
-		var map = new kakao.maps.Map(container, options);
-		var customOverlay = new kakao.maps.CustomOverlay({
-		});
-		
-		//행정구역 구분
-		$.getJSON("resources/json/map.geojson", function(geojson) {
-		 console.log(geojson);
-		    var data = geojson.features;
-		    var coordinates = [];    //좌표 저장할 배열
-		    var name = '';            //행정 구 이름
-		 
-		    $.each(data, function(index, val) {
-		 
-		        coordinates = val.geometry.coordinates[0];
-		        name = val.properties.SIG_KOR_NM;
-		        
-		        displayArea(coordinates, name);
-		 
-		    });
-		});
-		
-		// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
-		var zoomControl = new kakao.maps.ZoomControl();
-		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-		
-		var polygons=[];        //function 안 쪽에 지역변수로 넣으니깐 폴리곤 하나 생성할 때마다 배열이 비어서 클릭했을 때 전체를 못 없애줌.  그래서 전역변수로 만듦.
-	    
-		//행정구역 폴리곤
-		function displayArea(coordinates, name) {
-		    var path = [];            //폴리곤 그려줄 path
-		    var points = [];        //중심좌표 구하기 위한 지역구 좌표들
-		    
-		    $.each(coordinates[0], function(index, coordinate) {      // console.log(coordinates)를 확인해보면 보면 [0]번째에 배열이 주로 저장이 됨.  그래서 [0]번째 배열에서 꺼내줌.
-		        var point = new Object(); 
-		        point.x = coordinate[1];
-		        point.y = coordinate[0];
-		        points.push(point);
-		        path.push(new kakao.maps.LatLng(coordinate[1], coordinate[0]));            //new kakao.maps.LatLng가 없으면 인식을 못해서 path 배열에 추가
-		    })
-		    
-		    // 다각형을 생성합니다 
-		    var polygon = new kakao.maps.Polygon({
-		        map : map, // 다각형을 표시할 지도 객체
-		        path : path,
-		        strokeWeight : 2,
-		        strokeColor : '#004c80',
-		        strokeOpacity : 0.8,
-		        fillColor : '#fff',
-		        fillOpacity : 0.7
-		    });
-		    
-		    polygons.push(polygon);            //폴리곤 제거하기 위한 배열
-		
-		    //원 도형
-		    var circle = new kakao.maps.Circle({
-		        map: map,
-		        center: new kakao.maps.LatLng(37.565994, 126.977496),
-		        radius: 1000,	
-		        strokeOpacity: 0,
-		        fillColor : 'yellowgreen',
-		        fillOpacity: 0.1
-
-		    });
-		    
-		    // 다각형에 mouseover 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 변경합니다 
-		    // 지역명을 표시하는 커스텀오버레이를 지도위에 표시합니다
-		    kakao.maps.event.addListener(polygon, 'mouseover', function(mouseEvent) {
-		        polygon.setOptions({
-		            fillColor : '#09f'
-		        });
-		 
-		        customOverlay.setContent('<div class="area">' + name + '</div>');
-		 
-		        customOverlay.setPosition(mouseEvent.latLng);
-		        customOverlay.setMap(map);
-		    });
-		 
-		    // 다각형에 mousemove 이벤트를 등록하고 이벤트가 발생하면 커스텀 오버레이의 위치를 변경합니다 
-		    kakao.maps.event.addListener(polygon, 'mousemove', function(mouseEvent) {
-		 
-		        customOverlay.setPosition(mouseEvent.latLng);
-		    });
-		 
-		    // 다각형에 mouseout 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 원래색으로 변경합니다
-		    // 커스텀 오버레이를 지도에서 제거합니다 
-		    kakao.maps.event.addListener(polygon, 'mouseout', function() {
-		        polygon.setOptions({
-		            fillColor : '#fff'
-		        });
-		        customOverlay.setMap(null);
-		    });
-		 
-		    // 다각형에 click 이벤트를 등록하고 이벤트가 발생하면 해당 지역 확대을 확대합니다.
-		    kakao.maps.event.addListener(polygon, 'click', function() {
-		        
-		        // 현재 지도 레벨에서 2레벨 확대한 레벨
-		        var level = map.getLevel()-1;
-		        
-		        // 지도를 클릭된 폴리곤의 중앙 위치를 기준으로 확대합니다
-		        map.setLevel(level, {anchor: centroid(points), animate: {
-		            duration: 350            //확대 애니메이션 시간
-		        }});            
-		 
-		        //deletePolygon(polygons);                    //폴리곤 제거      
-		    });
-		}
-		//centroid 알고리즘 (폴리곤 중심좌표 구하기 위함)
-		function centroid (points) {
-			 var i, j, len, p1, p2, f, area, x, y;
-
-			area = x = y = 0;
-
-			for (i = 0, len = points.length, j = len - 1; i < len; j = i++) {
-					p1 = points[i];
-					p2 = points[j];
-
-					f = p1.y * p2.x - p2.y * p1.x;
-					x += (p1.x + p2.x) * f;
-					y += (p1.y + p2.y) * f;
-					area += f * 3;
-					
-			}
-			return new kakao.maps.LatLng(x / area, y / area);
-		}
-	
-		function deletePolygon(polygons) {
-			for(var i = 0 ; i < polygons.length ; i++) {
-				polygons[i].setMap(null);
-			}
-			
-			polygons = [];
-		}
-		
-	});
+		dust();
+	}); 
 	
 
     function dust() {
-        $('#names-dust').empty(); 
           $.ajax({ 
               type: "GET",
               url: "http://openapi.seoul.go.kr:8088/6d6d62644373647436327074734965/json/RealtimeCityAir/1/25/",
-              data: {}, 
-              success: function (response) { 
-                  let rows = response['RealtimeCityAir']['row']
-                  for(let i = 0 ;i<rows.length;i++){
-                    let gu_time = rows[i]['MSRDT']
-                    let gu_name = rows[i]['MSRSTE_NM']
-                    let gu_dust = rows[i]['PM10']
-                    let gu_udust = rows[i]['PM25']
-                    let temp_html = ``
-                        if(gu_dust>70){
-                           temp_html = `<li>${gu_name}:${gu_dust}</li>`
-                        }
-                        else{
-                           temp_html = `<li>${gu_name}-${gu_dust}-${gu_udust}:${gu_time}</li>`
-                           
-                        }
-                        $('#names-dust').append(temp_html);
-                      }
-                  }
+              success: function (response) {   	  
+                    var dataList = response.RealtimeCityAir.row;
+                    var container = document.getElementById('map');
+                	
+                    
+                    
+            		//지도 중심 좌표
+            		var options = {
+            			center: new kakao.maps.LatLng(37.565994, 126.977496),
+            			level: 9
+            		};
+            		
+            		//지도 생성
+            		var map = new kakao.maps.Map(container, options);
+            		var	infowindow = new kakao.maps.InfoWindow({removable: true});
+            		var customOverlay = new kakao.maps.CustomOverlay({});
+            		
+            		//행정구역 구분
+            		$.getJSON("resources/json/map.geojson", function(geojson) {
+            		 console.log(geojson);
+            		    var data = geojson.features;
+            		    var coordinates = [];    //좌표 저장할 배열
+            		    var name = '';            //행정 구 이름
+            		 
+            		    $.each(data, function(index, val) {
+            		 
+            		        coordinates = val.geometry.coordinates[0];
+            		        name = val.properties.SIG_KOR_NM;
+            		        
+            		        displayArea(coordinates, name);
+            		 
+            		    });
+            		});
+            		
+            		// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+            		var zoomControl = new kakao.maps.ZoomControl();
+            		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+            		
+            		var polygons=[];        //function 안 쪽에 지역변수로 넣으니깐 폴리곤 하나 생성할 때마다 배열이 비어서 클릭했을 때 전체를 못 없애줌.  그래서 전역변수로 만듦.
+            	    
+            		//행정구역 폴리곤
+            		function displayArea(coordinates, name) {
+            		    var path = [];            //폴리곤 그려줄 path
+            		    var points = [];        //중심좌표 구하기 위한 지역구 좌표들
+            		    
+            		    $.each(coordinates[0], function(index, coordinate) {      // console.log(coordinates)를 확인해보면 보면 [0]번째에 배열이 주로 저장이 됨.  그래서 [0]번째 배열에서 꺼내줌.
+            		        var point = new Object(); 
+            		        point.x = coordinate[1];
+            		        point.y = coordinate[0];
+            		        points.push(point);
+            		        path.push(new kakao.maps.LatLng(coordinate[1], coordinate[0]));            //new kakao.maps.LatLng가 없으면 인식을 못해서 path 배열에 추가
+            		    })
+            		    
+            		    var pm10 = 0;
+            		    for(var d of dataList) {
+            		    	if(name == d.MSRSTE_NM) {
+            		    		MSRDT = d.MSRDT
+            		    		pm10 = d.PM10
+            		    		pm25 = d.PM25;
+            		    	}
+            		    }
+            		    
+            		    var color = "#fff";
+            		    
+            		    if( pm10 < 1 ) {
+            		    	color = "#5e5e56";	//점검중
+            		    } else if(  pm10 <= 30) {
+            		    	color = "#42a7ff";	//좋음
+            		    } else if( pm10 <= 80) {
+            		    	color = "#42ffa2"; //보통
+            		    } else if( pm10 <= 150) {
+            		    	color = "#ffff00"; //나쁨
+            		    } else if(151 < pm10 ) {
+            		    	color = "#fa3d30";	//매우 나쁨
+            		    } 
+            		    
+            		    // 다각형을 생성합니다 
+            		    var polygon = new kakao.maps.Polygon({
+            		        map : map, // 다각형을 표시할 지도 객체
+            		        path : path,
+            		        strokeWeight : 2,
+            		        strokeColor : '#004c80',
+            		        strokeOpacity : 0.8,
+            		        fillColor : color,
+            		        fillOpacity : 0.7
+            		    });
+            		    
+            		    polygons.push(polygon);            //폴리곤 제거하기 위한 배열
+            		    
+            		  //지역 배열
+            		    var Locs = ['중구','종로구', '용산구','은평구','서대문구','마포구','광진구','성동구','중랑구',
+            			     '동대문구','성북구','도봉구','강북구','노원구','강서구','구로구','영등포구','동작구','관악구','금천구','양천구','강남구' ,'서초구','송파구','강동구','강남구'];  
+            		  //지역별 좌표	    
+            		    var circleLocs = [
+            		    	 new kakao.maps.LatLng(37.562368, 126.994337),
+            		    	 new kakao.maps.LatLng(37.601722, 126.972595),
+            		    	 new kakao.maps.LatLng(37.530788, 126.980108),
+            		    	 new kakao.maps.LatLng(37.622929, 126.924228),
+            		    	 new kakao.maps.LatLng(37.576761, 126.937031),
+            		    	 new kakao.maps.LatLng(37.559806, 126.898465),
+            		    	 new kakao.maps.LatLng(37.546251, 127.091018),
+            		    	 new kakao.maps.LatLng(37.554394, 127.039176),
+            		    	 new kakao.maps.LatLng(37.599985, 127.091837),
+            		    	 new kakao.maps.LatLng(37.581922, 127.053984),
+            		    	 new kakao.maps.LatLng(37.603368, 127.011140),
+            		    	 new kakao.maps.LatLng(37.673821, 127.031243),
+            		    	 new kakao.maps.LatLng(37.639221, 127.007821),
+            		    	 new kakao.maps.LatLng(37.649826, 127.074220),
+            		    	 new kakao.maps.LatLng(37.568567, 126.823401),
+            		    	 new kakao.maps.LatLng(37.493266, 126.839458),
+            		    	 new kakao.maps.LatLng(37.525442, 126.908517),
+            		    	 new kakao.maps.LatLng(37.504990, 126.952272),
+            		    	 new kakao.maps.LatLng(37.464280, 126.940805),
+            		    	 new kakao.maps.LatLng(37.448795, 126.906071),
+            		    	 new kakao.maps.LatLng(37.517080, 126.852273),
+            		    	 new kakao.maps.LatLng(37.493893, 127.071649),
+            		    	 new kakao.maps.LatLng(37.477033, 127.017967),
+            		    	 new kakao.maps.LatLng(37.510105, 127.109649),
+            		    	 new kakao.maps.LatLng(37.554159, 127.146360)
+            		    	];
+            		    
+            		    //지역 들어간 원을 좌표에 생성
+            		    for (var i = 0; i < circleLocs.length; i ++) {
+            		    	  var circleHtml = "<div class=\"map_circle\">" + Locs[i] + "</div>";
+            		    
+            		    	   var customOverlay = new kakao.maps.CustomOverlay({
+            		    			    	map: map,
+            		    			    	position:circleLocs[i],
+            		    			    	content:circleHtml,
+            		    			    	zIndex:1000
+            		    	    });
+            		    	}
+
+          
+            		    
+            		 // 다각형에 mouseover 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 변경합니다 
+            		    // 지역명을 표시하는 커스텀오버레이를 지도위에 표시합니다
+            		    kakao.maps.event.addListener(polygon, 'mouseover', function(mouseEvent) {
+
+            		        customOverlay.setContent('<div class="area">' + name + '</div>');
+            		        
+            		        customOverlay.setPosition(mouseEvent.latLng); 
+            		        customOverlay.setMap(map);
+            		    });
+
+            		    // 다각형에 mousemove 이벤트를 등록하고 이벤트가 발생하면 커스텀 오버레이의 위치를 변경합니다 
+            		    kakao.maps.event.addListener(polygon, 'mousemove', function(mouseEvent) {
+            		        
+            		        customOverlay.setPosition(mouseEvent.latLng); 
+            		    });
+
+            		    // 다각형에 mouseout 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 원래색으로 변경합니다
+            		    // 커스텀 오버레이를 지도에서 제거합니다 
+            		    kakao.maps.event.addListener(polygon, 'mouseout', function() {
+            		        customOverlay.setMap(null);
+            		    }); 
+            	
+            		    kakao.maps.event.addListener(polygon, 'click', function(mouseEvent) {
+            		    	  
+            		        var content = '<div class="info">' + 
+            		  		                    '   <div class="title">' + name + '</div>' +
+            		  		                    '   <div class="size">미세먼지 : ' + pm10 + ' ㎍/㎥</area>' +
+            		  		                  	'   <div class="size">초미세먼지 : ' + pm25  + '㎍/㎥</area>' +
+            		  		                 	'   <div class="time">측정시간 : ' + MSRDT  +
+            		  		                    '</div>';
+            		  		                    
+            		  		  infowindow.setContent(content); 	
+            		          infowindow.setPosition(mouseEvent.latLng); 
+            		          infowindow.setMap(map);
+            		      });
+            		   
+            		    
+            		    
+            		    // 다각형에 click 이벤트를 등록하고 이벤트가 발생하면 해당 지역 확대을 확대합니다.
+            		    kakao.maps.event.addListener(polygon, 'click', function(mouseEvent) {
+            		        
+            		        // 현재 지도 레벨에서 2레벨 확대한 레벨
+            		        var level = map.getLevel()-1;
+            		        
+            		        // 지도를 클릭된 폴리곤의 중앙 위치를 기준으로 확대합니다
+            		        map.setLevel(level, {anchor: centroid(points), animate: {
+            		            duration: 350            //확대 애니메이션 시간
+            		        }});    
+            		        
+            		       
+            	
+            		    });
+            		}
+            		//centroid 알고리즘 (폴리곤 중심좌표 구하기 위함)
+            		function centroid (points) {
+            			 var i, j, len, p1, p2, f, area, x, y;
+
+            			area = x = y = 0;
+
+            			for (i = 0, len = points.length, j = len - 1; i < len; j = i++) {
+            					p1 = points[i];
+            					p2 = points[j];
+
+            					f = p1.y * p2.x - p2.y * p1.x;
+            					x += (p1.x + p2.x) * f;
+            					y += (p1.y + p2.y) * f;
+            					area += f * 3;
+            					
+            			}
+            			return new kakao.maps.LatLng(x / area, y / area);
+            		}
+            	
+            		function deletePolygon(polygons) {
+            			for(var i = 0 ; i < polygons.length ; i++) {
+            				polygons[i].setMap(null);
+            			}
+            			
+            			polygons = [];
+            		}   
+            		
+            		
+              }
               });
           }
     
@@ -607,30 +698,25 @@ footer > .foot > nav > a{
 			</div>
 	</header>
 		
-	<main> 
-	<div class="Cpage"><h4>미세먼지</h4></div>	
+	<main>
+      		<div class="Cpage"><h4>미세먼지</h4></div>	
 <div class="paging_wrap"></div>
     </main>
     
     <!--지도 크기  -->
-  <div id="map" class="map" style="width:800px;height:500px;"></div>
+  <div id="map" class="map"></div>
    	
-   	<!--미세, 초미세 버튼  -->
-       <div id="controll_Dust" class="controll_Dust">
-   		<button id="Btn_FDust" onclick="">미세먼지</button>
-   		<button id="Btn_UFDust" onclick="">초미세먼지</button>
-    </div>
-    
+
     <!--미세먼지 기준  -->  
 					<div class="dust-info">
 						     <h3 style="text-align:center";>미세먼지</h3>
 						    	<dl>
 						            <dd><em>등급</em><em>지수범위</em></dd>
-						            <dd><span class="good">좋음</span>0~15</dd>
-						            <dd><span class="normal">보통</span>16~35</dd>
-						            <dd><span class="bad">나쁨</span>36~75</dd>
-						            <dd><span class="worst">매우나쁨</span>76~</dd>
-						            <dd><span class="sys">점검중</span>-</dd>
+						            <dd><span class="good">좋음</span>0 ~ 30</dd>
+						            <dd><span class="normal">보통</span>31 ~ 80</dd>
+						            <dd><span class="bad">나쁨</span>81 ~ 150</dd>
+						            <dd><span class="worst">매우나쁨</span>151 ~ </dd>
+						            <dd><span class="sys">점검중</span> - </dd>
 								</dl>			
 					    </div>		
 					    					
@@ -640,17 +726,16 @@ footer > .foot > nav > a{
 							  <h3 style="text-align:center";>초미세먼지</h3>
 								<dl>
 									<dd><em>등급</em><em>지수범위</em></dd>
-									<dd><span class="good">좋음</span>0~30</dd>
-									<dd><span class="normal">보통</span>31~80</dd>
-									<dd><span class="bad">나쁨</span>81~150</dd>
-									<dd><span class="worst">매우나쁨</span>151~</dd>
-									<dd><span>점검중</span>-</dd>
+									<dd><span class="good">좋음</span>0 ~ 15</dd>
+									<dd><span class="normal">보통</span>16 ~ 35</dd>
+									<dd><span class="bad">나쁨</span>36 ~ 75</dd>
+									<dd><span class="worst">매우나쁨</span>76 ~ </dd>
+									<dd><span class="sys">점검중</span> - </dd>
 								</dl>	
-						</div>			
-			   <!--실시간 미세먼지 출력  -->		
-						    <button onclick="dust()" class="timedust">업데이트</button>
-						    <ul id="names-dust" class="names-dust"></ul>
-
+						</div>
+    </main>
+    
+    
     <footer>
        <div class="foot">
 			<nav>

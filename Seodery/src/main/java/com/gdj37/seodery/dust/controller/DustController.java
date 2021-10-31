@@ -31,7 +31,7 @@ public class DustController {
 	
 	
 	@RequestMapping(value="/dust")
-	public ModelAndView parkList(
+	public ModelAndView dust(
 			@RequestParam HashMap<String, String> params,
 			ModelAndView mav) {
 		
