@@ -5,6 +5,16 @@ import java.util.List;
 
 public interface IParkDao {
 
-	List<HashMap<String, String>> getPDList(HashMap<String, String> params);
+	public int getPDCnt(HashMap<String, String> params) throws Throwable;
+
+	public List<HashMap<String, String>> getPDList(HashMap<String, String> params) throws Throwable;
+
+	public int addP(HashMap<String, String> params) throws Throwable;
+
+	public String getParkNumIsExists(HashMap<String, String> params) throws Throwable;
+
+	public int updateP(HashMap<String, String> params)throws Throwable;
+
+	public int addPK(HashMap<String, String> params)throws Throwable;
 
 }

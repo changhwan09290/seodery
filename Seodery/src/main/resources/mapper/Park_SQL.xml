@@ -3,23 +3,48 @@
 <mapper namespace="park">
 
 	<!-- 댓글목록 조회 -->
- 	<select id="getPDList" parameterType="hashmap" resultType="hashmap">
-		select 
-		    PC_SEQ.nextval, MBER_NUM, park_num, SRATING, CON
-		FROM PC
-		WHERE PARK_NUM = #{PARK_NUM}
+ 	<!-- <select id="getPDList" parameterType="hashmap" resultType="hashmap">
+		select PC.PC_SEQ.nextval, PC.MBER_NUM, PC.park_num, PC.SRATING, PC.CON, UR.ID
+		FROM (SELECT COMM_NUM,MBER_NUM,PARK_NUM,SRATING,CON,WRDATE
+				ROW_NUMBER() OVER(ORDER BY COMM_NUM DESC) AS PNUM)
+				PC, UR
+		WHERE PC.MBER_NUM = UR.MBER_NUM  AND PNUM #{startCnt} AND #{endCnt}
+		AND PARK_NUM = #{PARK_NUM}
+		ORDER BY PC.PNUM
 	</select> 
+ -->
 
 	<!-- 댓글 목록 총 건수조회 -->
-	 <select id="getPDCnt" parameterType="hashmap" resultType="Integer">
+	<!--  <select id="getPDCnt" parameterType="hashmap" resultType="Integer">
 		select count(*) as cnt
 		from PC
 		WHERE PARK_NUM = #{PARK_NUM}
+	</select>  -->
+
+<!-- 공원번호, 공원이름 insert -->
+	<insert id="addPK" parameterType="hashmap">
+		 INSERT INTO PK(PARK_NUM, PARK_NM, AREA, TEL_NUM)
+		VALUES (#{no}, #{name}, #{addr}, #{phon})
+	</insert>
+
+
+	<insert id="addP" parameterType="hashmap">
+		 INSERT INTO PC(COMM_NUM,MBER_NUM,PARK_NUM,SRATING,CON,WRDATE,DELC)
+		VALUES (PC_SEQ.nextval,#{MBER_NUM},#{PARK_NUM},#{SRATING},#{CON},SYSDATE,#{DELC})
+	</insert> 
+	
+	 <select id="getParkNumIsExists" parameterType="hashmap" resultType="String">
+		SELECT ( 
+		    CASE WHEN EXISTS ( SELECT PARK_NUM ,PARK_NM, AREA, TEL_NUM FROM PK
+		                        WHERE PARK_NUM = #{no} and PARK_NM = #{name} and AREA = #{addr} and TEL_NUM =#{phon}) 
+		      THEN 'Y' ELSE 'N' END ) AS IS_EXISTS
+		FROM PK
 	</select> 
-
-
-	<!-- <insert id="addO1" parameterType="hashmap">
-		 INSERT INTO O1(O_NO,M_NO, CON)
-		VALUES (O1_SEQ.NEXTVAL,#{mo},#{con})
-	</insert> -->
+	
+	<update id="updateP" parameterType="hashmap">
+		update PK set PARK_NUM=#{no}, PARK_NM = #{name}, AREA = #{addr}, TEL_NUM = #{phon}
+		where PARK_NUM is null and PARK_NM is null and AREA is null and TEL_NUM is null
+	</update>
+	
+	
 </mapper>

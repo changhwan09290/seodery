@@ -9,12 +9,9 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="resources/script/jquery/fxss-rate/rate.css">
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
 <script src="resources/script/jquery/fxss-rate/rate.js"></script>
-<script src="resources/script/jquery/fxss-rate/need/iconfont.js"></script>
-<script src="//code.jquery.com/jquery.min.js"></script>
+<!-- <script src="resources/script/jquery/fxss-rate/need/iconfont.js"></script> -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c953a065c47d3eb731f9ab037fd520fa&libraries=services,clusterer,drawing"></script>
 <style type="text/css">
  /* 웹 폰트 적용 */
  @font-face {
@@ -481,8 +478,6 @@ footer > .foot > nav > a{
 	font-size: 12pt;
 }
 </style>
-<script type="text/javascript"
-		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	/* if("${param.searchGbn}"!=""){
@@ -490,6 +485,16 @@ $(document).ready(function(){
 	} */
 	gnbSlideInit();
 	reloadList();
+	//reloadMap();
+	
+	
+	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+	var options = { //지도를 생성할 때 필요한 기본 옵션
+		center: new kakao.maps.LatLng(37.5501402, 126.9903773), //지도의 중심좌표.
+		level: 5 //지도의 레벨(확대, 축소 정도)
+	};
+
+	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 	
 	 //글작성
 	/* $("#addBtn").on("click",function(){
@@ -534,29 +539,29 @@ $(document).ready(function(){
 	//	reloadList();
 	//}); 
 	
+	
 	//addBtn
 	$(".write_area").on("click","#addBtn",function(){
 		 if(checkVal("#con")) {
 				alert("내용을 입력해 주세요.");
 				$(".write_con").focus();
 			} else {
-				var no = $(this).parent().attr("no");
+// 				var no = $(this).parent().attr("no");
 				
-				console.log("no>>>>"+ no);
-				
-				$("#no").val(no);
-				$("#actionForm").attr("action", "testOadd");
-				$("#actionForm").submit();
+// 				$("#no").val(no);
+// 				$("#actionForm").attr("action", "parkadd");
+// 				$("#actionForm").submit();
+				$("#wcform").attr("action", "parkadd");
+				$("#wcform").submit();
 		};
 	});
 	
-	
 	 /* 별점 구현 */
-	$('.starRev span').click(function(){
+	/* $('.starRev span').click(function(){
 		  $(this).parent().children('span').removeClass('on');
 		  $(this).addClass('on').prevAll('span').addClass('on');
 		  return false;
-		});
+		}); */
 	
 	/* 기본등급 시스템 */
 	$("#rateBox").rate({
@@ -578,25 +583,25 @@ $(document).ready(function(){
 		length: 5,
 		
 		// initial value
-		value: 3.5,
+		value: 0,
 		
 		// allows half star
-		half:true,
+		half:false,
 		
 		// supports decimal?
 		decimal:true,
 		
 		// is readonly?
-		readonly:true,
+		readonly:false,
 		
 		// shows the current rating value on hover
-		hover:false,
+		hover:true,
 		
 		// shows rating text
 		text:true,
 		
 		// an array of rating text
-		textList: ['Bad','Poor','Medium','Good','Perfect'],
+		textList: ['1점','2점','3점','4점','5점'],
 		// color
 		theme:'#FFB800',
 		// text/star size
@@ -610,9 +615,8 @@ $(document).ready(function(){
 		
 		customClass:''
 		});
-
-	
  });
+
 
 
 function checkVal(sel) {
@@ -625,17 +629,37 @@ function checkVal(sel) {
 
 
 //데이터 취득
+function reloadMap(){
+	
+	console.log("reload ##########");
+	var params = $("#actionForm2").serialize();
+	$.ajax({	//jquery의 ajax함수 호출  
+		url : "apiparklotall", 
+		type: "get",	//전송 방식
+		dataType:"json",	//받아올 데이터 형태 
+		data: params,
+// 		data : sendData,	//보낼 데이터(문자열 형태)
+		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
+			console.log("res >>>>" +res);
+			makeMakers(JSON.parse(res.resData).GetParkInfo.row); // 좌표목록 만듬
+			//drawList(res.list);
+			//drawPaging(res.pb);
+		},
+		error: function(request, status, error){	//실패 시 다음 함수 실행 
+			console.log(request);
+			console.log(error);
+		}
+	});
+}
+//데이터 취득
  function reloadList(){
 	
 	var params = $("#actionForm").serialize();
  	$.ajax({	//jquery의 ajax함수 호출  
-//  		url: "http://data.seoul.go.kr/dataList/OA-394/S/1/datasetView.do?" 
-// 					+"KEY=58446e7a71616b643239487a427157&TYPE=json&SERVICE=SearchParkInfoService&START_INDEX=1&END_INDEX=10", //접속 주소
-		url : "apiDtl", 
+ 		url : "apiDtl", 
 		type: "get",	//전송 방식
  		dataType:"json",	//받아올 데이터 형태 
  		data: params, 
-//  		data : sendData,	//보낼 데이터(문자열 형태)
  		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
  			console.log(res);
  			makeTable(JSON.parse(res.resData));
@@ -655,7 +679,6 @@ function checkVal(sel) {
       var rows = jsonData.SearchParkInfoService.row;
 
       $data = "";
-      
       /* for (var idx in rows) {
          $data += '<tr><td>' + rows[idx].P_IDX + '</td><tr><td>' + rows[idx].P_PARK + '</td></tr><tr><td>'+'<img src="resources/images/park/phone-call.png">'+rows[idx].P_ADMINTEL 
          + '</td></tr><td>'+'<img src="resources/images/park/location.png">' + "공원 주소 : " + rows[idx].P_ADDR + '</td><tr><td>'+ '<img src="resources/images/park/right.png">' + "개원일 : " + rows[idx].OPEN_DT + '</td></tr><tr><td>' 
@@ -664,7 +687,6 @@ function checkVal(sel) {
          + '<img src=\"' + rows[idx].P_IMG + '\"></td><tr>';
          
       } */
-      
       for (var idx in rows) {
           $data += '<tr><td>' + rows[idx].P_IDX + '</td><tr><td>' + rows[idx].P_PARK + '</td></tr><tr><td>'+'<img src="resources/images/park/phone-call.png">'+rows[idx].P_ADMINTEL 
           + '</td></tr><td>'+'<img src="resources/images/park/location.png">' + "공원 주소 : " + rows[idx].P_ADDR + '</td><tr><td>'+ '<img src="resources/images/park/right.png">' + "개원일 : " + rows[idx].OPEN_DT + '</td></tr><tr><td>' 
@@ -674,11 +696,8 @@ function checkVal(sel) {
           
        }
       
-      
       $("#table").html($data);
-     
    }
- 
  
  
   /* 탭 메뉴 이벤트 */
@@ -702,12 +721,8 @@ function checkVal(sel) {
 		  document.getElementById(tabName).style.display = "block";
 		  evt.currentTarget.className += " active";
 		}
- 
- 
- 
- 
- 
- /* 페이징 */
+
+  /* 페이징 */
 /*  function drawPaging(pb){
 	console.log("pb", pb);
 	 
@@ -788,7 +803,7 @@ function checkVal(sel) {
 							</li>
 							<li class="sub FDust">미세먼지</a>
 								<ul class="gnb_sub">
-									<li><a href="#">미세먼지 현황</a></li>
+									<li><a href="http://localhost/Seodery/dust">미세먼지 현황</a></li>
 								</ul>
 							</li>
 							<li class="sub Memory">추억저장</a>
@@ -827,6 +842,9 @@ function checkVal(sel) {
 							<input type="hidden" name="searchTxt"  value="${param.searchTxt}"/>
 							<input type="hidden" name="page"  value="${param.page}"/>
 							<input type="hidden" name="no"  value="${param.no}"/>
+							<input type="hidden" name="name"  value="${param.name}"/>
+							<input type="hidden" name="addr"  value="${param.addr}"/>
+							<input type="hidden" name="phon"  value="${param.phon}"/>
 							<!-- 로그인한 상태라면 작성버튼 -->
 							<%-- <c:if test="${!empty sMNo}">
 								<input type="button" value="작성" id="addBtn"/>
@@ -857,22 +875,29 @@ function checkVal(sel) {
 					<div class="wc_wrap">
 						<div class="write_area">
 							<form action="#" id="wcform" method="post">
-								<input type="hidden" id="no" name="no"/>
+<!-- 								<input type="hidden" id="no" name="no"/> -->
 								<input type="hidden" id="mo" name="mo"/>
-								<input type="hidden" id="page" name="page" value="${page}"/>
+<%-- 								<input type="hidden" id="page" name="page" value="${page}"/> --%>
+								<input type="hidden" name="page"  value="${param.page}"/>
+								<input type="hidden" name="no"  value="${param.no}"/>
+								<input type="hidden" name="name"  value="${param.name}"/>
+								<input type="hidden" name="addr"  value="${param.addr}"/>
+								<input type="hidden" name="phon"  value="${param.phon}"/>
 								
 								<div class="user_info">
 									<div class="user_name">유저 이름</div>
 								</div>
 								<div class="write_con_wrap">
-									<textarea class="write_con" id="con" name="con">내용작성</textarea>
+									<textarea class="write_con" id="con" name="con"></textarea>
 								</div>
-								<div class="btn_wrap" no="${no}" mo="" name="mo">
+								<div class="btn_wrap" no="${no}" mo="" name="${name}" addr="${addr}" phon="${phon}">
 									<input type="button" value="저장" class="action_btn" id="addBtn"/>
 									<input type="button" value="수정" class="action_btn2" id="updBtn"/>
 									<input type="button" value="취소" class="action_btn2" id="cancelBtn"/>
+								
 								</div>
 							</form>
+							
 						</div>
 					</div>
 					
@@ -913,6 +938,11 @@ function checkVal(sel) {
 				
 				<section id="parklot" class="tabcontent">
 					<h2>주차장</h2>
+					<form action="#" id="actionForm2" method="get">
+							<input type="hidden" name="page"  value="${param.page}"/>
+							<input type="hidden" name="no"  value="${param.no}"/>
+					</form>
+					<div id="map" style="width:600px;height:400px;margin-left:auto;margin-right:auto;"></div>
 				</section>
 				
 			<div class="paging_wrap"></div>
@@ -939,11 +969,7 @@ function checkVal(sel) {
     
     
     <script>
-	/* 네비게이션 바 마우스 포커스 이벤트 */
-	/* $(function(){
-		gnbSlideInit();
-	}); */
-	
+
 	
 	function gnbSlideInit() {
 		//gnb (상위메뉴에 마우스 포커스)

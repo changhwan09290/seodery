@@ -197,39 +197,44 @@ public class ParkController {
 		if (params.get("page") != null) { // 넘어오는 현재 p데이터가 존재 시 page =
 			page = Integer.parseInt(params.get("page"));
 		}
-		
 		//글 개수
 		
-		int cnt = iParkService.getPDCnt(params);
-		PagingBean pb = iPagingService.getPagingBean(page, cnt, 10,5);
+		//int cnt = iParkService.getPDCnt(params); 
+		//PagingBean pb = iPagingService.getPagingBean(page, cnt, 10,5);
 		
-		// 조회 시작 및 종료번호 할당
 		
-		params.put("startCnt",Integer.toString(pb.getStartCount()));
-		params.put("endCnt",Integer.toString(pb.getEndCount()));
+	// 조회 시작 및 종료번호 할당
+		 //params.put("startCnt",Integer.toString(pb.getStartCount()));
+		// params.put("endCnt",Integer.toString(pb.getEndCount()));
 		
-		List<HashMap<String, String>> list = iParkService.getPDList(params);
-		System.out.println("list >>>>>>>> " + list);
+		// List<HashMap<String, String>> list = iParkService.getPDList(params);
+		 //System.out.println("list >>>>>>>> " + list);
 		
 		HashMap<String, String> data = new HashMap<String, String>();
 		
-		// 상세보기 목록 번호 받아오기
+		 //상세보기 목록 번호 받아오기
+			/*
+			 * data.put("PARK_NUM","no"); data.put("MBER_NUM","1"); data.put("CON","test");
+			 * data.put("COMM_NUM","1"); data.put("SRATING", "3");
+			 */
 		String no = request.getParameter("no");
-		
-		data.put("PARK_NUM","no"); data.put("MBER_NUM","1"); data.put("CON","test");
-		data.put("COMM_NUM","1"); data.put("SRATING", "3");
-		
-		
+		String name = request.getParameter("name");
+		String addr = request.getParameter("addr");
+		String phon = request.getParameter("phon");
 		mav.addObject("page",page); 
-		mav.addObject("pb",pb);
-		mav.addObject("list",list);
+		/*
+		 * mav.addObject("pb",pb); mav.addObject("list",list);
+		 */
 		
 		 
-		list.add(data);
+		//list.add(data);
 
 		
 		System.out.println("목록번호는???" + no);
 		mav.addObject("no", no);
+		mav.addObject("name", name);
+		mav.addObject("addr", addr);
+		mav.addObject("phon", phon);
 		mav.addObject("page", page);
 
 		mav.setViewName("park/parkDtl");
@@ -237,20 +242,40 @@ public class ParkController {
 	}
 
 	
-	/*
-	 * @RequestMapping(value="/parkadd") public ModelAndView testOadd(
-	 * 
-	 * @RequestParam HashMap<String, String> params, ModelAndView mav) throws
-	 * Throwable {
-	 * 
-	 * System.out.println("****************************************"+params);
-	 * 
-	 * //int cnt = iParkService.addP(params);
-	 * 
-	 * if(cnt > 0) { //추가 성공했을 경우 mav.setViewName("redirect:parkDtl"); //목록으로 이동
-	 * }else { mav.addObject("msg","작성에 실패하였습니다.");
-	 * mav.setViewName("testO/failedAction"); //저장에 실패하면 이 페이지로 이동 } return mav; }
-	 */
+	
+	@RequestMapping(value="/parkadd")
+	public ModelAndView testOadd(
+			@RequestParam HashMap<String, String> params,HttpServletRequest request,
+			ModelAndView mav) throws Throwable {
+		
+		System.out.println("****************************************"+params);
+		String no = request.getParameter("no");
+		
+		mav.addObject("no", no);
+		
+		// Park num exists
+		String isExists = iParkService.getParkNumIsExists(params);
+		System.out.println("isExists >>>>>"+ isExists);
+		if(isExists == null || isExists.equals("N")) { // 'N'
+			// insert(PK)
+			int addPK = iParkService.addPK(params);	//공원번호,이름,주소,번호 추가하기
+		} else if(isExists.equals("Y")){ // 'Y'
+			int update = iParkService.updateP(params);
+		}
+		int add = iParkService.addP(params);
+		// comment save
+		
+		
+//		int cnt = iParkService.addP(params);
+//		
+//		if(cnt > 0) { //추가 성공했을 경우 
+//			mav.setViewName("redirect:parkDtl"); 	//상세보기로 이동 
+//		}else {
+//			mav.addObject("msg","작성에 실패하였습니다.");
+//			mav.setViewName("park/failedAction");		//저장에 실패하면 이 페이지로 이동 
+//		}
+		return mav;
+	}
 	
 	
 	/*
@@ -306,12 +331,6 @@ public class ParkController {
 
 		String urlStr = "http://openAPI.seoul.go.kr:8088/58446e7a71616b643239487a427157/json/SearchParkInfoService/";
 		urlStr += no + "/" + no;
-
-		/*
-		 * String urlStr =
-		 * "http://openAPI.seoul.go.kr:8088/58446e7a71616b643239487a427157/json/SearchParkInfoService/";
-		 * urlStr += 1 + "/" + 2;
-		 */
 
 		String vStringLine = "";
 
@@ -381,77 +400,69 @@ public class ParkController {
 	
 	
 	
-	/*
-	 * @RequestMapping(value = "/apiParkLot", method = RequestMethod.GET, produces =
-	 * "text/json;charset=UTF-8")
-	 * 
-	 * @ResponseBody public String callParkLotData(@RequestParam HashMap<String,
-	 * String> params) throws IOException {
-	 * 
-	 * ObjectMapper mapper = new ObjectMapper(); // jackson 객체 Map<String, Object>
-	 * modelMap = new HashMap<String, Object>(); // 데이터를 담을 map
-	 * 
-	 * int page = Integer.parseInt(params.get("page"));
-	 * 
-	 * int cnt = 982; // 총 게시글 개수
-	 * 
-	 * // int viewCnt = 15; // 페이지당 게시글 개수
-	 * 
-	 * PagingBean pb = iPagingService.getPagingBean(page, cnt, 15, 5);
-	 * 
-	 * // 데이터 시작, 종료 번호 추가 params.put("startCnt",
-	 * Integer.toString(pb.getStartCount())); params.put("endCnt",
-	 * Integer.toString(pb.getEndCount()));
-	 * 
-	 * // StringBuffer result = new StringBuffer(); // String urlStr =
-	 * "http://openAPI.seoul.go.kr:8088/58446e7a71616b643239487a427157/json/SearchParkInfoService/1/132?";
-	 * 
-	 * String urlStr =
-	 * "http://http://openapi.seoul.go.kr:8088/sample/json/GetParkInfo/"; urlStr +=
-	 * params.get("startCnt") + "/" + params.get("endCnt");
-	 * 
-	 * String vStringLine = "";
-	 * 
-	 * // modelMap.put("urlStr", urlStr); modelMap.put("pb", pb);
-	 * modelMap.put("page", page); try {
-	 * 
-	 * StringBuilder vStringBuilder = new StringBuilder();
-	 * 
-	 * URL vURL = new URL(urlStr);
-	 * 
-	 * HttpURLConnection vHttpURLConnection = (HttpURLConnection)
-	 * vURL.openConnection(); vHttpURLConnection.setRequestMethod("GET");
-	 * vHttpURLConnection.setDoOutput(true);
-	 * 
-	 * if (vHttpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-	 * BufferedReader vBufferedReader = new BufferedReader( new
-	 * InputStreamReader(vHttpURLConnection.getInputStream(), "utf-8"));
-	 * 
-	 * while ((vStringLine = vBufferedReader.readLine()) != null) {
-	 * vStringBuilder.append(vStringLine).append("\n"); }
-	 * 
-	 * vBufferedReader.close();
-	 * 
-	 * System.out.println("요청성공"); // System.out.println(">>>" +
-	 * vHttpURLConnection.getResponseCode()); // System.out.println(">>>" +
-	 * vHttpURLConnection.getResponseMessage()); // System.out.println(">>>" +
-	 * vStringBuilder.toString()); vStringLine = vStringBuilder.toString();
-	 * modelMap.put("resData", vStringLine);
-	 * 
-	 * } else { System.out.println("요청실패"); // System.out.println(">>>" +
-	 * vHttpURLConnection.getResponseCode()); // System.out.println(">>>" +
-	 * vHttpURLConnection.getResponseMessage()); // System.out.println(">>>" +
-	 * vStringBuilder.toString()); vStringLine = vStringBuilder.toString(); }
-	 * 
-	 * } catch (MalformedURLException e) { // TODO Auto-generated catch block
-	 * e.printStackTrace(); }
-	 * 
-	 * // 데이터를 문자열화 return mapper.writeValueAsString(modelMap); }
-	 */
-	
-	
-	
-	
+	@RequestMapping(value = "/apiparklotall", method = RequestMethod.GET, produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String callAllData(@RequestParam HashMap<String, String> params) throws IOException {
+
+		ObjectMapper mapper = new ObjectMapper(); // jackson 객체
+		Map<String, Object> modelMap = new HashMap<String, Object>(); // 데이터를 담을 map
+
+		// 데이터 시작, 종료 번호 추가
+		params.put("startCnt", "1");
+		params.put("endCnt", "982");
+
+//		StringBuffer result = new StringBuffer();
+//		String urlStr = "http://openAPI.seoul.go.kr:8088/58446e7a71616b643239487a427157/json/SearchParkInfoService/1/132?";
+
+		String urlStr = "http://openapi.seoul.go.kr:8088/5576534466616b6432324c6b586b48/json/GetParkInfo/";
+		urlStr += params.get("startCnt") + "/" + params.get("endCnt");
+
+		String vStringLine = "";
+
+		// modelMap.put("urlStr", urlStr);
+		try {
+
+			StringBuilder vStringBuilder = new StringBuilder();
+
+			URL vURL = new URL(urlStr);
+
+			HttpURLConnection vHttpURLConnection = (HttpURLConnection) vURL.openConnection();
+			vHttpURLConnection.setRequestMethod("GET");
+			vHttpURLConnection.setDoOutput(true);
+
+			if (vHttpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				BufferedReader vBufferedReader = new BufferedReader(
+						new InputStreamReader(vHttpURLConnection.getInputStream(), "utf-8"));
+
+				while ((vStringLine = vBufferedReader.readLine()) != null) {
+					vStringBuilder.append(vStringLine).append("\n");
+				}
+
+				vBufferedReader.close();
+
+				System.out.println("요청성공");
+//		  		System.out.println(">>>" + vHttpURLConnection.getResponseCode());
+//		  		System.out.println(">>>" + vHttpURLConnection.getResponseMessage());
+//		  		System.out.println(">>>" + vStringBuilder.toString());
+				vStringLine = vStringBuilder.toString();
+				modelMap.put("resData", vStringLine);
+
+			} else {
+				System.out.println("요청실패");
+//	  			System.out.println(">>>" + vHttpURLConnection.getResponseCode());
+//		  		System.out.println(">>>" + vHttpURLConnection.getResponseMessage());
+//		  		System.out.println(">>>" + vStringBuilder.toString());
+				vStringLine = vStringBuilder.toString();
+			}
+
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// 데이터를 문자열화
+		return mapper.writeValueAsString(modelMap);
+	}
 	
 	
 	

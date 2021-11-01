@@ -306,9 +306,10 @@ footer > .foot > nav > a{
 	
 	//로그인 
 	/* $("#loginBtn").on("click",function(){
-		location.href = "testLogin";
-	});
-	 */
+			$("#loginForm").attr("action","logins")
+			$("#loginForm").submit()
+		}) */
+	 
 	 
 	//로그아웃 
 	/* $("#logoutBtn").on("click",function(){
@@ -342,10 +343,15 @@ footer > .foot > nav > a{
 	//상세보기 버튼을 클릭했을 때 이벤트 
 	 $("tbody").on("click", "input", function(){
 		console.log("no >>" + $(this).parents('tr').find('td[name="pIdx"]').text());
-		
+		console.log("name>>" + $(this).parents('tr').find('td[name="pname"]').text());
+		console.log("addr>>" + $(this).parents('tr').find('td[name="paddr"]').text());
+		console.log("phon>>" + $(this).parents('tr').find('td[name="pphon"]').text());
 		//$("#no").attr($(this).parents('tr').find('td[name="pIdx"]').text()); 
 		
 		$("#no").val($(this).parents('tr').find('td[name="pIdx"]').text());
+		$("#name").val($(this).parents('tr').find('td[name="pname"]').text());
+		$("#addr").val($(this).parents('tr').find('td[name="paddr"]').text());
+		$("#phon").val($(this).parents('tr').find('td[name="pphon"]').text());
 		
 		$("#actionForm").attr("action","parkDtl");
 		$("#actionForm").submit();
@@ -399,8 +405,8 @@ footer > .foot > nav > a{
       $data = "";
       
       for (var idx in rows) {
-         $data += '<tr><td name="pIdx">'+ rows[idx].P_IDX + '</td><td>' + rows[idx].P_PARK + '</td><td>'+ rows[idx].P_ADDR 
-         		+ '</td><td>'+ rows[idx].P_ADMINTEL + '</td><td>' + '<input type="button" value="상세보기" id="DtlBtn">' + '</td></tr>';
+         $data += '<tr><td name="pIdx">'+ rows[idx].P_IDX + '</td><td name="pname">' + rows[idx].P_PARK + '</td><td name="paddr">'+ rows[idx].P_ADDR 
+         		+ '</td><td name="pphon">'+ rows[idx].P_ADMINTEL + '</td><td>' + '<input type="button" value="상세보기" id="DtlBtn">' + '</td></tr>';
       }
       
       $("#table").html($data);
@@ -442,7 +448,7 @@ footer > .foot > nav > a{
 	
 	$(".paging_wrap").html(html);
 }
- */
+
 </script>
 </head>
 <body>
@@ -452,7 +458,6 @@ footer > .foot > nav > a{
 			<div id="logo">
 				<form action="#" method="post" id="Loginform" >
 					<div class="logout">
-						{000}님 환영합니다.
 						<div class="pencil"></div>
 						<input type="button" value="로그아웃" id="LogoutBtn"/>
 					</div>
@@ -489,7 +494,7 @@ footer > .foot > nav > a{
 							</li>
 							<li class="sub FDust">미세먼지</a>
 								<ul class="gnb_sub">
-									<li><a href="#">미세먼지 현황</a></li>
+									<li><a href="http://localhost/Seodery/dust">미세먼지 현황</a></li>
 								</ul>
 							</li>
 							<li class="sub Memory">추억저장</a>

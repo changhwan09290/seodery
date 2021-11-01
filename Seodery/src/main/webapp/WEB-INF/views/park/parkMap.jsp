@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
-<!-- <script src="//code.jquery.com/jquery.min.js"></script> -->
 <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c953a065c47d3eb731f9ab037fd520fa"></script> -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c953a065c47d3eb731f9ab037fd520fa&libraries=services,clusterer,drawing"></script>
 <style type="text/css">
@@ -251,6 +250,13 @@ footer > .foot > nav > a{
 	margin-left: 40%;
 }
 
+.desc #DtlBtn{
+	border: none;
+    background-color: white;
+    color: blue;
+    font-weight: 900;
+    cursor: pointer;
+}
 
 /* 지도 오버레이 */
 .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
@@ -268,10 +274,13 @@ footer > .foot > nav > a{
 x;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
 .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
 .info .link {color: #5085BB;}
-
+.info .pIdx{
+	display: none;
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
+	var overlays = new Array();
 	gnbSlideInit();
 	
 	//상세보기 버튼을 클릭했을 때 이벤트 
@@ -281,6 +290,16 @@ $(document).ready(function(){
 		//$("#no").attr($(this).parents('tr').find('td[name="pIdx"]').text()); 
 		
 		$("#no").val($(this).parents('tr').find('td[name="pIdx"]').text());
+		
+		$("#actionForm").attr("action","parkDtl");
+		$("#actionForm").submit();
+	});  
+	
+	//지도 상세보기 버튼을 클릭했을 때 이벤트 
+	 $("#map").on("click", "input", function(){
+		console.log("위치>>>>" + $(this).parents('div').children('div[name="pIdx"]').text());
+		
+		$("#no").val($(this).parents('div').children('div[name="pIdx"]').text());
 		
 		$("#actionForm").attr("action","parkDtl");
 		$("#actionForm").submit();
@@ -313,25 +332,25 @@ $(document).ready(function(){
 			var marker = new kakao.maps.Marker({
 		        map: map, // 마커를 표시할 지도
 		        position: new kakao.maps.LatLng(data.LATITUDE, data.LONGITUDE), // 마커를 표시할 위치
-		        title : data.P_PARK // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+		        title : data.P_PARK, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+		        idx : overlays.length
 		    });
 			
+			var idx = overlays.length;
+			
 // 			var iwPosition = new kakao.maps.LatLng(data.LATITUDE, data.LONGITUDE); //인포윈도우 표시 위치입니다
-			var iwContent = '<div class="wrap">' + 
-            '    <div class="info">' + 
-            '        <div class="title">' + 
-            data.P_PARK + 
-            '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
-            '        </div>' + 
-            '        <div class="body">' + 
-            '            <div class="img">' +
-            '                <img src=\"' + data.P_IMG + '\" width="73px;heigt="70px">' +
-            '           </div>' + 
-            '            <div class="desc">' + 
-            '                <div class="ellipsis">'+data.P_ADDR +'</div>' + 
-            '            </div>' + 
-            '        </div>' + 
-            '    </div>' +    
+			var iwContent = 
+			'<div class="wrap">' + '<div class="info">' + '<div name="pIdx">' + data.P_IDX +'</div>'
+			+'<div class="title">' + data.P_PARK + '<div class="close close_info" idx="' + idx + '" title="닫기"></div>' + 
+            '</div>' + '<div class="body">' + '<div class="img">' +
+            '<img src=\"' + data.P_IMG + '\" width="73px;heigt="70px">' +
+            '</div>' + 
+            '<div class="desc">' + 
+            '<div class="ellipsis">'+data.P_ADDR +'</div>' + 
+            '<input type="button" value="상세보기" id="DtlBtn">'+
+            '</div>' + 
+            '</div>' + 
+            '</div>' +    
             '</div>';
             
 				var overlay = new kakao.maps.CustomOverlay({
@@ -341,17 +360,20 @@ $(document).ready(function(){
 				    position: marker.getPosition()  
 				});
 				
+				overlays.push(overlay);
+				
 				// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
 				kakao.maps.event.addListener(marker, 'click', function() {
-				    overlay.setMap(map);
+					overlay.setMap(map);
+					
 				});
-				
-				// 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
-				function closeOverlay() {
-				    overlay.setMap(null);     
-				}
 		}
 		
+		
+		// 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+		$("body").on("click", ".close_info", function() {
+			overlays[$(this).attr("idx")].setMap(null);
+		});
 	 } 
 	
 
@@ -497,7 +519,7 @@ function drawPaging(pb){
 							</li>
 							<li class="sub FDust">미세먼지</a>
 								<ul class="gnb_sub">
-									<li><a href="#">미세먼지 현황</a></li>
+									<li><a href="http://localhost/Seodery/dust">미세먼지 현황</a></li>
 								</ul>
 							</li>
 							<li class="sub Memory">추억저장</a>
