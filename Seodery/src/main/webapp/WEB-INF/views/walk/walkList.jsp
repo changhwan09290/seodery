@@ -30,11 +30,10 @@
     	  
     	//페이징
     		 $(".paging_wrap").on("click","span",function(){
-    			 $("#page").val($(this).attr("page"));
-    			 /* $("#searchTxt").val($("#oldTxt").val());  */
-    			
-    			reloadList();
-    		});  	  
+				 $("#page").val($(this).attr("page"));
+	
+				reloadList();
+			})  
     	  
     	  
     	  
