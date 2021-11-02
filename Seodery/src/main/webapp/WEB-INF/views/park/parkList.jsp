@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,7 +46,8 @@
         }
         
  /* 로그인 버튼 */
-#LogoutBtn {
+/*  
+ #LoginBtn,#LogoutBtn {
 	border : none;
 	border-radius: 5px;
 	background-color:rgb(3, 104, 115);
@@ -57,19 +59,35 @@
 	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
 	/* position: fixed;
 	right: 90px;
-	top: 100px; */
-}
+	top: 100px; 
+} */
+ 
+/* 로그인 버튼 */
+#LoginBtn,#LogoutBtn {
+	z-index: 9999;
+   border : none;
+   border-radius: 5px;
+   background-color:rgb(3, 104, 115);
+   font-size: 1.1rem;
+   color : white;
+   font-family: '고딕';
+   cursor: pointer;
+   padding: 4px 17px 4px 17px;
+   box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
+   /* position: fixed;
+   right: 90px;
+   top: 100px; */
+} 
+ 
 
 /* 로그인버튼, 유저 로그인정보 div */
-.logout{
+ .logo{
 	white-space : nowrap;
  	display : flex;
- 	position : absolute;
-	right: 8%;
-	top: 93px;
-	align-items: flex-end;
+	margin-left: 630px;
+	margin-top: 0px;
 	
-}
+} 
 /* 마이페이지 연필 이미지 */
 .pencil{
 	width: 30px;
@@ -305,10 +323,13 @@ footer > .foot > nav > a{
 	}); */
 	
 	//로그인 
-	/* $("#loginBtn").on("click",function(){
-			$("#loginForm").attr("action","logins")
-			$("#loginForm").submit()
-		}) */
+	   $("#LoginBtn").on("click",function(){
+			
+		 location.href = "login";
+		 /*   $("#Loginform").attr("action","logins")
+			$("#Loginform").submit()   */
+		});  
+
 	 
 	 
 	//로그아웃 
@@ -388,6 +409,7 @@ footer > .foot > nav > a{
  		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
  			console.log(res);
  			makeTable(JSON.parse(res.resData));
+ 			console.log(makeTable(JSON.parse(res.resData)));
  			//drawList(res.list);
  			drawPaging(res.pb);
  		},
@@ -410,7 +432,6 @@ footer > .foot > nav > a{
       }
       
       $("#table").html($data);
-     
    }
  
  
@@ -449,21 +470,34 @@ footer > .foot > nav > a{
 	$(".paging_wrap").html(html);
 }
 
+/*  function linkGo(url) {
+		location.href = url
+	} */
+ 
 </script>
 </head>
 <body>
 
  <div id="wrapper">
         <header id="header">
-			<div id="logo">
-				<form action="#" method="post" id="Loginform" >
-					<div class="logout">
-						<div class="pencil"></div>
-						<input type="button" value="로그아웃" id="LogoutBtn"/>
-					</div>
-				</form>
-			</div> 
-			
+		<div class="logo">
+			</div>
+			<div class="pencil"></div>
+						<c:choose>
+							<c:when test="${empty sMNo}">
+								<div class="login">
+									<input type="button" value="로그인" id="LoginBtn"/>
+								</div>
+							</c:when>
+						<c:otherwise>
+							<div class="logout">
+								${sMNm}님 환영합니다.
+								<div class="pencil"></div>
+								<input type="button" value="로그아웃" id="LogoutBtn"/>
+							</div>
+						</c:otherwise>
+						</c:choose>
+						
 			<div class="navcon">
 				<nav id="nav">
 					<div class="gnb_subbox"></div>

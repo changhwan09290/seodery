@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
     <link rel="stylesheet" href="resources/css/login/default.css">
     <link rel="stylesheet" href="resources/css/login/login.css">
-	<script src="resources/script/login/login.js"></script>
+	<script src="resources/script/login/login.js"></script>                          
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
     <link rel="stylesheet" href="resources/css/login/mainpage.css">
     <script type="text/javascript">

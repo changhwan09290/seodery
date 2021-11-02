@@ -4,8 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="css/Mbercss.css">
+
+<link rel="stylesheet" href="resources/css/login/member.css">
+
 <style>
 
 </style>
@@ -14,10 +15,15 @@
         // 필수 입력정보인 아이디, 비밀번호가 입력되었는지 확인하는 함수
         function checkValue()
         {
-            if(!document.userInfo.id.value){
-                alert("아이디를 입력하세요.");
-                return false;
-            }
+        	$("#id").hide();
+			$("#id").text("사용가능한 아이디입니다.");
+			$("#id").show();
+
+		} else if (data.Check === "fail") {
+			$("#id").hide();
+			$("#id").text("아이디가 중복되었습니다.");
+			$("#id").show();
+		}
             
             if(!document.userInfo.password.value){
                 alert("비밀번호를 입력하세요.");
