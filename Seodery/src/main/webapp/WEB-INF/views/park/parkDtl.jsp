@@ -347,30 +347,33 @@ footer > .foot > nav > a{
   background-color: #ccc;
 }
 
-/* Style the tab content */
+/* 탭 메뉴  */
 .tabcontent {
   display: none;
   padding: 6px 12px;
  /*  border: 1px solid #ccc; */
   border-top: none;
   position: relative;
-  height: 100vh;
+  height: 100%;
   width: 100%;
 }
 
 /* 댓글 */
 
 .pc_wrap {
-	width: 800px;
+	width: 95%;
 	margin: 0px auto;
-	 border: 1px solid #444444; 
+	border: 1px solid #444444; 
 }
 
+/* 댓글 감싸는 div */
 .write_area {
 	height: 100px;
+	display : inline-block;
 	position: relative;
 }
 
+/* 유저아이디 div */
 .user_info {
 	display: inline-table;
 	width: 100px;
@@ -387,32 +390,35 @@ footer > .foot > nav > a{
 	font-size: 12pt;
 }
 
+/* 댓글 작성 폼  */
 .write_con_wrap {
-	display: inline-block;
-	width: 550px;
+	width: 800px;
 	height: 100px;
+	display : inline-block;
 	vertical-align: top;
 }
-
+/* 댓글 작성 아이템 */
 .write_con {
-	width: 540px;
+	width: 95%;
 	height: 90px;
 	resize: none;
 	margin: 2px;
 }
 
+/* 작성, 수정, 취소 버튼 */
 .btn_wrap {
 	display: inline-block;
-	width: 150px;
+	width: 140px;
 	height: 100px;
+	margin-left: 700px;
 	vertical-align: top;
 	position: absolute;
 }
-
 .action_btn {
-	width: 128px;
+	width: 100px;
 	height: 97px;
 	margin: 2px;
+	justify-content: flex-end;
 	
 }
 
@@ -420,6 +426,11 @@ footer > .foot > nav > a{
 	width: 71px;
 	height: 96px;
 	margin: 2px;
+}
+
+/* 댓글 작성 전체 div */
+.write_area{
+	width: 100%;
 }
 
 .write_area .action_btn2 {
@@ -477,6 +488,26 @@ footer > .foot > nav > a{
 	vertical-align: middle;
 	text-align: left;
 	font-size: 12pt;
+}
+
+.wcbox{
+	display: flex;
+}
+.write_con_wrap{
+	justify-content: center;
+}
+
+
+.imgbox { /*사이드바 %로 단위변경*/
+  float: right;
+  width: 40.25%;
+  height: 200px;
+  padding: 1.5625%;
+  margin-top: -360px;
+  margin-left: 51%;
+}
+.imgbox img {
+	margin-left: 50%;
 }
 </style>
 <script type="text/javascript">
@@ -555,7 +586,6 @@ $(document).ready(function(){
 				$(".write_con").focus();
 			} else {
 // 				var no = $(this).parent().attr("no");
-				
 // 				$("#no").val(no);
 // 				$("#actionForm").attr("action", "parkadd");
 // 				$("#actionForm").submit();
@@ -691,24 +721,16 @@ function reloadMap(){
       var rows = jsonData.SearchParkInfoService.row;
 
       $data = "";
-      /* for (var idx in rows) {
-         $data += '<tr><td>' + rows[idx].P_IDX + '</td><tr><td>' + rows[idx].P_PARK + '</td></tr><tr><td>'+'<img src="resources/images/park/phone-call.png">'+rows[idx].P_ADMINTEL 
-         + '</td></tr><td>'+'<img src="resources/images/park/location.png">' + "공원 주소 : " + rows[idx].P_ADDR + '</td><tr><td>'+ '<img src="resources/images/park/right.png">' + "개원일 : " + rows[idx].OPEN_DT + '</td></tr><tr><td>' 
-         + '<img src="resources/images/park/right.png">' + "주요 시설 : " + rows[idx].MAIN_EQUIP 
-         + '</td></tr><tr><td>' + "주요 식물 : " + rows[idx].MAIN_PLANTS + '</td></tr><tr><td>'
-         + '<img src=\"' + rows[idx].P_IMG + '\"></td><tr>';
-         
-      } */
       for (var idx in rows) {
           $data += '<tr><td>' + rows[idx].P_IDX + '</td><tr><td>' + rows[idx].P_PARK + '</td></tr><tr><td>'+'<img src="resources/images/park/phone-call.png">'+rows[idx].P_ADMINTEL 
           + '</td></tr><td>'+'<img src="resources/images/park/location.png">' + "공원 주소 : " + rows[idx].P_ADDR + '</td><tr><td>'+ '<img src="resources/images/park/right.png">' + "개원일 : " + rows[idx].OPEN_DT + '</td></tr><tr><td>' 
           + '<img src="resources/images/park/right.png">' + "주요 시설 : " + rows[idx].MAIN_EQUIP 
-          + '</td></tr><tr><td>' + "주요 식물 : " + rows[idx].MAIN_PLANTS + '</td></tr><tr><td>'
-          + '<img src=\"' + rows[idx].P_IMG + '\"></td><tr>';
+          + '</td></tr><tr><td>' + "주요 식물 : " + rows[idx].MAIN_PLANTS + '</td></tr>';
           
        }
       
       $("#table").html($data);
+      $(".imgbox").html('<img src=\"' + rows[idx].P_IMG + '\">');
    }
  
  
@@ -805,8 +827,8 @@ function reloadMap(){
 							</div>
 							<li class="sub Park">공원</a>	
 								<ul class="gnb_sub">
-									<li><a href="http://localhost/Seodery/parkList">공원 찾기</a></li>
-									<li><a href="http://localhost/Seodery/parkMap">길 찾기</a></li>
+									<li><a href="parkList">공원 찾기</a></li>
+									<li><a href="parkMap">길 찾기</a></li>
 								</ul>
 							</li>
 							<li class="sub WalkT">산책로</a>
@@ -823,7 +845,7 @@ function reloadMap(){
 							</li>
 							<li class="sub FDust">미세먼지</a>
 								<ul class="gnb_sub">
-									<li><a href="http://localhost/Seodery/dust">미세먼지 현황</a></li>
+									<li><a href="dust">미세먼지 현황</a></li>
 								</ul>
 							</li>
 							<li class="sub Memory">추억저장</a>
@@ -867,16 +889,17 @@ function reloadMap(){
 							<input type="hidden" name="phon"  value="${param.phon}"/>
 					</form>
 					</div>
-				<div >
+				<div>
 			            <table>
 			            	<thead>
 								
 							</thead>
 				               <tbody id="table">
 				               
-				               </tbody>   
+				               </tbody>
 				            </table>
 				</div>
+				               <div class="imgbox"></div>   
 				
 				<div class="tab">
 				  <button class="tablinks" onclick="openTab(event, 'Comm')">댓글</button>
@@ -886,10 +909,10 @@ function reloadMap(){
 				<section id="Comm" class="tabcontent">
 					<h2>댓글</h2>	
 					
-					<div id="rateBox"></div>
 					
-					<div class="wc_wrap">
+					<div class="pc_wrap">
 						<div class="write_area">
+					<div id="rateBox"></div>
 							<form action="#" id="wcform" method="post">
 							<c:choose>
 								<c:when test="${empty sMNo}">
@@ -907,6 +930,7 @@ function reloadMap(){
 								<input type="hidden" name="addr"  value="${param.addr}"/>
 								<input type="hidden" name="phon"  value="${param.phon}"/>
 								<input type="hidden" name="srating"/>
+								<div class="wcbox">
 								<div class="user_info">
 									<div class="user_name">${sMNm}</div>
 								</div>
@@ -921,6 +945,7 @@ function reloadMap(){
 								</c:otherwise>
 						</c:choose>
 							</form>
+								</div>
 						</div>
 					</div>
 					
@@ -936,7 +961,7 @@ function reloadMap(){
 							<c:forEach var="data" items="${list}">
 							<div class="ob_data">
 								<div class="user_info">
-									<div class="user_name" name="mo">${data.MBER_NUM}</div>
+									<div class="user_name" name="mo">${sMNm}</div>
 								</div>
 								<div class="con_info">
 									<div class="con" name="con">${data.CON}</div>
