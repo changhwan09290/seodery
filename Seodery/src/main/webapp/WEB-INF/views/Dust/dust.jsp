@@ -46,7 +46,8 @@
         }
         
  /* 로그인 버튼 */
-#LogoutBtn {
+#LogoutBtn,#LogoutBtn {
+	z-index: 9999;
 	border : none;
 	border-radius: 5px;
 	background-color:rgb(3, 104, 115);
@@ -62,7 +63,7 @@
 }
 
 /* 로그인버튼, 유저 로그인정보 div */
-.logout{
+.login{
 	white-space : nowrap;
  	display : flex;
  	position : absolute;
@@ -323,7 +324,7 @@ footer > .foot > nav > a{
     /*좋음 */
     .good {	
 	 	background-color: rgb( 66, 167, 255);    
-	 	width:30%;
+	 	width:25%;
     	box-sizing: border-box;
 	}
 	/*보통 */
@@ -388,11 +389,19 @@ footer > .foot > nav > a{
 <script type="text/javascript"
 		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
-	
+
 	//지도 표시 div
 	$(document).ready(function() {
-		
 		dust();
+		
+		//로그인 
+		   $("#LoginBtn").on("click",function(){
+				
+			 location.href = "login";
+			});  
+
+		
+		
 	}); 
 	
 
@@ -625,17 +634,25 @@ footer > .foot > nav > a{
 </head>
 <body>
 
- <div id="wrapper">
+<div id="wrapper">
         <header id="header">
 			<div id="logo">
 				<form action="#" method="post" >
 					<div class="logout">
-						{000}님 환영합니다.
-						<div class="pencil"></div>
-						<input type="button" value="로그아웃" id="LogoutBtn"/>
+						<c:choose>
+							<c:when test="${empty sMNo}">
+								<input type="button" value="로그인" id="LoginBtn" />
+							</c:when>
+							<c:otherwise>
+								${sMNm}님 환영합니다.
+								<div class="pencil"></div>
+								<input type="button" value="로그아웃" id="LogoutBtn" />
+							</c:otherwise>
+						</c:choose>							
 					</div>
 				</form>
-			</div> 
+			</div>
+			
 			
 			<div class="navcon">
 				<nav id="nav">

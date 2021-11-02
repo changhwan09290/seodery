@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MOpinion">
+	<select id="getCSCnt" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*) AS CNT
+		FROM CS
+		WHERE DELC = 1		
+	</select>
+
+
+	<select id="getMOpinionList" parameterType="hashmap" resultType="hashmap">		
+		SELECT C.MBER_OPINI_NUM, C.TITLE, ID ,C.REGISTER_DT, C.ATACH
+		FROM (SELECT C.MBER_OPINI_NUM, C.TITLE, ID,
+				TO_CHAR(C.REGISTER_DT, 'YYYY-MM-DD') AS  REGISTER_DT, ATACH,
+				ROW_NUMBER() OVER(ORDER BY C.MBER_OPINI_NUM DESC) AS RNUM
+		FROM CS C INNER JOIN UR U 
+		        ON C.MBER_NUM = U.MBER_NUM
+		WHERE C.DELC =1 
+		) C
+		WHERE C.RNUM BETWEEN #{startCnt} AND #{endCnt}
+	</select>
+
+	<insert id="MOpinionAdd" parameterType="hashmap">
+		INSERT INTO CS(MBER_OPINI_NUM, MBER_NUM, TITLE, CON, ATACH)
+		VALUES(CS_SEQ.NEXTVAL, #{mno}, #{title}, #{con}, #{atach})
+	</insert>
+		
+	<select id="getMOpinion" parameterType="hashmap" resultType="hashmap">
+		SELECT C.TITLE, ID, C.CON , C.ATACH,
+				TO_CHAR(REGISTER_DT, 'YYYY-MM-DD') AS  REGISTER_DT
+		FROM CS C INNER JOIN UR U 
+		        ON C.MBER_NUM = U.MBER_NUM
+		WHERE 1 = 1
+		 AND MBER_OPINI_NUM = #{no}
+	</select>	
+	
+	<update id="UpdateMOpinion" parameterType="hashmap" >
+		UPDATE CS SET TITLE = #{title},
+        			  CON = #{con},       
+        			  ATACH = #{atach}		  
+			WHERE MBER_OPINI_NUM = #{no}
+	</update>
+	
+	<update id="deleteMOpinion" parameterType="hashmap">
+		UPDATE CS SET DELC = 0
+		WHERE MBER_OPINI_NUM = #{no}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+</mapper>
