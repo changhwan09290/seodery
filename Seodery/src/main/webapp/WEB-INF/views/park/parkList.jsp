@@ -306,7 +306,7 @@ footer > .foot > nav > a{
 		$("#actionForm").attr("action","testABAdd");
 		$("#actionForm").submit();
 	}); */
-	
+
 	//로그인 
 	   $("#LoginBtn").on("click",function(){
 			
@@ -365,6 +365,7 @@ footer > .foot > nav > a{
 		url : "apitest", 
 		type: "get",	//전송 방식
  		dataType:"json",	//받아올 데이터 형태 
+ 		async: false,
  		data: params,
 //  		data : sendData,	//보낼 데이터(문자열 형태)
  		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
