@@ -354,8 +354,9 @@ function drawList(list) {
 	for(var data of list) {
 		html += "<tr title=\"" + data.TITLE + "\"> ";
 		html += "<td>" + data.QS_NUM + "</td>		";
-		html += "<td>" + data.TITLE + "</td>		";
-		if(data.BAS_TITLE != null) {
+		html += "<td>";		
+		html += data.TITLE;
+		if(data.ATACH != null) {
 	    	html += "<img src=\"resources/images/bicycle/attach_icon.png\" />";
 	    }
 	    html += "</td>";
@@ -416,15 +417,14 @@ function drawPaging(pb) {
 					<div class="logout">
 						<c:choose>
 							<c:when test="${empty sMNo}">
-								<input type="button" value="로그인" id="LoginBtn" onclick="console.log('!');"/>
+								<input type="button" value="로그인" id="LoginBtn"/>
 							</c:when>
 							<c:otherwise>
 								${sMNm}님 환영합니다.
 								<div class="pencil"></div>
 								<input type="button" value="로그아웃" id="LogoutBtn" />
 							</c:otherwise>
-						</c:choose>						
-						<!-- <input type="button" value="로그아웃" id="LogoutBtn"/> -->
+						</c:choose>
 					</div>
 				</form>
 			</div> 
@@ -441,13 +441,13 @@ function drawPaging(pb) {
 							</div>
 							<li class="sub Park">공원
 								<ul class="gnb_sub">
-									<li><a href="#">공원 찾기</a></li>
-									<li><a href="#">길 찾기</a></li>
+									<li><a href="parkList">공원 찾기</a></li>
+									<li><a href="parkMap">길 찾기</a></li>
 								</ul>
 							</li>
 							<li class="sub WalkT">산책로
 								<ul class="gnb_sub">
-									<li><a href="#">산책로 찾기</a></li>
+									<li><a href="walkList">산책로 찾기</a></li>
 								</ul>
 							</li>
 							<li class="sub Bike">자전거
@@ -459,7 +459,7 @@ function drawPaging(pb) {
 							</li>
 							<li class="sub FDust">미세먼지
 								<ul class="gnb_sub">
-									<li><a href="#">미세먼지 현황</a></li>
+									<li><a href="dust">미세먼지 현황</a></li>
 								</ul>
 							</li>
 							<li class="sub Memory">추억저장
