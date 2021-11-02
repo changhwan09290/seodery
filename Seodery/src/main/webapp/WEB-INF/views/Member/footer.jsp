@@ -5,9 +5,44 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+ footer{ /*푸터 %로 단위변경*/
+            clear: both; 
+            width: 85%;
+            height: 120px;
+            text-align: center;
+        }
+        /* footer */
+footer { 
+	width: 85%;
+	height: 110px;
+	position: fixed;				
+	bottom : 0px; 
+	/* position: relative;				
+	top:580px;
+	bottom : 0px; */
+	padding-top: 15px;
+	color: gray;
+	font-size: 0.8em;
+	text-align: center;
+	margin: 0 auto;
+	
+}
+/* footer div */
+.foot{
+	border-top: 1px solid black;
+	
+}
+
+footer > .foot > nav > a{
+	text-decoration: none;
+	color: black;
+}
+        
+</style>
 </head>
 <body>
-<footer>
+ <footer>
        <div class="foot">
 			<nav>
 			<br/>
@@ -22,9 +57,5 @@
 				</p>
 		</div>
     </footer>
-    </div>
-   
-    <script type="text/javascript" src="resources/script/jquery/swiper.js"></script>
-   
 </body>
 </html>
