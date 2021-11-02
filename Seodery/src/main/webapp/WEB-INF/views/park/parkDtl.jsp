@@ -77,8 +77,6 @@
 	top: 93px;
 	align-items: flex-end;
 } 
-	
-}
 /* 마이페이지 연필 이미지 */
 .pencil{
 	width: 30px;
