@@ -18,5 +18,4 @@ public interface IMOpinionService {
 	public int deleteMOpinion(HashMap<String, String> params) throws Throwable;
 
 
-
 }

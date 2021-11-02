@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Notice">
+	<select id="getNCnt" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*) AS CNT
+		FROM NT
+		WHERE DELC = 1		
+	</select>
+	
+	
+	<select id="getNoticeList" parameterType="hashmap" resultType="hashmap">		
+		SELECT N.NOT_NUM, N.TITLE, ID ,N.REGISTER_DT, N.ATACH
+		FROM (SELECT N.NOT_NUM, N.TITLE, ID,
+				TO_CHAR(N.REGISTER_DT, 'YYYY-MM-DD') AS  REGISTER_DT, ATACH,
+				ROW_NUMBER() OVER(ORDER BY N.NOT_NUM DESC) AS RNUM
+		FROM NT N INNER JOIN UR U 
+		        ON N.MBER_NUM = U.MBER_NUM
+		WHERE N.DELC =1 
+		) N
+		WHERE N.RNUM BETWEEN #{startCnt} AND #{endCnt}
+	</select>
+	
+	<insert id="NoticeAdd" parameterType="hashmap">
+		INSERT INTO NT(NOT_NUM, MBER_NUM, TITLE, CON, ATACH)
+		VALUES(NT_SEQ.NEXTVAL, #{mno}, #{title}, #{con}, #{atach})
+	</insert>
+	
+	<select id="getNotice" parameterType="hashmap" resultType="hashmap">
+		SELECT N.NOT_NUM, ID, N.CON , N.ATACH,
+				TO_CHAR(REGISTER_DT, 'YYYY-MM-DD') AS  REGISTER_DT
+		FROM NT N INNER JOIN UR U 
+		        ON N.MBER_NUM = U.MBER_NUM
+		WHERE 1 = 1
+		 AND NOT_NUM = #{no}
+	</select>
+	
+	
+	<update id="UpdateNotice" parameterType="hashmap" >
+		UPDATE NT SET TITLE = #{title},
+        			  CON = #{con},       
+        			  ATACH = #{atach}		  
+			WHERE NOT_NUM = #{no}
+	</update>
+	
+	<update id="deleteNotice" parameterType="hashmap">
+		UPDATE NT SET DELC = 0
+		WHERE NOT_NUM = #{no}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

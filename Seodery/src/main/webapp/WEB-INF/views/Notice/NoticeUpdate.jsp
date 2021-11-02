@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,7 +72,6 @@
 	align-items: flex-end;
 	
 }
-
 /* 마이페이지 연필 이미지 */
 .pencil{
 	width: 30px;
@@ -81,7 +82,6 @@
 	margin-left : 7px;
 	background-size: contain;
 }
-
 
 /* 네비게이션바 전체 */
 .navi{
@@ -214,6 +214,8 @@ main > .Cpage {
 	font-weight: 900;
 }
 
+
+
 main > table > tr,td {
 	border: 1px solid black;
 }
@@ -226,43 +228,6 @@ main > table > tr,td {
 	width: 86%;
 } */
 
-/* 표 */
-#table {
-	width: 85%;
-	height : 50%;
-	border-collapse: collapse;
-	margin-left: auto;
-	margin-right: auto;
-	font-family: '고딕';
-	font-size: 1.1rem;
-}
-
-#table > th,td{
-	border : 1px solid black;
-	padding: 5px;
-	text-align: center;
-}
-
-th {
-	border : 1px solid black;
-	padding: 5px;
-	background-color: rgb(212,212,212);
-}
-
-/* 페이징 div */
-.page{
-	display: flex;
-	justify-content: center;
-	margin-top: 25px;
-}
-
-.paging{
-	margin-right: 7px;
-}
-/* 1번째 페이지 */
-#one{
-	color: red;
-}
 /* footer */
 footer { 
 	width: 85%;
@@ -290,208 +255,131 @@ footer > .foot > nav > a{
 	color: black;
 }
 
-.cont{
-  width:720px;
-}
-.container{
-  display:flex;
-  flex-wrap:wrap;
-  width:720px;
-  justify-content:flex-start;
-  text-align: center;
-  top: 45%;
-  left: 50%;
-  transform:translate(-50%, -30%); 
-  position: absolute;
-}
-.single-item{
-  width:200px;
-  height:200px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background-color:#f3f3f3;
-  margin: 20px;
-  border-radius: 10px;
-  color:#888;
-}
-.topbox {
-	display: flex;
-	height: 50px;
-	margin-bottom: 10px; 
-	margin-left: 10px;
-}
-
-
-#addBtn{
-	border : none;
-	border-radius: 5px;
-	width: 55px;
-	height: 28px;
-	background-color: rgb(3, 104, 115);
-	color: white;
-	font-family: '고딕';	
-	cursor: pointer;
-	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
-	white-space : nowrap;
-	position: absolute;
-	right: 14%;
-	top: 255px;
-}
 
 
 </style>
 <script type="text/javascript"
 		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
+<script type="text/javascript"
+ 		src="resources/script/jquery/jquery.form.js"></script>
+<script type="text/javascript"
+ 		src="resources/script/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
- $(document).ready(function(){
-	 
-	reloadList();
-	
-	//글작성
-	 $("#addBtn").on("click",function(){
-		//취소했을시 검색어유지
-		
-		$("#actionForm").attr("action","MOpinionAdd");
-		$("#actionForm").submit();
-	}); 
-	
-	//로그인 
-	 $("#LoginBtn").on("click",function(){
-			$("#actionForm").attr("action","login")
-			$("#actionForm").submit()
-		});
-	
-	 
-	// 로그아웃 
-	$("#logoutBtn").on("click", function() {
-		location.href = "logout";
+$(document).ready(function(){
+	CKEDITOR.replace("con", {
+		resize_enabled : false,
+		language : "ko",
+		enterMode : "2"
+	});
+	//취소버튼
+	$("#cancelBtn").on("click", function(){
+		$("#backForm").submit();
 	});
 	
-	
-	
-	//페이징
-	 $(".paging_wrap").on("click","span",function(){
-		$("#page").val($(this).attr("page"));
-		$("#searchTxt").val($("#oldTxt").val());
+	//엔터키 폼실행 막기
+	$("#updateForm").on("keypress", "input" , function(event){
+		if(event.keyCode == 13) {//엔터키가 눌러졌을때
+			return false;	//form실행 이벤트를 하지않음 필수
+		}
+	});
 		
-		reloadList();
-	}); 
+	//첨부파일 버튼
+	$("#fileBtn").on("click", function(){
+		$("#att").click();
+	});
 	
-	//tr을 클릭했을 때 이벤트 
-	 $("tbody").on("click", "tr", function(){
-		$("#no").val($(this).attr("no"));
-		
-		$("#actionForm").attr("action","MOpinion");
-		$("#actionForm").submit();
-	});  
+	//첨부파일 선택 시
+	$("#att").on("change", function(){
+		$("#fileName").html($(this).val().substring($(this).val().lastIndexOf("\\") + 1));
+	});
 	
+	//첨부파일 삭제 버튼
+	$("#fileDelBtn").on("click", function(){
+		$("#fileName").html("");//사용자에게 보여지는 파일명
+		$("#atach").val("");//DB에 올라갈 파일명
+		$("#fileBtn").attr("class", "");//첨부파일 선택 버튼 보이기
+		$(this).remove(); //첨부파일 삭제버튼 제거
+	});	
+	
+	//수정 버튼
+	$("#updateBtn").on("click", function() {
+		//ck에디터 중에 con과 관련된 객체에서 데이터를 취득하여textarea인 con에 값을 넣는다
+		$("#con").val(CKEDITOR.instances['con'].getData());		
+
+	if(checkVal("#title")) {
+			alert("제목을 입력해 주세요.");
+			$("#title").focus();
+		}else if(checkVal("#con")) {
+			alert("내용을 입력해 주세요.");
+		}else{	
+			var fileForm = $("#fileForm");
+			
+			fileForm.ajaxForm({
+				success : function(res) {
+					if(res.result == "SUCCESS") {
+					//업로드 파일명 적용
+						if(res.fileName.length > 0) {//업로드한 파일이 있는 경우
+							$("#atach").val(res.fileName[0]);
+						}
+					
+						//글 수정
+						var params = $("#updateForm").serialize();
+						
+						$.ajax({
+							url: "NoticeUpdates",
+							type: "post",
+							dataType: "json",
+							data: params,
+							success: function(res){
+								if(res.result == "success") {
+									$("#backForm").submit();
+								}else if(res.result == "failed") {
+									alert("수정에 실패하였습니다.");
+								} else {
+									alert("수정중 문제가 발생하였습니다.");
+								}
+							},
+							error: function(request, status, error) {
+								console.log(error);
+							}
+						});
+					} else {
+						alert("파일 업로드에 실패하였습니다.");
+					}
+				},
+				error : function(req, status, error) {
+					console.log(error);
+					alert("파일 업로드중에 문제가 발생하였습니다.");
+				}
+			});
+			
+			fileForm.submit();
+		}
+	});
 });
 
-
-
-//데이터 취득
-function reloadList() {
-	var params = $("#actionForm").serialize();//form의 데이터를 문자열로 변환
-	
-	$.ajax({ //jquery의 ajax함수 호츨
-		url: "MOpinionLists", //접속 주소
-		type: "post", //전송 방식
-		dataType: "json",//받오올 데이터 형태
-		data: params, //보낼 데이터(문자열 형태)
-		success: function(res) { //성공(ajax통신 성공) 시 다음 함수 실행
-			 drawList(res.list);
-			 drawPaging(res.pb);
-		},
-		error: function(request, status, error) {//실패 시 다음 함수 실행
-			console.log(request);	
-			console.log(error);	
-		}
-	});
+function checkVal(sel) {
+	if($.trim($(sel).val()) == "") {
+		return true;
+	} else {
+		return false;
+	}
 }
-
-//목록 그리기 
-
-function drawList(list) {
-	var html ="";
-	
-	for(var data of list) {
-		html += "<tr no=\"" +  data.MBER_OPINI_NUM + "\">       " ;
-		html += "<td>" + data.MBER_OPINI_NUM + "</td>         " ;
-		html += "<td>" + data.TITLE + "</td>         " ;
-		html += data.ATACH;
-		
-		if(data.ATACH != null) {
-			html += "<img src=\"resources/images/attFile.png\" />";	
-		} 
-		html += "<td>" + data.ID + "</td>       " ;
-		html += "<td>" + data.REGISTER_DT + "</td>      " ;
-		html += "</tr>              " ;
-	}   
-	
-	$("tbody").html(html);
-}	
-
-
-
- /* 페이징 */
- function drawPaging(pb){
-	console.log("pb", pb);
-	 
-	var html ="";
-	
-	html += "<span page=\"1\">처음</span>      " ;
-	
-	//현재페이지가 1인지 확인
-	if($("#page").val()=="1"){
-		html +=  "<span page=\"1\">이전</span>";
-	}else{
-		html += "<span page=\""+($("#page").val()*1-1)+"\">이전</span>";
-	}
-	
-	
-	for(var i = pb.startPcount; i<= pb.endPcount ; i++){
-		if($("#page").val()==i){
-			html += "<span page=\""+ i + "\"><b>"+i+"</b></span>";
-		}else{
-			html += "<span page=\""+ i + "\">"+ i + "</span>";
-		}
-	}
-	
-	if($("#page").val()== pb.maxPcount){
-		html += "<span page=\""+pb.maxPcount +"\">다음</span>      ";
-	}else {
-		html += "<span page=\""+ ($("#page").val()*1 +1) +"\">다음</span>      ";
-	}
-	
-	html += "<span page=\""+pb.maxPcount +"\">마지막</span>      ";
-	
-	$(".paging_wrap").html(html);
-}
-
 </script>
 </head>
 <body>
 
-<div id="wrapper">
+ <div id="wrapper">
         <header id="header">
 			<div id="logo">
 				<form action="#" method="post" >
 					<div class="logout">
-						<c:choose>
-							<c:when test="${empty sMNo}">
-								<input type="button" value="로그인" id="LoginBtn" />
-							</c:when>
-							<c:otherwise>
-								${sMNm}님 환영합니다.
-								<div class="pencil"></div>
-								<input type="button" value="로그아웃" id="LogoutBtn" />
-							</c:otherwise>
-						</c:choose>						
-						<input type="button" value="로그아웃" id="LogoutBtn"/> 
+						{000}님 환영합니다.
+						<div class="pencil"></div>
+						<input type="button" value="로그아웃" id="LogoutBtn"/>
 					</div>
 				</form>
-			</div>
+			</div> 
 			
 			<div class="navcon">
 				<nav id="nav">
@@ -555,30 +443,48 @@ function drawList(list) {
 	</header>
 		
 	<main>
-      		<div class="Cpage"><h4>공지사항 > 고객의 소리함</h4></div>
-      		<form action="#" id="actionForm" method="post">
-	      	<div class="topbox">
-	      		<div class="menuBox"><h2>고객의 소리함</h2></div>
-				<input type="hidden"  id="oldTxt" value="${param.searchTxt}" />
-				<input type="hidden"  name="page" id="page" value="${page}" />
-				<input type="hidden" name="no" id="no" />
-				<input type="button" value="작성" id="addBtn"/>
-	      	</div>
-	      	</form>
-	      	<table id="table">
-	      		<thead>
-	      			<tr>
-		      			<th>번호</th>
-		      			<th>제목</th>
-		      			<th>아이디</th>
-		      			<th>작성일</th>
-	      			</tr>	      			
-	      		</thead>
-	      		<tbody></tbody>	
-	      	</table>
-		      		
+	
+      		<div class="Cpage"><h4>공지사항 > 고객의 소리함 > 작성페이지</h4></div>
+      		<div class="title">
+      			<h1>고객의 소리함</h1>
+      		</div>
+      		
+			<form id="fileForm" action="fileUploadAjax" method="post" enctype="multipart/form-data">
+				<input type="file" name="att" id="att" />
+			</form>
+			<form action="MOpinion" id="backForm" method="post">
+				<input type="hidden" name="searchGbn" value="${param.searchGbn}" />
+				<input type="hidden" name="searchTxt" value="${param.searchTxt}" />
+				<input type="hidden" name="page" value="${param.page}" />
+				<input type="hidden" name="no" value="${param.no}" />					
+			</form>
+		<form action="#" id="updateForm" method="post">
+		<input type="hidden" name="no" value="${param.no}" />	
+	제목 <input type="text" id="title" name="title" value="${data.TITLE}" /><br>
+	작성자 : ${data.ID}<input type="hidden" name="id" value="${sMNo}" /><br>
+	<textarea rows="5" cols="5" id="con" name="con">${data.CON}</textarea>
+	첨부파일 :
+	<c:choose>
+		<c:when test="${!empty data.ATACH}">
+		<!-- 첨부파일이 있는경우 버튼을 숨긴다 -->
+			<input type="button" value="첨부파일선택" id="fileBtn" class="hide_btn" />
+		</c:when>
+		<c:otherwise>
+			<input type="button" value="첨부파일선택" id="fileBtn" />
+		</c:otherwise>
+	</c:choose>
+	<c:set var="len" value="${fn:length(data.ATACH)}"></c:set>
+	<span id="fileName">${fn:substring(data.ATACH, 20, len)}</span><!-- 현재 등록되어있는 파일명 -->
+	<c:if test="${!empty data.ATACH}">
+		<input type="button" value="첨부파일삭제" id="fileDelBtn" />
+	</c:if> 
+	<input type="hidden" name="atach" id="atach" value="${data.ATACH}" /><!-- DB저장용 -->	
+	</form>
+		<br>
+		<input type="button" value="수정" id="updateBtn" />
+		<input type="button" value="취소" id="cancelBtn" />
+				
 
-<div class="paging_wrap" align="center"></div>
     </main>
     
     

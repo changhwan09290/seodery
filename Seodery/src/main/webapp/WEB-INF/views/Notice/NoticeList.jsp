@@ -352,7 +352,7 @@ footer > .foot > nav > a{
 	 $("#addBtn").on("click",function(){
 		//취소했을시 검색어유지
 		
-		$("#actionForm").attr("action","MOpinionAdd");
+		$("#actionForm").attr("action","NoticeAdd");
 		$("#actionForm").submit();
 	}); 
 	
@@ -382,10 +382,10 @@ footer > .foot > nav > a{
 	 $("tbody").on("click", "tr", function(){
 		$("#no").val($(this).attr("no"));
 		
-		$("#actionForm").attr("action","MOpinion");
+		$("#actionForm").attr("action","Notice");
 		$("#actionForm").submit();
 	});  
-	
+	 
 });
 
 
@@ -395,7 +395,7 @@ function reloadList() {
 	var params = $("#actionForm").serialize();//form의 데이터를 문자열로 변환
 	
 	$.ajax({ //jquery의 ajax함수 호츨
-		url: "MOpinionLists", //접속 주소
+		url: "NoticeLists", //접속 주소
 		type: "post", //전송 방식
 		dataType: "json",//받오올 데이터 형태
 		data: params, //보낼 데이터(문자열 형태)
@@ -416,8 +416,8 @@ function drawList(list) {
 	var html ="";
 	
 	for(var data of list) {
-		html += "<tr no=\"" +  data.MBER_OPINI_NUM + "\">       " ;
-		html += "<td>" + data.MBER_OPINI_NUM + "</td>         " ;
+		html += "<tr no=\"" +  data.NOT_NUM + "\">       " ;
+		html += "<td>" + data.NOT_NUM + "</td>         " ;
 		html += "<td>" + data.TITLE + "</td>         " ;
 		html += data.ATACH;
 		
@@ -555,10 +555,10 @@ function drawList(list) {
 	</header>
 		
 	<main>
-      		<div class="Cpage"><h4>공지사항 > 고객의 소리함</h4></div>
+      		<div class="Cpage"><h4>공지사항</h4></div>
       		<form action="#" id="actionForm" method="post">
 	      	<div class="topbox">
-	      		<div class="menuBox"><h2>고객의 소리함</h2></div>
+	      		<div class="menuBox"><h2>공지사항</h2></div>
 				<input type="hidden"  id="oldTxt" value="${param.searchTxt}" />
 				<input type="hidden"  name="page" id="page" value="${page}" />
 				<input type="hidden" name="no" id="no" />
