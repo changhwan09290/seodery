@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>자전거 이용안내</title>
+<title>자전거 수리문의</title>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <style type="text/css">
 <!-- 기본테마 -->
@@ -26,7 +27,6 @@
         #wrapper { /*85%로 너비값*/
             width: 85%;
             margin: 0 auto;
-           /*  position: relative; */
         }
        header { /*헤더 %로 단위변경*/
             width: 100%;
@@ -38,9 +38,23 @@
            /*  border-bottom: 2px solid black; */
     }
        
+ /* 로그아웃 버튼 */
+#LoginBtn {
+	border : none;
+	border-radius: 5px;
+	background-color:rgb(3, 104, 115);
+	font-size: 1.1rem;
+	color : white;
+	font-family: '고딕';
+	cursor: pointer;
+	padding: 4px 17px 4px 17px;
+	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
+	/* position: fixed;
+	right: 90px;
+	top: 100px; */
+}
        
-       
- /* 로그인 버튼 */
+ /* 로그아웃 버튼 */
 #LogoutBtn {
 	border : none;
 	border-radius: 5px;
@@ -109,7 +123,7 @@
 
 /* 관리자 메뉴 없애기 */
 .navi > #manager{
-	display: none;	
+	display: none;
 }
 
 /* 메뉴바에 커서 올렸을때 호버이벤트 */
@@ -199,7 +213,7 @@ main .li{
 }
 
 /* 현재페이지 나타내기 */
-.Cpage {
+main > .Cpage {
 	width: 100%;
 	padding-top: 3%;
 	padding-left: 8%;
@@ -207,7 +221,7 @@ main .li{
 	font-weight: 900;
 }
 
-main > table > tr,td {
+main > table > tr,th {
 	border: 1px solid black;
 }
 
@@ -218,7 +232,7 @@ main > table > tr,td {
  	position: relative;
 	width: 86%;
 } */
-
+            
 /* footer */
 footer { 
 	width: 85%;
@@ -238,54 +252,156 @@ footer > .foot > nav > a{
 	color: black;
 }
 
-	.title {
+.title {
 		padding-left: 10%;
-	}
+}
 
-	section {
-		float: left;
-		width: 40%;
-		display: grid;
-		justify-content: space-between;
-		padding-left: 10%;
-	}
-	
-	.left {
-		float: left;
-	}
-	
-	aside {
-		float: right;
-		width: 40%;
-		display: grid;
-		justify-content: space-between;
-		padding-right: 10%;
-	}
-	
-	.left > div > img {
-		padding-left: 0;
-		width: 350px;
-		height: 400px;
-	}
-	
-	ul {
-		line-height: 30px;
-		list-style:none;
-		padding-left: 0;
-	}
+#actionForm {
+	float: right;
+	padding-right: 10%;
+}
 
+.tabled {
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+.table {
+	text-align: center;
+	border: 2px solid gray;
+	width: 80%;
+}
 </style>
+
+<script type="text/javascript"
+		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	//페이징 처리
+	$("#PagingWrap").on("click", "span", function() {
+		$("#page").val($(this).attr("page"));		
+		reloadList();
+	});
+	
+	//작성 버튼
+	$("#addBtn").on("click", function() {
+		$("#actionForm").attr("action", "ASAdd");
+		$("#actionForm").submit();
+	});
+	
+	//상세보기로 이동(제목 누르면)
+	$("tbody").on("click", "tr", function() {
+		$("#title").val($(this).attr("title"));
+		$("#searchTxt").val($("#oldTxt").val());
+		$("#actionForm").attr("action", "ASDtl");
+		$("#actionForm").submit();
+	});
+	
+	//로그인
+	$("#LoginBtn").on("click", function() {
+		location.href = "Login";
+	});
+	
+	//로그아웃
+	$("#LogoutBtn").on("click", function() {
+		location.href = "Logout";
+	});
+
+});
+function reloadList() {
+	var params = $("#actionForm").serialize();
+	$.ajax({
+		url: "AfterServiceListAjax",
+		type: "get",
+		dataType: "json",
+		data: params,
+		success: function(res) {
+			drawList(res.list);
+			drawPaging(res.pb);
+		},
+		error: function(request, status, error) {
+			console.log(error);
+		}
+	});
+}
+
+function drawList(list) {
+	var html = "";
+	
+	for(var data of list) {
+		html += "<tr title=\"" + data.BAS_title + "\"> ";
+		html += "<td>" + data.BAS_qs_num + "</td>		";
+		html += "<td>" + data.BAS_title + "</td>		";
+		if(data.BAS_title != null) {
+	    	html += "<img src=\"resources/images/bicycle/attach_icon.png\" />";
+	    }
+	    html += "</td>";
+		html += "<td>" + data.UR_ID + "</td>		";
+		html += "<td>" + data.BAS_WRDATE + "</td>		";
+		/* html += "<td>" + data.BAS_처리상태 + "</td>	"; */
+		/* if 관리자가 답을 달면 처리완료, 안달면 null? */
+		html += "</tr>						";
+	}
+	
+	$("tbody").html(html);
+}
+
+function drawPaging(pb) {
+	var html ="";
+		
+		if($("#page").val() == "1") {
+			html += "<span page=\"1\">이전</span>    ";
+		} else {
+			html += "<span page=\"" +($("#page").val() * 1 - 1) + "\">이전</span>    ";
+		}
+		
+		for(var i = pb.startPcount; i <= pb.endPcount; i++) {
+			if($("#page").val() == i) {
+				html += "<span page=\"" + i + "\"><b>" + i + "</b></span>    ";
+			} else {
+				html += "<span page=\"" + i + "\">" + i + "</span>    ";
+			}
+		}
+		
+		if($("#page").val() == pb.maxPcount) {
+			html += "<span page=\"" + pb.maxPcount + "\">다음</span>    ";
+		} else {
+			html += "<span page=\"" +($("#page").val() * 1 + 1) + "\">다음</span>    ";
+		}
+
+		$("#PagingWrap").html(html);
+}
+</script>
 </head>
 <body>
+<%-- <div>
+	<c:choose>
+		<c:when test="${empty sMNo}">
+			<input type="button" value="로그인" id="LoginBtn" />
+		</c:when>
+		<c:otherwise>
+			${sMNm}님 어서오세요.<input type="button" value="로그아웃" id="LogoutBtn" />
+		</c:otherwise>
+	</c:choose>
+</div> --%>
+
 <!-- 기본테마 -->
 <div id="wrapper">
         <header id="header">
 			<div id="logo">
 				<form action="#" method="post" >
 					<div class="logout">
-						{000}님 환영합니다.
-						<div class="pencil"></div>
-						<input type="button" value="로그아웃" id="LogoutBtn"/>
+						<c:choose>
+							<c:when test="${empty sMNo}">
+								<input type="button" value="로그인" id="LoginBtn" />
+							</c:when>
+							<c:otherwise>
+								${sMNm}님 환영합니다.
+								<div class="pencil"></div>
+								<input type="button" value="로그아웃" id="LogoutBtn" />
+							</c:otherwise>
+						</c:choose>						
+						<!-- <input type="button" value="로그아웃" id="LogoutBtn"/> -->
 					</div>
 				</form>
 			</div> 
@@ -350,51 +466,35 @@ footer > .foot > nav > a{
 				</nav>	
 			</div>
 	</header>
+</div>
+<main>
+	<div class="Cpage"><h4>자전거 > 자전거 수리문의</h4></div>
 
-	<div class="Cpage"><h4>자전거 > 자전거 이용안내</h4></div>
-	
-	<div class="title">
-	<h1>자전거 이용안내</h1>
-	</div>
-
-	<section class="left">
-
-		<h3 style="color:#0F90FA;">이용요금</h3>
-		<!-- 색: #0F90FA -->
-		<ul>
-			<li><b>일일권</b></li>
-			<li>&nbsp;- 1시간 1천원</li>
-			<li>&nbsp;- 2시간 2천원</li>
-		</ul>
-		<ul>
-			<li><b>정기권</b></li>
-			<li>&nbsp;- 7일 3,000원</li>
-			<li>&nbsp;- 1개월 5,000원</li>
-			<li>&nbsp;- 180일 15,000원</li>
-			<li>&nbsp;- 1년 30,000원(1시간권 기준)</li>
-		</ul>
-		<div class="img">
-		<img src="http://localhost:8002/Seodery/resources/images/bicycle/bike.png">
-		</div>
-	</section>
-
-	<aside class="right">
-		<h3 style="color:#0F90FA;">자전거 안전하게 이용하세요</h3>
-		<ul>
-			<li><b>안전모 착용하기</b></li>
-			<li>자전거도로 및 도로를 운행할 때에 자전거 운전자 및 동승자는 반드시 안전모를 착용해야 합니다.</li>
-		</ul>
-		<ul>
-			<li><b>자전거 음주운전 금지</b></li>
-			<li>술에 취한 상태에서 자전거를 운행하는 경우 20만원 이하의 벌금이나 구류 또는 과료에 처합니다.</li>
-		</ul>
-		<ul>
-			<li><b>안전한 전기자전거 운행</b></li>
-			<li>안전요건에 적합하지 않은 전기자전거를 자전거도로에서 운행하는 경우 4만원의 과태료가 부과됨니다.</li>
-		</ul>
-	</aside>
-	<div style="clear:both;"></div>
-	<footer>
+<div class="title">
+	<h1>자전거 수리문의</h1>
+</div>
+<form action="#" id="actionForm" method="post">
+	<input type="hidden" name="page" id="page" value="${page}" />
+	<input type="hidden" name="title" id="title" />
+	<input type="button" value="작성" id="addBtn" />
+</form>
+<div class="tabled" align="center">
+<table class="table">
+	<thead>
+		<tr>
+			<th style="width:10%">번호</th>
+			<th style="width:40%">제목</th>
+			<th style="width:10%">아이디</th>
+			<th style="width:20%">작성일</th>
+			<th style="width:20%">처리상태</th>
+		</tr>
+	</thead>
+	<%-- <colgroup><col width="200"/><col width="200"/></colgroup> --%>
+	<tbody></tbody>
+</table>
+</div>
+</main>
+<footer>
        <div class="foot">
 			<nav>
 			<br/>
@@ -409,7 +509,7 @@ footer > .foot > nav > a{
 				</p>
 		</div>
     </footer>
- </div>
+ 
     <script>
 	/* 네비게이션 바 마우스 포커스 이벤트 */
 	$(function(){
@@ -447,5 +547,7 @@ footer > .foot > nav > a{
 	} 
 	
 </script>
+
+<div id="PagingWrap"></div>
 </body>
 </html>

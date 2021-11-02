@@ -6,13 +6,15 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
+<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c953a065c47d3eb731f9ab037fd520fa"></script> -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c953a065c47d3eb731f9ab037fd520fa&libraries=services,clusterer,drawing"></script>
 <style type="text/css">
  /* 웹 폰트 적용 */
  @font-face {
     font-family: 'Cafe24Ssurround';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
     font-weight: normal;
-    font-style: normal;
+    font-style: normal;https://apis.map.kakao.com/web/wizard
 } 
    
    @font-face {
@@ -212,48 +214,9 @@ main > .Cpage {
 	font-weight: 900;
 }
 
-/* 상세보기 버튼 */
-#DtlBtn {
-	/* border : none; */
-	border-radius: 5px;
-	background-color:rgb(3, 104, 115);
-	font-size: 1.1rem;
-	color : white;
-	font-family: '고딕';
-	cursor: pointer;
-	padding: 4px 17px 4px 17px;
-	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
+table{
+	margin-right: 8%;
 }
-
-
-
-/* 표 */
-#table {
-	/* width: 85%;
-	height : 50%; */
-	border-collapse: collapse;
-	margin-left: auto;
-	margin-right: auto;
-	font-family: '고딕';
-	font-size: 1.1rem;
-}
-
-
-main > table > tr,td {
-	border-top: 1px solid black;
-}
-
-th {
-	padding: 5px;
-}
-
-
-/* body 전체 */
-/* #wrap{
-	min-height: 100vh;
- 	position: relative;
-	width: 86%;
-} */
 
 /* footer */
 footer { 
@@ -281,56 +244,66 @@ footer > .foot > nav > a{
 	text-decoration: none;
 	color: black;
 }
-
+/* 페이징 div  */
 .paging_wrap{
 	margin-top : 5%;;
 	margin-left: 40%;
 }
 
+.desc #DtlBtn{
+	border: none;
+    background-color: white;
+    color: blue;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+/* 지도 오버레이 */
+.wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+.wrap * {padding: 0;margin: 0;}
+.wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
+.wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
+.info .title {padding: 5px 0 0 10px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
+.info .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
+.info .close:hover {cursor: pointer;}
+.info .body {position: relative;overflow: hidden;}
+.info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
+.desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
+.info .img {position: absolute;top: 6px;left: 5px;width: 73p
+x;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
+.info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+.info .link {color: #5085BB;}
+.info .pIdx{
+	display: none;
+}
 </style>
-<script type="text/javascript"
-		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
- $(document).ready(function(){
-	/* if("${param.searchGbn}"!=""){
-		$("#searchGbn").val("${param.searchGbn}");
-	} */
-	reloadList();
-	 //글작성
-	/* $("#addBtn").on("click",function(){
-		$("#searchTxt").val($("#oldTxt").val());	//취소했을시 검색어유지
+$(document).ready(function(){
+	var overlays = new Array();
+	gnbSlideInit();
+	
+	//상세보기 버튼을 클릭했을 때 이벤트 
+	 $("tbody").on("click", "input", function(){
+		console.log("no >>" + $(this).parents('tr').find('td[name="pIdx"]').text());
 		
-		$("#actionForm").attr("action","testABAdd");
+		//$("#no").attr($(this).parents('tr').find('td[name="pIdx"]').text()); 
+		
+		$("#no").val($(this).parents('tr').find('td[name="pIdx"]').text());
+		
+		$("#actionForm").attr("action","parkDtl");
 		$("#actionForm").submit();
-	}); */
+	});  
 	
-	//로그인 
-	/* $("#loginBtn").on("click",function(){
-			$("#loginForm").attr("action","logins")
-			$("#loginForm").submit()
-		}) */
-	 
-	 
-	//로그아웃 
-	/* $("#logoutBtn").on("click",function(){
-		location.href = "testLogout";
-	}); */
-	
-	//검색
-	/* $("#searchBtn").on("click",function(){
-		$("#oldTxt").val($("#searchTxt").val());
-		$("#page").val("1");
+	//지도 상세보기 버튼을 클릭했을 때 이벤트 
+	 $("#map").on("click", "input", function(){
+		console.log("위치>>>>" + $(this).parents('div').children('div[name="pIdx"]').text());
 		
-		reloadList();
-	}); */
-	
-	//검색창 엔터치면 검색이 되게 한다. 
-	/* $("#searchTxt").on("keypress",function(event){
-		if(event.keyCode ==13 ){
-			$("#searchBtn").click();
-			return false;
-		}
-	}); */
+		$("#no").val($(this).parents('div').children('div[name="pIdx"]').text());
+		
+		$("#actionForm").attr("action","parkDtl");
+		$("#actionForm").submit();
+	});  
 	
 	//페이징
 	 $(".paging_wrap").on("click","span",function(){
@@ -340,82 +313,134 @@ footer > .foot > nav > a{
 		reloadList();
 	}); 
 	
-	//상세보기 버튼을 클릭했을 때 이벤트 
-	 $("tbody").on("click", "input", function(){
-		console.log("no >>" + $(this).parents('tr').find('td[name="pIdx"]').text());
-		console.log("name>>" + $(this).parents('tr').find('td[name="pname"]').text());
-		console.log("addr>>" + $(this).parents('tr').find('td[name="paddr"]').text());
-		console.log("phon>>" + $(this).parents('tr').find('td[name="pphon"]').text());
-		//$("#no").attr($(this).parents('tr').find('td[name="pIdx"]').text()); 
-		
-		$("#no").val($(this).parents('tr').find('td[name="pIdx"]').text());
-		$("#name").val($(this).parents('tr').find('td[name="pname"]').text());
-		$("#addr").val($(this).parents('tr').find('td[name="paddr"]').text());
-		$("#phon").val($(this).parents('tr').find('td[name="pphon"]').text());
-		
-		$("#actionForm").attr("action","parkDtl");
-		$("#actionForm").submit();
-	});  
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+	mapOption = { 
+	    center: new kakao.maps.LatLng(37.5501402, 126.9903773), // 지도의 중심좌표
+	    level: 5 // 지도의 확대 레벨
+	}; 
+
+	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 	
+	// 마커 만들기
+	 function makeMakers(list) {
+		console.log("makeMakers###########");
+		var positions = [];
+		console.log(list);
+		for( var i=0; i<list.length; i++) {
+		    var data = list[i];
+		    
+			var marker = new kakao.maps.Marker({
+		        map: map, // 마커를 표시할 지도
+		        position: new kakao.maps.LatLng(data.LATITUDE, data.LONGITUDE), // 마커를 표시할 위치
+		        title : data.P_PARK, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+		        idx : overlays.length
+		    });
+			
+			var idx = overlays.length;
+			
+// 			var iwPosition = new kakao.maps.LatLng(data.LATITUDE, data.LONGITUDE); //인포윈도우 표시 위치입니다
+			var iwContent = 
+			'<div class="wrap">' + '<div class="info">' + '<div name="pIdx">' + data.P_IDX +'</div>'
+			+'<div class="title">' + data.P_PARK + '<div class="close close_info" idx="' + idx + '" title="닫기"></div>' + 
+            '</div>' + '<div class="body">' + '<div class="img">' +
+            '<img src=\"' + data.P_IMG + '\" width="73px;heigt="70px">' +
+            '</div>' + 
+            '<div class="desc">' + 
+            '<div class="ellipsis">'+data.P_ADDR +'</div>' + 
+            '<input type="button" value="상세보기" id="DtlBtn">'+
+            '</div>' + 
+            '</div>' + 
+            '</div>' +    
+            '</div>';
+            
+				var overlay = new kakao.maps.CustomOverlay({
+				    content: iwContent,
+				    map: map,
+// 				    position: iwPosition      
+				    position: marker.getPosition()  
+				});
+				
+				overlays.push(overlay);
+				
+				// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+				kakao.maps.event.addListener(marker, 'click', function() {
+					overlay.setMap(map);
+					
+				});
+		}
+		
+		
+		// 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+		$("body").on("click", ".close_info", function() {
+			overlays[$(this).attr("idx")].setMap(null);
+		});
+	 } 
 	
+
+	
+	reloadList();
+	reloadMap();
+	//데이터 취득
+	function reloadMap(){
+		
+		console.log("reload ##########");
+		
+		var params = $("#actionForm").serialize();
+		$.ajax({	//jquery의 ajax함수 호출  
+			url : "apitestall", 
+			type: "get",	//전송 방식
+			dataType:"json",	//받아올 데이터 형태 
+			data: params,
+	// 		data : sendData,	//보낼 데이터(문자열 형태)
+			success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
+				makeMakers(JSON.parse(res.resData).SearchParkInfoService.row); // 좌표목록 만듬
+				//drawList(res.list);
+				//drawPaging(res.pb);
+			},
+			error: function(request, status, error){	//실패 시 다음 함수 실행 
+				console.log(request);
+				console.log(error);
+			}
+		});
+	}
 	
 });
 
-/*  var getIndex = function() {
-	  var select = document.querySelector('.select');
-	  var index = select.rowIndex;
-	  alert(index);
-	}; */
-
-//데이터 취득
- function reloadList(){
- 	/* var sendData = {
- 			"KEY" : "58446e7a71616b643239487a427157"
- 			,"TYPE" : "json"
- 			,"SERVICE" : "SearchParkInfoService"
- 			,"START_INDEX" : 1
- 			,"END_INDEX" : 10
- 	}; */
+function reloadList(){
+	
 	var params = $("#actionForm").serialize();
- 	$.ajax({	//jquery의 ajax함수 호출  
-//  		url: "http://data.seoul.go.kr/dataList/OA-394/S/1/datasetView.do?"
-// 					+"KEY=58446e7a71616b643239487a427157&TYPE=json&SERVICE=SearchParkInfoService&START_INDEX=1&END_INDEX=10", //접속 주소
+	$.ajax({	//jquery의 ajax함수 호출  
 		url : "apitest", 
 		type: "get",	//전송 방식
- 		dataType:"json",	//받아올 데이터 형태 
- 		data: params,
-//  		data : sendData,	//보낼 데이터(문자열 형태)
- 		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
- 			console.log(res);
- 			makeTable(JSON.parse(res.resData));
- 			//drawList(res.list);
- 			drawPaging(res.pb);
- 		},
- 		error: function(request, status, error){	//실패 시 다음 함수 실행 
- 			console.log(request);
- 			console.log(error);
- 		}
- 	});
- }
-
+		dataType:"json",	//받아올 데이터 형태 
+		data: params,
+		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
+			makeTable(JSON.parse(res.resData)); // 목록 만듬
+			drawPaging(res.pb);
+		},
+		error: function(request, status, error){	//실패 시 다음 함수 실행 
+			console.log(request);
+			console.log(error);
+		}
+	});
+}
 
 //목록 그리기 
-  function makeTable(jsonData) {
-      var rows = jsonData.SearchParkInfoService.row;
-      $data = "";
-      
-      for (var idx in rows) {
-         $data += '<tr><td name="pIdx">'+ rows[idx].P_IDX + '</td><td name="pname">' + rows[idx].P_PARK + '</td><td name="paddr">'+ rows[idx].P_ADDR 
-         		+ '</td><td name="pphon">'+ rows[idx].P_ADMINTEL + '</td><td>' + '<input type="button" value="상세보기" id="DtlBtn">' + '</td></tr>';
-      }
-      
-      $("#table").html($data);
-     
-   }
- 
- 
- /* 페이징 */
- function drawPaging(pb){
+function makeTable(jsonData) {
+    var rows = jsonData.SearchParkInfoService.row;
+    $data = "";
+    
+    for (var idx in rows) {
+       $data += '<tr><td name="pIdx">'+ rows[idx].P_IDX + '</td><td>' + rows[idx].P_PARK + '</td><td>'+ rows[idx].P_ADDR 
+       		+ '</td><td>'+ rows[idx].P_ADMINTEL + '</td><td>' + '<input type="button" value="상세보기" id="DtlBtn">' + '</td></tr>';
+    }
+    
+    $("#table").html($data);
+    
+ }
+
+/* 페이징 */
+function drawPaging(pb){
 	console.log("pb", pb);
 	 
 	var html ="";
@@ -452,12 +477,12 @@ footer > .foot > nav > a{
 </script>
 </head>
 <body>
-
- <div id="wrapper">
+    <div id="wrapper">
         <header id="header">
 			<div id="logo">
-				<form action="#" method="post" id="Loginform" >
+				<form action="#" method="post" >
 					<div class="logout">
+						{000}님 환영합니다.
 						<div class="pencil"></div>
 						<input type="button" value="로그아웃" id="LogoutBtn"/>
 					</div>
@@ -526,27 +551,17 @@ footer > .foot > nav > a{
 	</header>
 		
 	<main>
-      	<div class="Cpage"><h4>공원 > 공원찾기</h4></div>
-      	<div>
-	<form action="#" id="actionForm" method="get">
-		<select name="searchGbn" id="searchGbn">
-			<option value="0">지역</option>
-		</select>
-		<input type="text" name="searchTxt" id="searchTxt" value="${param.searchTxt}"/>
-		<input type="hidden" name="oldTxt" value="${param.searchTxt}"/>
-		<input type="hidden" name="page" id="page" value="${page}"/>
-		<input type="hidden" name="no" id="no"/>
-		<input type="hidden" name="name" id="name"/>
-		<input type="hidden" name="addr" id="addr"/>
-		<input type="hidden" name="phon" id="phon"/>
-		<input type="button" value="검색" id="searchBtn"/>
-		<!-- 로그인한 상태라면 작성버튼 -->
-		<%-- <c:if test="${!empty sMNo}">
-			<input type="button" value="작성" id="addBtn"/>
-		</c:if> --%>
-	</form>
-</div>
-<div align="center">
+      	<div class="Cpage"><h4>공원 > 길 찾기</h4></div>
+      	<form action="#" id="actionForm" method="get">
+			<input type="text" name="searchTxt" id="searchTxt" value="${param.searchTxt}" placeholder="검색어를 입력해주세요"/>
+			<input type="hidden" name="oldTxt" value="${param.searchTxt}"/>
+			<input type="hidden" name="page" id="page" value="${page}"/>
+			<input type="hidden" name="no" id="no"/>
+			<input type="button" value="검색" id="searchBtn"/>
+		</form>
+		
+      	<div id="map" style="width:800px;height:400px;margin-left:auto;margin-right:auto;"></div>
+    		<div align="center">
             <table style="text-align:center;">
             	<thead>
 			<tr>
@@ -562,9 +577,8 @@ footer > .foot > nav > a{
                
                </tbody>   
             </table>
-</div>
-
-<div class="paging_wrap"></div>
+	</div>
+    	<div class="paging_wrap"></div>
     </main>
     
     
@@ -583,16 +597,13 @@ footer > .foot > nav > a{
 				</p>
 		</div>
     </footer>
+    
     </div>
     
     
     
     <script>
 	/* 네비게이션 바 마우스 포커스 이벤트 */
-	$(function(){
-		gnbSlideInit();
-	});
-	
 	
 	function gnbSlideInit() {
 		//gnb (상위메뉴에 마우스 포커스)
@@ -623,7 +634,11 @@ footer > .foot > nav > a{
 	    });
 	} 
 	
+
+	
 </script>
     
+    
 </body>
+
 </html>

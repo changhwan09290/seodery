@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
+
+<link rel="stylesheet" href="/path/to/bootstrap.min.css">
 <style type="text/css">
  /* 웹 폰트 적용 */
  @font-face {
@@ -239,6 +241,7 @@ main > .Cpage {
 }
 
 
+
 main > table > tr,td {
 	border-top: 1px solid black;
 }
@@ -287,6 +290,29 @@ footer > .foot > nav > a{
 	margin-left: 40%;
 }
 
+/* 별점 */
+
+.starR1{
+    background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat -52px 0;
+    background-size: auto 100%;
+    width: 15px;
+    height: 30px;
+    float:left;
+    text-indent: -9999px;
+    cursor: pointer;
+}
+.starR2{
+    background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
+    background-size: auto 100%;
+    width: 15px;
+    height: 30px;
+    float:left;
+    text-indent: -9999px;
+    cursor: pointer;
+}
+.starR1.on{background-position:0 0;}
+.starR2.on{background-position:-15px 0;}
+
 </style>
 <script type="text/javascript"
 		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
@@ -296,76 +322,25 @@ footer > .foot > nav > a{
 		$("#searchGbn").val("${param.searchGbn}");
 	} */
 	reloadList();
-	 //글작성
-	/* $("#addBtn").on("click",function(){
-		$("#searchTxt").val($("#oldTxt").val());	//취소했을시 검색어유지
-		
-		$("#actionForm").attr("action","testABAdd");
-		$("#actionForm").submit();
-	}); */
 	
-	//로그인 
-	/* $("#loginBtn").on("click",function(){
-			$("#loginForm").attr("action","logins")
-			$("#loginForm").submit()
-		}) */
+	/* $('.starRev span').click(function(){
+		  $(this).parent().children('span').removeClass('on');
+		  $(this).addClass('on').prevAll('span').addClass('on');
+		  return false;
+		});
+	 */
 	 
-	 
-	//로그아웃 
-	/* $("#logoutBtn").on("click",function(){
-		location.href = "testLogout";
-	}); */
-	
-	//검색
-	/* $("#searchBtn").on("click",function(){
-		$("#oldTxt").val($("#searchTxt").val());
-		$("#page").val("1");
-		
-		reloadList();
-	}); */
-	
-	//검색창 엔터치면 검색이 되게 한다. 
-	/* $("#searchTxt").on("keypress",function(event){
-		if(event.keyCode ==13 ){
-			$("#searchBtn").click();
-			return false;
-		}
-	}); */
-	
-	//페이징
-	 $(".paging_wrap").on("click","span",function(){
-		 $("#page").val($(this).attr("page"));
-		 /* $("#searchTxt").val($("#oldTxt").val());  */
-		
-		reloadList();
-	}); 
-	
-	//상세보기 버튼을 클릭했을 때 이벤트 
-	 $("tbody").on("click", "input", function(){
-		console.log("no >>" + $(this).parents('tr').find('td[name="pIdx"]').text());
-		console.log("name>>" + $(this).parents('tr').find('td[name="pname"]').text());
-		console.log("addr>>" + $(this).parents('tr').find('td[name="paddr"]').text());
-		console.log("phon>>" + $(this).parents('tr').find('td[name="pphon"]').text());
-		//$("#no").attr($(this).parents('tr').find('td[name="pIdx"]').text()); 
-		
-		$("#no").val($(this).parents('tr').find('td[name="pIdx"]').text());
-		$("#name").val($(this).parents('tr').find('td[name="pname"]').text());
-		$("#addr").val($(this).parents('tr').find('td[name="paddr"]').text());
-		$("#phon").val($(this).parents('tr').find('td[name="pphon"]').text());
-		
-		$("#actionForm").attr("action","parkDtl");
-		$("#actionForm").submit();
-	});  
-	
+	 /* 별점 구현 */
+	$('.starRev span').click(function(){
+		  $(this).parent().children('span').removeClass('on');
+		  $(this).addClass('on').prevAll('span').addClass('on');
+		  return false;
+		});
 	
 	
 });
 
-/*  var getIndex = function() {
-	  var select = document.querySelector('.select');
-	  var index = select.rowIndex;
-	  alert(index);
-	}; */
+
 
 //데이터 취득
  function reloadList(){
@@ -378,9 +353,9 @@ footer > .foot > nav > a{
  	}; */
 	var params = $("#actionForm").serialize();
  	$.ajax({	//jquery의 ajax함수 호출  
-//  		url: "http://data.seoul.go.kr/dataList/OA-394/S/1/datasetView.do?"
+//  		url: "http://data.seoul.go.kr/dataList/OA-394/S/1/datasetView.do?" 
 // 					+"KEY=58446e7a71616b643239487a427157&TYPE=json&SERVICE=SearchParkInfoService&START_INDEX=1&END_INDEX=10", //접속 주소
-		url : "apitest", 
+		url : "apiDtl", 
 		type: "get",	//전송 방식
  		dataType:"json",	//받아올 데이터 형태 
  		data: params,
@@ -389,7 +364,7 @@ footer > .foot > nav > a{
  			console.log(res);
  			makeTable(JSON.parse(res.resData));
  			//drawList(res.list);
- 			drawPaging(res.pb);
+ 			//drawPaging(res.pb);
  		},
  		error: function(request, status, error){	//실패 시 다음 함수 실행 
  			console.log(request);
@@ -402,11 +377,13 @@ footer > .foot > nav > a{
 //목록 그리기 
   function makeTable(jsonData) {
       var rows = jsonData.SearchParkInfoService.row;
+      
       $data = "";
       
       for (var idx in rows) {
-         $data += '<tr><td name="pIdx">'+ rows[idx].P_IDX + '</td><td name="pname">' + rows[idx].P_PARK + '</td><td name="paddr">'+ rows[idx].P_ADDR 
-         		+ '</td><td name="pphon">'+ rows[idx].P_ADMINTEL + '</td><td>' + '<input type="button" value="상세보기" id="DtlBtn">' + '</td></tr>';
+         $data += '<tr><td>' + rows[idx].P_IDX + '</td><td>' + rows[idx].P_PARK + '</td><td>'+'<img src="resources/images/park/phone-call.png">'+rows[idx].P_ADMINTEL 
+         + '</td><td>'+ rows[idx].P_ADDR + '</td><td>'+ rows[idx].OPEN_DT + '</td><td>' 
+         + rows[ids].MAIN_EQUIP + '</td><td>'+ rows[idx].MAIN_PLANTS + '</td><td>'+ rows[idx].P_IMG + '</td></tr>';
       }
       
       $("#table").html($data);
@@ -415,7 +392,7 @@ footer > .foot > nav > a{
  
  
  /* 페이징 */
- function drawPaging(pb){
+/*  function drawPaging(pb){
 	console.log("pb", pb);
 	 
 	var html ="";
@@ -447,8 +424,8 @@ footer > .foot > nav > a{
 	html += "<span page=\""+pb.maxPcount +"\">마지막</span>      ";
 	
 	$(".paging_wrap").html(html);
-}
-
+} */
+ 
 </script>
 </head>
 <body>
@@ -456,8 +433,9 @@ footer > .foot > nav > a{
  <div id="wrapper">
         <header id="header">
 			<div id="logo">
-				<form action="#" method="post" id="Loginform" >
+				<form action="#" method="post" >
 					<div class="logout">
+						{000}님 환영합니다.
 						<div class="pencil"></div>
 						<input type="button" value="로그아웃" id="LogoutBtn"/>
 					</div>
@@ -476,8 +454,8 @@ footer > .foot > nav > a{
 							</div>
 							<li class="sub Park">공원</a>	
 								<ul class="gnb_sub">
-									<li><a href="http://localhost/Seodery/parkList">공원 찾기</a></li>
-									<li><a href="http://localhost/Seodery/parkMap">길 찾기</a></li>
+									<li><a href="#">공원 찾기</a></li>
+									<li><a href="#">길 찾기</a></li>
 								</ul>
 							</li>
 							<li class="sub WalkT">산책로</a>
@@ -494,7 +472,7 @@ footer > .foot > nav > a{
 							</li>
 							<li class="sub FDust">미세먼지</a>
 								<ul class="gnb_sub">
-									<li><a href="http://localhost/Seodery/dust">미세먼지 현황</a></li>
+									<li><a href="#">미세먼지 현황</a></li>
 								</ul>
 							</li>
 							<li class="sub Memory">추억저장</a>
@@ -526,45 +504,65 @@ footer > .foot > nav > a{
 	</header>
 		
 	<main>
-      	<div class="Cpage"><h4>공원 > 공원찾기</h4></div>
-      	<div>
-	<form action="#" id="actionForm" method="get">
-		<select name="searchGbn" id="searchGbn">
-			<option value="0">지역</option>
-		</select>
-		<input type="text" name="searchTxt" id="searchTxt" value="${param.searchTxt}"/>
-		<input type="hidden" name="oldTxt" value="${param.searchTxt}"/>
-		<input type="hidden" name="page" id="page" value="${page}"/>
-		<input type="hidden" name="no" id="no"/>
-		<input type="hidden" name="name" id="name"/>
-		<input type="hidden" name="addr" id="addr"/>
-		<input type="hidden" name="phon" id="phon"/>
-		<input type="button" value="검색" id="searchBtn"/>
-		<!-- 로그인한 상태라면 작성버튼 -->
-		<%-- <c:if test="${!empty sMNo}">
-			<input type="button" value="작성" id="addBtn"/>
-		</c:if> --%>
-	</form>
-</div>
-<div align="center">
-            <table style="text-align:center;">
-            	<thead>
-			<tr>
-				<th>번호</th>
-				<th>공원이름</th>
-				<th>공원 주소</th>
-				<th>전화번호</th>
-				<th>상세보기</th>
-			</tr>
-		</thead>
-               <colgroup><col width="200"/><col width="200"/></colgroup>
-               <tbody id="table">
-               
-               </tbody>   
-            </table>
-</div>
-
-<div class="paging_wrap"></div>
+		      	<div class="Cpage"><h4>공원 > 공원찾기> 상세페이지</h4></div>
+			      	<div>
+					<form action="#" id="actionForm" method="get">
+							<input type="hidden" name="searchGbn"  value="${param.searchGbn}"/>
+							<input type="hidden" name="searchTxt"  value="${param.searchTxt}"/>
+							<input type="hidden" name="page"  value="${param.page}"/>
+							<input type="hidden" name="no"  value="${param.no}"/>
+							<!-- 로그인한 상태라면 작성버튼 -->
+							<%-- <c:if test="${!empty sMNo}">
+								<input type="button" value="작성" id="addBtn"/>
+							</c:if> --%>
+					</form>
+					</div>
+				<div align="center">
+			            <table style="text-align:center;">
+			            	<thead>
+								<tr>
+									<th>번호</th>
+									<th>공원이름</th>
+									<th>전화번호</th>
+									<th>공원 주소</th>
+									<th>개원일</th>
+									<th>주요 시설</th>
+									<th>주요 식물</th>
+								</tr>
+							</thead>
+				               <colgroup><col width="200"/><col width="200"/></colgroup>
+				               <tbody id="table">
+				               
+				               </tbody>   
+				            </table>
+				</div>
+				
+				<section id="Comm">
+					<h2>댓글</h2>	
+						<div class="starRev">
+						  <span class="starR1 on" value="0.5">별1_왼쪽</span>
+						  <span class="starR2" value="1">별1_오른쪽</span>
+						  <span class="starR1" value="1.5">별2_왼쪽</span>
+						  <span class="starR2" value="2">별2_오른쪽</span>
+						  <span class="starR1" value="2.5">별3_왼쪽</span>
+						  <span class="starR2" value="3">별3_오른쪽</span>
+						  <span class="starR1" value="3.5">별4_왼쪽</span>
+						  <span class="starR2" value="4">별4_오른쪽</span>
+						  <span class="starR1" value="4.5">별5_왼쪽</span>
+						  <span class="starR2" value="5">별5_오른쪽</span>
+						</div>
+						
+						<input type="text" />
+						<input type="button" value="작성" id=""/>
+				</section>
+				
+				<section>
+				<br/>
+				<br/>
+				<br/>
+					<h2>주차장</h2>
+				</section>
+			<div class="paging_wrap"></div>
     </main>
     
     

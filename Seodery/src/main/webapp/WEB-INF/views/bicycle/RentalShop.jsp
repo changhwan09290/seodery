@@ -4,8 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>자전거 이용안내</title>
-<script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
+<title>실시간 대여정보</title>
+<script type="text/javascript"
+		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bacfa63ae8d74a05f2ba2ee2f08d3302"></script>
+
 <style type="text/css">
 <!-- 기본테마 -->
 /* 웹 폰트 적용 */
@@ -41,7 +44,23 @@
        
        
  /* 로그인 버튼 */
-#LogoutBtn {
+#LoginBtn {
+	border : none;
+	border-radius: 5px;
+	background-color:rgb(3, 104, 115);
+	font-size: 1.1rem;
+	color : white;
+	font-family: '고딕';
+	cursor: pointer;
+	padding: 4px 17px 4px 17px;
+	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
+	/* position: fixed;
+	right: 90px;
+	top: 100px; */
+}
+
+ /* 로그아웃 버튼 */
+#LoginBtn {
 	border : none;
 	border-radius: 5px;
 	background-color:rgb(3, 104, 115);
@@ -174,7 +193,7 @@
 
 /* gnb(네비게이션바)의 하위메뉴 */
 .gnb_sub {
-	 display: none; 
+	display: none; 
 	list-style-type: none;
 	padding-left: 0px;
 }
@@ -191,19 +210,20 @@
 #nav{
 	margin-left: 5.6%;
    	margin-right: 5.3%;
+
 }
 /* 공지사항,공원 best5 목록 글씨 */
-main .li{
+ main .li{
 	font-size: 1.4rem;
 	font-family:'twayair';
 }
 
 /* 현재페이지 나타내기 */
-.Cpage {
+main > .Cpage {
 	width: 100%;
-	padding-top: 3%;
-	padding-left: 8%;
-	font-family: '고딕';
+	margin-top: 5.5%;
+	margin-left: 3.5%;
+	font-family: '고딕'; 
 	font-weight: 900;
 }
 
@@ -238,43 +258,180 @@ footer > .foot > nav > a{
 	color: black;
 }
 
-	.title {
-		padding-left: 10%;
-	}
-
-	section {
-		float: left;
-		width: 40%;
-		display: grid;
-		justify-content: space-between;
+	.h1 {
 		padding-left: 10%;
 	}
 	
-	.left {
-		float: left;
+	#map {
+		margin-left: 15%;
+		margin-bottom: 3%;
+		/* z-index: -1; */
+		z-index: auto;
 	}
 	
-	aside {
-		float: right;
-		width: 40%;
-		display: grid;
-		justify-content: space-between;
-		padding-right: 10%;
+ 	div .customOverlay {
+		color: white;
+		border-radius: 10px;
+		width: 20px;
+		text-align: center;
 	}
 	
-	.left > div > img {
-		padding-left: 0;
-		width: 350px;
-		height: 400px;
-	}
-	
-	ul {
-		line-height: 30px;
-		list-style:none;
-		padding-left: 0;
-	}
-
 </style>
+<script type="text/javascript">
+$(document).ready(function() {
+	var container = document.getElementById('map');
+	var options = {
+		center: new kakao.maps.LatLng(37.55564880, 126.91062927), //생성자는 위도, 경도순으로 넣기
+		level: 4
+	};
+	
+	
+	var map = new kakao.maps.Map(container, options);
+	
+	let apiRslt = [];
+	let positions= [];
+	$.ajax({
+		url : "rentalapi",
+		type : "get",
+		dataType:"JSON",
+		async: false, //동기
+		success: function(res) {
+			console.log(res);
+
+			apiRslt = res.rentBikeStatus.row;
+			positions = apiRslt.map((props) => {
+				return({
+					title: props.parkingBikeTotCnt, 
+					latlng: new kakao.maps.LatLng(props.stationLatitude, props.stationLongitude),
+					name: props.stationName
+				});
+			});	
+		},
+		error: function(err) {
+			console.log(err);
+		}
+	});
+	
+	
+	//5개이하 마커
+	var redImageSrc = "https://i.ibb.co/gd2nbMJ/maker-red.png"; // 마커이미지의 주소입니다    
+    var redImageSize = new kakao.maps.Size(54, 59); // 마커이미지의 크기입니다
+    var redImageOption = {offset: new kakao.maps.Point(27, 59)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다	
+ 	// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+    var redMarkerImage = new kakao.maps.MarkerImage(redImageSrc, redImageSize, redImageOption);
+        
+    //20개 이하
+    var yellowImageSrc = "https://i.ibb.co/WpGj3Kj/maker-yellow.png"; // 마커이미지의 주소입니다    
+    var yellowImageSize = new kakao.maps.Size(54, 59); // 마커이미지의 크기입니다
+    var yellowImageOption = {offset: new kakao.maps.Point(27, 59)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다	
+    var yellowMarkerImage = new kakao.maps.MarkerImage(yellowImageSrc, yellowImageSize, yellowImageOption);
+	
+    //그 외
+    var greenImageSrc = "https://i.ibb.co/DVqv7Ym/maker-green.png"; // 마커이미지의 주소입니다    
+    var greenImageSize = new kakao.maps.Size(54, 59); // 마커이미지의 크기입니다
+    var greenImageOption = {offset: new kakao.maps.Point(27, 59)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다	
+    var greenMarkerImage = new kakao.maps.MarkerImage(greenImageSrc, greenImageSize, greenImageOption);
+    
+    // 마커를 생성합니다
+
+    for (var i=0; i< positions.length; i++) {
+    	
+    	let bikeLeft = positions[i].title;
+    	if (bikeLeft <= 5) { 
+    		var content = '<div class="customOverlay" style="background-color: red;">' + positions[i].title + '</div>';
+		    var redMarker = new kakao.maps.Marker({
+		    	map: map,
+		    	position: positions[i].latlng,
+		    	title: positions[i].title,
+		       	image: redMarkerImage, // 마커이미지 설정 
+		        clickable: true
+			});
+    	} else if (5 < bikeLeft && bikeLeft <= 20) { 
+    		var content = '<div class="customOverlay" style="background-color: #E6EC1C;">' + positions[i].title + '</div>';
+    		var yellowMarker = new kakao.maps.Marker({
+		    	map: map,
+		    	position: positions[i].latlng,
+		    	title: positions[i].title,
+		       	image: yellowMarkerImage, // 마커이미지 설정 
+		        clickable: true
+			});
+    	} else {
+    		/* console.dir('else'); */
+    		var content = '<div class="customOverlay" style="background-color: #49D04C;">' + positions[i].title + '</div>';
+    		var greenMarker = new kakao.maps.Marker({
+		    	map: map,
+		    	position: positions[i].latlng,
+		    	title: positions[i].title,
+		       	image: greenMarkerImage, // 마커이미지 설정
+		        clickable: true
+			});
+    	}
+	    // 커스텀 오버레이를 생성합니다
+	    var customOverlay = new kakao.maps.CustomOverlay({
+	        map: map,
+	        position: positions[i].latlng,
+	        content: content,
+	        yAnchor: 2.4
+	    });
+	 	// 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+	    var iwContent = '<div style="padding:5px;">' + positions[i].name + '</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+	        iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+	
+	    // 인포윈도우를 생성합니다
+	    var infowindow = new kakao.maps.InfoWindow({
+	        content : iwContent,
+	        removable : iwRemoveable,
+	        name: positions[i].name
+	    });
+    }
+ // 마커에 클릭이벤트를 등록합니다
+    kakao.maps.event.addListener(redMarker, 'click', function() {
+          // 마커 위에 인포윈도우를 표시합니다
+          infowindow.open(map, redMarker);  
+    });
+ // 마커에 클릭이벤트를 등록합니다
+    kakao.maps.event.addListener(yellowMarker, 'click', function() {
+          // 마커 위에 인포윈도우를 표시합니다
+          infowindow.open(map, yellowMarker);  
+    });
+ // 마커에 클릭이벤트를 등록합니다
+   /*  kakao.maps.event.addListener(greenMarker, 'click', function() {
+          // 마커 위에 인포윈도우를 표시합니다
+          infowindow.open(map, greenMarker);  
+    }); */
+ 
+		// 마커가 지도 위에 표시되도록 설정합니다
+	    /* marker.setMap(map);   */
+    /* var clusterer = new kakao.maps.MarkerClusterer({
+        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+        minLevel: 10 // 클러스터 할 최소 지도 레벨 
+    });
+    clusterer.addMarkers(redMarker, yellowMarker, greenMarker); */
+
+});
+
+/* function reloadList(){
+	$.ajax({
+		url : "rentalapi",
+		type : "get",
+		dataType:"json",
+		data: params,
+		success: function(res) {
+			console.log(res);
+			
+			let rows = res.rentBikeStatus.row;
+			for (let i = 0; i < rows.length; i++) {
+                let bikeLeft = rows[i].parkingBikeTotCnt;
+			}
+				
+		},
+		error: function(request, status, error) {
+			console.log(error);
+		}
+	});
+} */
+</script>
 </head>
 <body>
 <!-- 기본테마 -->
@@ -350,50 +507,17 @@ footer > .foot > nav > a{
 				</nav>	
 			</div>
 	</header>
-
-	<div class="Cpage"><h4>자전거 > 자전거 이용안내</h4></div>
 	
-	<div class="title">
-	<h1>자전거 이용안내</h1>
+	<main>
+	<div class="Cpage"><h4>자전거 > 실시간 대여소</h4></div>
+	
+	<div class="h1">
+	<h1>실시간 대여소</h1>
 	</div>
-
-	<section class="left">
-
-		<h3 style="color:#0F90FA;">이용요금</h3>
-		<!-- 색: #0F90FA -->
-		<ul>
-			<li><b>일일권</b></li>
-			<li>&nbsp;- 1시간 1천원</li>
-			<li>&nbsp;- 2시간 2천원</li>
-		</ul>
-		<ul>
-			<li><b>정기권</b></li>
-			<li>&nbsp;- 7일 3,000원</li>
-			<li>&nbsp;- 1개월 5,000원</li>
-			<li>&nbsp;- 180일 15,000원</li>
-			<li>&nbsp;- 1년 30,000원(1시간권 기준)</li>
-		</ul>
-		<div class="img">
-		<img src="http://localhost:8002/Seodery/resources/images/bicycle/bike.png">
-		</div>
-	</section>
-
-	<aside class="right">
-		<h3 style="color:#0F90FA;">자전거 안전하게 이용하세요</h3>
-		<ul>
-			<li><b>안전모 착용하기</b></li>
-			<li>자전거도로 및 도로를 운행할 때에 자전거 운전자 및 동승자는 반드시 안전모를 착용해야 합니다.</li>
-		</ul>
-		<ul>
-			<li><b>자전거 음주운전 금지</b></li>
-			<li>술에 취한 상태에서 자전거를 운행하는 경우 20만원 이하의 벌금이나 구류 또는 과료에 처합니다.</li>
-		</ul>
-		<ul>
-			<li><b>안전한 전기자전거 운행</b></li>
-			<li>안전요건에 적합하지 않은 전기자전거를 자전거도로에서 운행하는 경우 4만원의 과태료가 부과됨니다.</li>
-		</ul>
-	</aside>
-	<div style="clear:both;"></div>
+	
+	<!-- 지도 크기 -->
+	<div id="map" style="width:740px;height:500px;"></div>
+	</main>
 	<footer>
        <div class="foot">
 			<nav>
@@ -409,8 +533,8 @@ footer > .foot > nav > a{
 				</p>
 		</div>
     </footer>
- </div>
-    <script>
+</div>
+<script>
 	/* 네비게이션 바 마우스 포커스 이벤트 */
 	$(function(){
 		gnbSlideInit();
