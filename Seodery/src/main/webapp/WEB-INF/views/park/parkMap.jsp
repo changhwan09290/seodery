@@ -29,9 +29,10 @@
             width: 85%;
             margin: 0 auto;
         }
-       header { /*헤더 %로 단위변경*/
+      header { /*헤더 %로 단위변경*/
             width: 100%;
             height: 155px;
+            position : relative;
             background-image :url("resources/images/park/logo.png");
             background-size: 320px 164px;
             background-repeat : no-repeat;
@@ -47,24 +48,25 @@
             text-align: center;
         }
         
- /* 로그인 버튼 */
-#LogoutBtn {
-	border : none;
-	border-radius: 5px;
-	background-color:rgb(3, 104, 115);
-	font-size: 1.1rem;
-	color : white;
-	font-family: '고딕';
-	cursor: pointer;
-	padding: 4px 17px 4px 17px;
-	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
-	/* position: fixed;
-	right: 90px;
-	top: 100px; */
-}
+/* 로그인 버튼 */
+#LoginBtn,#LogoutBtn {
+	z-index: 9999;
+   border : none;
+   border-radius: 5px;
+   background-color:rgb(3, 104, 115);
+   font-size: 1.1rem;
+   color : white;
+   font-family: '고딕';
+   cursor: pointer;
+   padding: 4px 17px 4px 17px;
+   box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
+   /* position: fixed;
+   right: 90px;
+   top: 100px; */
+} 
 
 /* 로그인버튼, 유저 로그인정보 div */
- .logo{
+.logo{
 	white-space : nowrap;
  	display : flex;
  	position : absolute;
@@ -72,6 +74,7 @@
 	top: 93px;
 	align-items: flex-end;
 } 
+
 /* 마이페이지 연필 이미지 */
 .pencil{
 	width: 30px;
@@ -186,7 +189,7 @@
 }
 
 .navcon{
-	padding-top: 193px; 
+	padding-top: 36px; 
 	position: absolute; 
 	left:20px; 
 	right:20px;
@@ -387,13 +390,14 @@ $(document).ready(function(){
 		
 		var params = $("#actionForm").serialize();
 		$.ajax({	//jquery의 ajax함수 호출  
-			url : "apitestall", 
+			url : "http://openAPI.seoul.go.kr:8088/58446e7a71616b643239487a427157/json/SearchParkInfoService/1/200", 
 			type: "get",	//전송 방식
 			dataType:"json",	//받아올 데이터 형태 
+			async: false,
 			data: params,
 	// 		data : sendData,	//보낼 데이터(문자열 형태)
 			success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
-				makeMakers(JSON.parse(res.resData).SearchParkInfoService.row); // 좌표목록 만듬
+				makeMakers(res.SearchParkInfoService.row); // 좌표목록 만듬
 				//drawList(res.list);
 				//drawPaging(res.pb);
 			},
@@ -413,6 +417,7 @@ function reloadList(){
 		url : "apitest", 
 		type: "get",	//전송 방식
 		dataType:"json",	//받아올 데이터 형태 
+		async: false,
 		data: params,
 		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
 			makeTable(JSON.parse(res.resData)); // 목록 만듬

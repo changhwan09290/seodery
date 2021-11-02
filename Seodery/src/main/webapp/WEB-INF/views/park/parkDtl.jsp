@@ -635,7 +635,7 @@ function reloadMap(){
 	console.log("reload ##########");
 	var params = $("#actionForm2").serialize();
 	$.ajax({	//jquery의 ajax함수 호출  
-		url : "apiparklotall", 
+		url : "http://openapi.seoul.go.kr:8088/5576534466616b6432324c6b586b48/json/GetParkInfo/1/982", 
 		type: "get",	//전송 방식
 		dataType:"json",	//받아올 데이터 형태 
 		async: false,
