@@ -139,7 +139,7 @@
 /* 하위메뉴 글씨 */
 .gnb_sub > li> a{
    color : black;
-   font-size: 0.9em;
+   font-size: 0.8em;
 }
 
 /* 네비메뉴에 있는 a태그 */
