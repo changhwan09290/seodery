@@ -21,6 +21,7 @@ public class ParkDao implements IParkDao{
 
 	@Override
 	public int addP(HashMap<String, String> params) throws Throwable {
+		System.out.println("add P params>>>>>> " + params);
 		return sqlSession.insert("park.addP",params);
 	}
 

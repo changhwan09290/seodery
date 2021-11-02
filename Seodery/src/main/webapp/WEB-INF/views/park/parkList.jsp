@@ -390,7 +390,7 @@ footer > .foot > nav > a{
       
       for (var idx in rows) {
          $data += '<tr><td name="pIdx">'+ rows[idx].P_IDX + '</td><td name="pname">' + rows[idx].P_PARK + '</td><td name="paddr">'+ rows[idx].P_ADDR 
-         		+ '</td><td name="pphon">'+ rows[idx].P_ADMINTEL + '</td><td>' + '<input type="button" value="상세보기" id="DtlBtn">' + '</td></tr>';
+         		+ '</td><td name="pphon">'+ rows[idx].P_ADMINTEL + '</td><td>' + '<input type="button" value="상세보기" id="DtlBtn" mo="${sMNo}">' + '</td></tr>';
       }
       
       $("#table").html($data);
@@ -468,7 +468,7 @@ footer > .foot > nav > a{
 							<li class="sub Park">공원</a>	
 								<ul class="gnb_sub">
 									<li><a href="parkList">공원 찾기</a></li>
-									<li><a href="http://localhost/Seodery/parkMap">길 찾기</a></li>
+									<li><a href="parkMap">길 찾기</a></li>
 								</ul>
 							</li>
 							<li class="sub WalkT">산책로</a>
@@ -485,7 +485,7 @@ footer > .foot > nav > a{
 							</li>
 							<li class="sub FDust">미세먼지</a>
 								<ul class="gnb_sub">
-									<li><a href="http://localhost/Seodery/dust">미세먼지 현황</a></li>
+									<li><a href="dust">미세먼지 현황</a></li>
 								</ul>
 							</li>
 							<li class="sub Memory">추억저장</a>
@@ -526,6 +526,7 @@ footer > .foot > nav > a{
 		<input type="hidden" name="oldTxt" value="${param.searchTxt}"/>
 		<input type="hidden" name="page" id="page" value="${page}"/>
 		<input type="hidden" name="no" id="no"/>
+		<input type="hidden" name="mo" id="mo"/>
 		<input type="hidden" name="name" id="name"/>
 		<input type="hidden" name="addr" id="addr"/>
 		<input type="hidden" name="phon" id="phon"/>

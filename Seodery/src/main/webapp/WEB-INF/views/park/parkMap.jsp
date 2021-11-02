@@ -286,6 +286,18 @@ $(document).ready(function(){
 	var overlays = new Array();
 	gnbSlideInit();
 	
+	//로그인 
+	   $("#LoginBtn").on("click",function(){
+			
+		 location.href = "login";
+		});  
+
+	 
+	//로그아웃 
+	 $("#LogoutBtn").on("click",function(){
+		location.href = "logout";
+	}); 
+	
 	//상세보기 버튼을 클릭했을 때 이벤트 
 	 $("tbody").on("click", "input", function(){
 		console.log("no >>" + $(this).parents('tr').find('td[name="pIdx"]').text());

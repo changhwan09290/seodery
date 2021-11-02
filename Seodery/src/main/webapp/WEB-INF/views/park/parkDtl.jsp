@@ -52,7 +52,7 @@
         }
         
 /* 로그인 버튼 */
-#LoginBtn,#LogoutBtn {
+#LoginBtn,#LogoutBtn,.LoginBtn {
 	z-index: 9999;
    border : none;
    border-radius: 5px;
@@ -506,15 +506,22 @@ $(document).ready(function(){
 	}); */
 	
 	//로그인 
-	/* $("#loginBtn").on("click",function(){
-		location.href = "testLogin";
-	});
-	 */
+	   $("#LoginBtn").on("click",function(){
+			
+		 location.href = "login";
+		});  
+	
+	//댓글 로그인 
+	   $(".LoginBtn").on("click",function(){
+			
+		 location.href = "login";
+		});  
+
 	 
 	//로그아웃 
-	/* $("#logoutBtn").on("click",function(){
-		location.href = "testLogout";
-	}); */
+	 $("#LogoutBtn").on("click",function(){
+		location.href = "logout";
+	}); 
 	
 	//검색
 	/* $("#searchBtn").on("click",function(){
@@ -552,6 +559,8 @@ $(document).ready(function(){
 // 				$("#no").val(no);
 // 				$("#actionForm").attr("action", "parkadd");
 // 				$("#actionForm").submit();
+				var starNum = $("#rateBox")[0].innerText;
+				$("input[name='srating']").val(starNum.substr(0,1));
 				$("#wcform").attr("action", "parkadd");
 				$("#wcform").submit();
 		};
@@ -852,13 +861,10 @@ function reloadMap(){
 							<input type="hidden" name="searchTxt"  value="${param.searchTxt}"/>
 							<input type="hidden" name="page"  value="${param.page}"/>
 							<input type="hidden" name="no"  value="${param.no}"/>
+							<input type="hidden" name="mo"  value="${sMNo}"/>
 							<input type="hidden" name="name"  value="${param.name}"/>
 							<input type="hidden" name="addr"  value="${param.addr}"/>
 							<input type="hidden" name="phon"  value="${param.phon}"/>
-							<!-- 로그인한 상태라면 작성버튼 -->
-							<%-- <c:if test="${!empty sMNo}">
-								<input type="button" value="작성" id="addBtn"/>
-							</c:if> --%>
 					</form>
 					</div>
 				<div >
@@ -866,7 +872,6 @@ function reloadMap(){
 			            	<thead>
 								
 							</thead>
-				              <!--  <colgroup><col width="600"/><col width="600"/></colgroup> -->
 				               <tbody id="table">
 				               
 				               </tbody>   
@@ -882,32 +887,40 @@ function reloadMap(){
 					<h2>댓글</h2>	
 					
 					<div id="rateBox"></div>
+					
 					<div class="wc_wrap">
 						<div class="write_area">
 							<form action="#" id="wcform" method="post">
-<!-- 								<input type="hidden" id="no" name="no"/> -->
-								<input type="hidden" id="mo" name="mo"/>
-<%-- 								<input type="hidden" id="page" name="page" value="${page}"/> --%>
+							<c:choose>
+								<c:when test="${empty sMNo}">
+								<!-- 비 로그인 시 -->
+									<div class="login_req_wrap">
+										<div class="login_req">작성 시 로그인이 필요합니다. <input type="button" value="로그인" class="LoginBtn"/></div>
+									</div>
+								</c:when>
+								<c:otherwise>
+								<input type="hidden" id="mo" name="mo" value="${sMNo}"/>
+<%-- 							<input type="hidden" id="page" name="page" value="${page}"/> --%>
 								<input type="hidden" name="page"  value="${param.page}"/>
 								<input type="hidden" name="no"  value="${param.no}"/>
 								<input type="hidden" name="name"  value="${param.name}"/>
 								<input type="hidden" name="addr"  value="${param.addr}"/>
 								<input type="hidden" name="phon"  value="${param.phon}"/>
-								
+								<input type="hidden" name="srating"/>
 								<div class="user_info">
-									<div class="user_name">유저 이름</div>
+									<div class="user_name">${sMNm}</div>
 								</div>
 								<div class="write_con_wrap">
-									<textarea class="write_con" id="con" name="con"></textarea>
+									<textarea class="write_con" id="con" name="con">${data.CON}</textarea>
 								</div>
-								<div class="btn_wrap" no="${no}" mo="" name="${name}" addr="${addr}" phon="${phon}">
+								<div class="btn_wrap" no="${no}" mo="${sMNo}" name="${name}" addr="${addr}" phon="${phon}">
 									<input type="button" value="저장" class="action_btn" id="addBtn"/>
 									<input type="button" value="수정" class="action_btn2" id="updBtn"/>
 									<input type="button" value="취소" class="action_btn2" id="cancelBtn"/>
-								
 								</div>
+								</c:otherwise>
+						</c:choose>
 							</form>
-							
 						</div>
 					</div>
 					
