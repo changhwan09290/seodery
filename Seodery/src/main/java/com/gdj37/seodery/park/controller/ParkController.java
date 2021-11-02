@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gdj37.seodery.common.bean.PagingBean;
 import com.gdj37.seodery.common.service.IPagingService;
 import com.gdj37.seodery.park.service.IParkService;
+import com.gdj37.seodery.ur.service.IUrService;
+import com.gdj37.seodery.util.Utils;
 
 @Controller
 public class ParkController {
@@ -33,11 +36,11 @@ public class ParkController {
 	
 	@Autowired
 	public IPagingService iPagingService;
-
+	
+	
 	@RequestMapping(value = "/parkList")
-	public ModelAndView parkList(@RequestParam HashMap<String, String> params,HttpServletRequest request,ModelAndView mav) {
-
-		
+	public ModelAndView parkList(@RequestParam HashMap<String, String> params,
+			HttpServletRequest request,ModelAndView mav)throws Throwable {
 		
 		String page = "1";
 		if (params.get("page") != null) { // 넘어오는 현재 p데이터가 존재 시 page =
