@@ -200,8 +200,8 @@ public class ParkController {
 		if (params.get("page") != null) { // 넘어오는 현재 p데이터가 존재 시 page =
 			page = Integer.parseInt(params.get("page"));
 		}
-		//글 개수
 		
+		//글 개수
 		int cnt = iParkService.getPDCnt(params); 
 		PagingBean pb = iPagingService.getPagingBean(page, cnt, 10,5);
 		
@@ -213,7 +213,7 @@ public class ParkController {
 		 List<HashMap<String, String>> list = iParkService.getPDList(params);
 		 System.out.println("list >>>>>>>> " + list);
 		
-		HashMap<String, String> data = new HashMap<String, String>();
+		//HashMap<String, String> data = new HashMap<String, String>();
 		
 		 //상세보기 목록 번호 받아오기
 			/*
@@ -225,11 +225,9 @@ public class ParkController {
 		String addr = request.getParameter("addr");
 		String phon = request.getParameter("phon");
 		mav.addObject("page",page); 
-		/*
-		 * mav.addObject("pb",pb); mav.addObject("list",list);
-		 */
+		mav.addObject("pb",pb); 
+		mav.addObject("list", list);
 		
-		 
 		//list.add(data);
 
 		
@@ -247,7 +245,7 @@ public class ParkController {
 	
 	
 	@RequestMapping(value="/parkadd")
-	public ModelAndView testOadd(
+	public ModelAndView parkadd(
 			@RequestParam HashMap<String, String> params,HttpServletRequest request,
 			ModelAndView mav) throws Throwable {
 		
@@ -261,22 +259,19 @@ public class ParkController {
 		System.out.println("isExists >>>>>"+ isExists);
 		if(isExists == null || isExists.equals("N")) { // 'N'
 			// insert(PK)
-			int addPK = iParkService.addPK(params);	//공원번호,이름,주소,번호 추가하기
+			int addPK = iParkService.addPK(params);	//공원번호
 		} else if(isExists.equals("Y")){ // 'Y'
 			int update = iParkService.updateP(params);
 		}
-		int add = iParkService.addP(params);
+		int cnt = iParkService.addP(params);
 		// comment save
 		
-		
-//		int cnt = iParkService.addP(params);
-//		
-//		if(cnt > 0) { //추가 성공했을 경우 
-//			mav.setViewName("redirect:parkDtl"); 	//상세보기로 이동 
-//		}else {
-//			mav.addObject("msg","작성에 실패하였습니다.");
-//			mav.setViewName("park/failedAction");		//저장에 실패하면 이 페이지로 이동 
-//		}
+		if(cnt > 0) { //추가 성공했을 경우 
+			mav.setViewName("redirect:parkDtl"); 	//상세보기로 이동 
+		}else {
+			mav.addObject("msg","작성에 실패하였습니다.");
+			mav.setViewName("park/failedAction");		//저장에 실패하면 이 페이지로 이동 
+		}
 		return mav;
 	}
 	

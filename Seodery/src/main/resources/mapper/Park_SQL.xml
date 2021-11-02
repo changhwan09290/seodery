@@ -3,36 +3,34 @@
 <mapper namespace="park">
 
 	<!-- 댓글목록 조회 -->
- 	 <select id="getPDList" parameterType="hashmap" resultType="hashmap">
-		select PC.PC_SEQ.nextval, PC.MBER_NUM, PC.park_num, PC.SRATING, PC.CON, UR.ID
-		FROM (SELECT COMM_NUM,MBER_NUM,PARK_NUM,SRATING,CON,WRDATE
-				ROW_NUMBER() OVER(ORDER BY COMM_NUM DESC) AS PNUM)
-				PC, UR
-		WHERE PC.MBER_NUM = UR.MBER_NUM  AND PNUM #{startCnt} AND #{endCnt}
-		AND PARK_NUM = #{PARK_NUM}
-		ORDER BY PC.PNUM
+ 	  <select id="getPDList" parameterType="hashmap" resultType="hashmap">
+		select 
+	    COMM_NUM, MBER_NUM, PARK_NUM, SRATING, CON, WRDATE, DELC
+		FROM PC 
+		WHERE PARK_NUM = #{no}
 	</select> 
  
 
 	<!-- 댓글 목록 총 건수조회 -->
-	<!--  <select id="getPDCnt" parameterType="hashmap" resultType="Integer">
+	  <select id="getPDCnt" parameterType="hashmap" resultType="Integer">
 		select count(*) as cnt
 		from PC
-		WHERE PARK_NUM = #{PARK_NUM}
-	</select>  -->
+		WHERE PARK_NUM = #{no}
+	</select>  
 
-<!-- 공원번호, 공원이름 insert -->
+<!-- 공원 테이블에 공원번호, 공원이름, 주소, 번호 insert -->
 	<insert id="addPK" parameterType="hashmap">
 		 INSERT INTO PK(PARK_NUM, PARK_NM, AREA, TEL_NUM)
 		VALUES (#{no}, #{name}, #{addr}, #{phon})
 	</insert>
 
-
+<!-- 댓글 인서트  -->
 	<insert id="addP" parameterType="hashmap">
 		 INSERT INTO PC(COMM_NUM,MBER_NUM,PARK_NUM,SRATING,CON,WRDATE,DELC)
 		VALUES (PC_SEQ.nextval,#{mo},#{no},#{srating},#{con},SYSDATE, 0)
 	</insert> 
 	
+	<!-- 공원 테이블에 내가 선택한 공원 번호가 없으면 y 있으면 n  -->
 	 <select id="getParkNumIsExists" parameterType="hashmap" resultType="String">
 		SELECT ( 
 		    CASE WHEN EXISTS ( SELECT PARK_NUM FROM PK 
@@ -41,10 +39,12 @@
 		FROM DUAL
 	</select> 
 	
+	<!-- 내가 선택한 공원정보 공원테이블에 업데이트 -->
 	<update id="updateP" parameterType="hashmap">
 		update PK set PARK_NM = #{name}, AREA = #{addr}, TEL_NUM = #{phon}
 		where PARK_NUM = #{no}
 	</update>
+	
 	
 	
 </mapper>
