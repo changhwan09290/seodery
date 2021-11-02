@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,9 +9,7 @@
 <script type="text/javascript"
 		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bacfa63ae8d74a05f2ba2ee2f08d3302"></script>
-
 <style type="text/css">
-<!-- 기본테마 -->
 /* 웹 폰트 적용 */
  @font-face {
     font-family: 'Cafe24Ssurround';
@@ -43,8 +42,9 @@
        
        
        
- /* 로그인 버튼 */
-#LoginBtn {
+/* 로그인 버튼 */
+#LoginBtn, #LogoutBtn {
+	z-index: 9999;
 	border : none;
 	border-radius: 5px;
 	background-color:rgb(3, 104, 115);
@@ -54,37 +54,18 @@
 	cursor: pointer;
 	padding: 4px 17px 4px 17px;
 	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
-	/* position: fixed;
-	right: 90px;
-	top: 100px; */
-}
-
- /* 로그아웃 버튼 */
-#LoginBtn {
-	border : none;
-	border-radius: 5px;
-	background-color:rgb(3, 104, 115);
-	font-size: 1.1rem;
-	color : white;
-	font-family: '고딕';
-	cursor: pointer;
-	padding: 4px 17px 4px 17px;
-	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
-	/* position: fixed;
-	right: 90px;
-	top: 100px; */
 }
 
 /* 로그인버튼, 유저 로그인정보 div */
-.logout{
-	white-space : nowrap;
- 	display : flex;
- 	position : absolute;
+.logout {
+	white-space: nowrap;
+	display: flex;
+	position: absolute;
 	right: 8%;
 	top: 93px;
 	align-items: flex-end;
-	
 }
+
 /* 마이페이지 연필 이미지 */
 .pencil{
 	width: 30px;
@@ -206,6 +187,7 @@
 	margin-left: 12px;
 	margin-right: 12px;
 }
+
 /* 네비게이션바 */
 #nav{
 	margin-left: 5.6%;
@@ -222,7 +204,7 @@
 main > .Cpage {
 	width: 100%;
 	margin-top: 5.5%;
-	margin-left: 3.5%;
+	margin-left: 5.5%;
 	font-family: '고딕'; 
 	font-weight: 900;
 }
@@ -282,7 +264,8 @@ $(document).ready(function() {
 	var container = document.getElementById('map');
 	var options = {
 		center: new kakao.maps.LatLng(37.55564880, 126.91062927), //생성자는 위도, 경도순으로 넣기
-		level: 4
+		level: 4,
+		maxLevel: 8
 	};
 	
 	
@@ -440,12 +423,20 @@ $(document).ready(function() {
 			<div id="logo">
 				<form action="#" method="post" >
 					<div class="logout">
-						{000}님 환영합니다.
-						<div class="pencil"></div>
-						<input type="button" value="로그아웃" id="LogoutBtn"/>
+						<c:choose>
+							<c:when test="${empty sMNo}">
+								<input type="button" value="로그인" id="LoginBtn" onclick="console.log('!');" /> 
+							</c:when>
+							<c:otherwise>
+								${sMNm}님 환영합니다.
+								<div class="pencil"></div>
+								<input type="button" value="로그아웃" id="LogoutBtn" />
+							</c:otherwise>
+						</c:choose>						
+						<!-- <input type="button" value="로그아웃" id="LogoutBtn"/> -->
 					</div>
 				</form>
-			</div> 
+			</div>
 			
 			<div class="navcon">
 				<nav id="nav">
@@ -470,9 +461,9 @@ $(document).ready(function() {
 							</li>
 							<li class="sub Bike">자전거
 								<ul class="gnb_sub">
-									<li><a href="#">실시간 대여정보</a></li>
-									<li><a href="#">자전거 이용안내</a></li>
-									<li><a href="#">자전거 수리문의</a></li>
+									<li><a href="RentalShop">실시간 대여정보</a></li>
+									<li><a href="use_info">자전거 이용안내</a></li>
+									<li><a href="AfterServiceList">자전거 수리문의</a></li>
 								</ul>
 							</li>
 							<li class="sub FDust">미세먼지
@@ -568,8 +559,7 @@ $(document).ready(function() {
 	          }
 	       }, 50); 
 	    });
-	} 
-	
+	}	
 </script>
 </body>
 </html>

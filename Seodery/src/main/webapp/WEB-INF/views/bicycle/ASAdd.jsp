@@ -123,7 +123,8 @@ function checkVal(sel) {
 	제목 : <input type="text" id="title" name="title" /><br>
 	고유번호 : <input type="text" id="serialNum" name="serialNum" /><br>
 	대여소 위치 : <input type="text" id="rentsh_loc" name="rentsh_loc" /><br>
-	작성자 : ${sMNm}<input type="hidden" value="${sMNo}" name="id" /><br> <!-- 수정 -->
+	작성자 : ${sMNm}<input type="hidden" value="${data.m_num}" name="id" /><br> <!-- 수정 -->
+	<%-- <input type="hidden" value="${data.m_num}" name="m_num" /> --%>
 	<textarea rows="5" cols="5" id="con" name="con"></textarea><br/>
 	첨부파일 : <input type="button" id="attach" value="첨부파일선택" /><br>
 	<span id="fileName"></span>

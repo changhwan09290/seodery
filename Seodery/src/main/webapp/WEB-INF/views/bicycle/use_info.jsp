@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,21 +8,20 @@
 <title>자전거 이용안내</title>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <style type="text/css">
-<!-- 기본테마 -->
 /* 웹 폰트 적용 */
- @font-face {
-    font-family: 'Cafe24Ssurround';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-} 
-   
-   @font-face {
-    font-family: 'twayair';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-} 
+@font-face {
+	font-family: 'Cafe24Ssurround';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'twayair';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
     
         #wrapper { /*85%로 너비값*/
             width: 85%;
@@ -38,10 +38,9 @@
            /*  border-bottom: 2px solid black; */
     }
        
-       
-       
- /* 로그인 버튼 */
-#LogoutBtn {
+/* 로그인 버튼 */
+#LoginBtn, #LogoutBtn {
+	z-index: 9999;
 	border : none;
 	border-radius: 5px;
 	background-color:rgb(3, 104, 115);
@@ -51,9 +50,6 @@
 	cursor: pointer;
 	padding: 4px 17px 4px 17px;
 	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
-	/* position: fixed;
-	right: 90px;
-	top: 100px; */
 }
 
 /* 로그인버튼, 유저 로그인정보 div */
@@ -168,7 +164,7 @@
 }
 
 /* 메뉴 글씨체 */
-.gnb > .navi > .sub{
+.gnb > .navi > .sub {
 	font-family: 'Cafe24Ssurround';
 }
 
@@ -199,10 +195,10 @@ main .li{
 }
 
 /* 현재페이지 나타내기 */
-.Cpage {
+main > .Cpage {
 	width: 100%;
-	padding-top: 3%;
-	padding-left: 8%;
+	margin-top: 5.5%;
+	margin-left: 5.5%;
 	font-family: '고딕';
 	font-weight: 900;
 }
@@ -275,6 +271,22 @@ footer > .foot > nav > a{
 	}
 
 </style>
+<script type="text/javascript"
+		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	//로그인
+	$("#LoginBtn").on("click", function() {
+		location.href = "login";
+	});
+	
+	//로그아웃
+	$("#LogoutBtn").on("click", function() {
+		location.href = "logout";
+	});
+
+});
+</script>
 </head>
 <body>
 <!-- 기본테마 -->
@@ -283,12 +295,20 @@ footer > .foot > nav > a{
 			<div id="logo">
 				<form action="#" method="post" >
 					<div class="logout">
-						{000}님 환영합니다.
-						<div class="pencil"></div>
-						<input type="button" value="로그아웃" id="LogoutBtn"/>
+						<c:choose>
+							<c:when test="${empty sMNo}">
+								<input type="button" value="로그인" id="LoginBtn" />
+							</c:when>
+							<c:otherwise>
+								${sMNm}님 환영합니다.
+								<div class="pencil"></div>
+								<input type="button" value="로그아웃" id="LogoutBtn" />
+							</c:otherwise>
+						</c:choose>						
+						<!-- <input type="button" value="로그아웃" id="LogoutBtn"/> -->
 					</div>
 				</form>
-			</div> 
+			</div>
 			
 			<div class="navcon">
 				<nav id="nav">
@@ -313,9 +333,9 @@ footer > .foot > nav > a{
 							</li>
 							<li class="sub Bike">자전거
 								<ul class="gnb_sub">
-									<li><a href="#">실시간 대여정보</a></li>
-									<li><a href="#">자전거 이용안내</a></li>
-									<li><a href="#">자전거 수리문의</a></li>
+									<li><a href="RentalShop">실시간 대여정보</a></li>
+									<li><a href="use_info">자전거 이용안내</a></li>
+									<li><a href="AfterServiceList">자전거 수리문의</a></li>
 								</ul>
 							</li>
 							<li class="sub FDust">미세먼지
@@ -350,50 +370,51 @@ footer > .foot > nav > a{
 				</nav>	
 			</div>
 	</header>
-
-	<div class="Cpage"><h4>자전거 > 자전거 이용안내</h4></div>
-	
-	<div class="title">
-	<h1>자전거 이용안내</h1>
-	</div>
-
-	<section class="left">
-
-		<h3 style="color:#0F90FA;">이용요금</h3>
-		<!-- 색: #0F90FA -->
-		<ul>
-			<li><b>일일권</b></li>
-			<li>&nbsp;- 1시간 1천원</li>
-			<li>&nbsp;- 2시간 2천원</li>
-		</ul>
-		<ul>
-			<li><b>정기권</b></li>
-			<li>&nbsp;- 7일 3,000원</li>
-			<li>&nbsp;- 1개월 5,000원</li>
-			<li>&nbsp;- 180일 15,000원</li>
-			<li>&nbsp;- 1년 30,000원(1시간권 기준)</li>
-		</ul>
-		<div class="img">
-		<img src="http://localhost:8002/Seodery/resources/images/bicycle/bike.png">
+	<main>
+		<div class="Cpage"><h4>자전거 > 자전거 이용안내</h4></div>
+		
+		<div class="title">
+			<h1>자전거 이용안내</h1>
 		</div>
-	</section>
-
-	<aside class="right">
-		<h3 style="color:#0F90FA;">자전거 안전하게 이용하세요</h3>
-		<ul>
-			<li><b>안전모 착용하기</b></li>
-			<li>자전거도로 및 도로를 운행할 때에 자전거 운전자 및 동승자는 반드시 안전모를 착용해야 합니다.</li>
-		</ul>
-		<ul>
-			<li><b>자전거 음주운전 금지</b></li>
-			<li>술에 취한 상태에서 자전거를 운행하는 경우 20만원 이하의 벌금이나 구류 또는 과료에 처합니다.</li>
-		</ul>
-		<ul>
-			<li><b>안전한 전기자전거 운행</b></li>
-			<li>안전요건에 적합하지 않은 전기자전거를 자전거도로에서 운행하는 경우 4만원의 과태료가 부과됨니다.</li>
-		</ul>
-	</aside>
-	<div style="clear:both;"></div>
+	
+		<section class="left">
+	
+			<h3 style="color:#0F90FA;">이용요금</h3>
+			<!-- 색: #0F90FA -->
+			<ul>
+				<li><b>일일권</b></li>
+				<li>&nbsp;- 1시간 1천원</li>
+				<li>&nbsp;- 2시간 2천원</li>
+			</ul>
+			<ul>
+				<li><b>정기권</b></li>
+				<li>&nbsp;- 7일 3,000원</li>
+				<li>&nbsp;- 1개월 5,000원</li>
+				<li>&nbsp;- 180일 15,000원</li>
+				<li>&nbsp;- 1년 30,000원(1시간권 기준)</li>
+			</ul>
+			<div class="img">
+			<img src="http://localhost:8002/Seodery/resources/images/bicycle/bike.png">
+			</div>
+		</section>
+	
+		<aside class="right">
+			<h3 style="color:#0F90FA;">자전거 안전하게 이용하세요</h3>
+			<ul>
+				<li><b>안전모 착용하기</b></li>
+				<li>자전거도로 및 도로를 운행할 때에 자전거 운전자 및 동승자는 반드시 안전모를 착용해야 합니다.</li>
+			</ul>
+			<ul>
+				<li><b>자전거 음주운전 금지</b></li>
+				<li>술에 취한 상태에서 자전거를 운행하는 경우 20만원 이하의 벌금이나 구류 또는 과료에 처합니다.</li>
+			</ul>
+			<ul>
+				<li><b>안전한 전기자전거 운행</b></li>
+				<li>안전요건에 적합하지 않은 전기자전거를 자전거도로에서 운행하는 경우 4만원의 과태료가 부과됨니다.</li>
+			</ul>
+		</aside>
+		<div style="clear:both;"></div>
+	</main>
 	<footer>
        <div class="foot">
 			<nav>
@@ -409,7 +430,7 @@ footer > .foot > nav > a{
 				</p>
 		</div>
     </footer>
- </div>
+</div>
     <script>
 	/* 네비게이션 바 마우스 포커스 이벤트 */
 	$(function(){
