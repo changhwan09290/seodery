@@ -32,9 +32,10 @@
             width: 85%;
             margin: 0 auto;
         }
-       header { /*헤더 %로 단위변경*/
+        header { /*헤더 %로 단위변경*/
             width: 100%;
             height: 155px;
+            position : relative;
             background-image :url("resources/images/park/logo.png");
             background-size: 320px 164px;
             background-repeat : no-repeat;
@@ -50,30 +51,32 @@
             text-align: center;
         }
         
- /* 로그인 버튼 */
-#LogoutBtn {
-	border : none;
-	border-radius: 5px;
-	background-color:rgb(3, 104, 115);
-	font-size: 1.1rem;
-	color : white;
-	font-family: '고딕';
-	cursor: pointer;
-	padding: 4px 17px 4px 17px;
-	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
-	/* position: fixed;
-	right: 90px;
-	top: 100px; */
-}
+/* 로그인 버튼 */
+#LoginBtn,#LogoutBtn {
+	z-index: 9999;
+   border : none;
+   border-radius: 5px;
+   background-color:rgb(3, 104, 115);
+   font-size: 1.1rem;
+   color : white;
+   font-family: '고딕';
+   cursor: pointer;
+   padding: 4px 17px 4px 17px;
+   box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
+   /* position: fixed;
+   right: 90px;
+   top: 100px; */
+} 
 
 /* 로그인버튼, 유저 로그인정보 div */
-.logout{
+ .logo{
 	white-space : nowrap;
  	display : flex;
  	position : absolute;
-	right: 8%;
+	right: 3%;
 	top: 93px;
 	align-items: flex-end;
+} 
 	
 }
 /* 마이페이지 연필 이미지 */
@@ -190,7 +193,7 @@
 }
 
 .navcon{
-	padding-top: 193px; 
+	padding-top: 36px; 
 	position: absolute; 
 	left:20px; 
 	right:20px;
@@ -763,15 +766,23 @@ function reloadMap(){
 
  <div id="wrapper">
         <header id="header">
-			<div id="logo">
-				<form action="#" method="post" >
-					<div class="logout">
-						{000}님 환영합니다.
+			<div class="logo">
 						<div class="pencil"></div>
-						<input type="button" value="로그아웃" id="LogoutBtn"/>
-					</div>
-				</form>
-			</div> 
+						<c:choose>
+							<c:when test="${empty sMNo}">
+								<div class="login">
+									<input type="button" value="로그인" id="LoginBtn"/>
+								</div>
+							</c:when>
+						<c:otherwise>
+							<div class="logout">
+								${sMNm}님 환영합니다.
+								<input type="button" value="로그아웃" id="LogoutBtn"/>
+							</div>
+						</c:otherwise>
+						</c:choose>
+			</div>
+	</header>
 			
 			<div class="navcon">
 				<nav id="nav">
@@ -832,7 +843,6 @@ function reloadMap(){
 					</div>
 				</nav>	
 			</div>
-	</header>
 		
 	<main>
 		      	<div class="Cpage"><h4>공원 > 공원찾기> 상세페이지 ${no}번</h4></div>

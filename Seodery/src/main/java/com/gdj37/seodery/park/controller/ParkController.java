@@ -109,7 +109,6 @@ public class ParkController {
 //		  		System.out.println(">>>" + vStringBuilder.toString());
 				vStringLine = vStringBuilder.toString();
 				modelMap.put("resData", vStringLine);
-
 			} else {
 				System.out.println("요청실패");
 //	  			System.out.println(">>>" + vHttpURLConnection.getResponseCode());
@@ -117,6 +116,7 @@ public class ParkController {
 //		  		System.out.println(">>>" + vStringBuilder.toString());
 				vStringLine = vStringBuilder.toString();
 			}
+			vHttpURLConnection.disconnect();
 
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -181,7 +181,7 @@ public class ParkController {
 //		  		System.out.println(">>>" + vStringBuilder.toString());
 				vStringLine = vStringBuilder.toString();
 			}
-
+			vHttpURLConnection.disconnect();
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

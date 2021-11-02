@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,15 +64,14 @@
 }
 
 /* 로그인버튼, 유저 로그인정보 div */
-.logout{
+ .logo{
 	white-space : nowrap;
  	display : flex;
  	position : absolute;
-	right: 8%;
+	right: 3%;
 	top: 93px;
 	align-items: flex-end;
-	
-}
+} 
 /* 마이페이지 연필 이미지 */
 .pencil{
 	width: 30px;
@@ -479,15 +479,23 @@ function drawPaging(pb){
 <body>
     <div id="wrapper">
         <header id="header">
-			<div id="logo">
-				<form action="#" method="post" >
-					<div class="logout">
-						{000}님 환영합니다.
+			<div class="logo">
 						<div class="pencil"></div>
-						<input type="button" value="로그아웃" id="LogoutBtn"/>
-					</div>
-				</form>
-			</div> 
+						<c:choose>
+							<c:when test="${empty sMNo}">
+								<div class="login">
+									<input type="button" value="로그인" id="LoginBtn"/>
+								</div>
+							</c:when>
+						<c:otherwise>
+							<div class="logout">
+								${sMNm}님 환영합니다.
+								<input type="button" value="로그아웃" id="LogoutBtn"/>
+							</div>
+						</c:otherwise>
+						</c:choose>
+			</div>
+	</header>
 			
 			<div class="navcon">
 				<nav id="nav">
@@ -548,7 +556,6 @@ function drawPaging(pb){
 					</div>
 				</nav>	
 			</div>
-	</header>
 		
 	<main>
       	<div class="Cpage"><h4>공원 > 길 찾기</h4></div>

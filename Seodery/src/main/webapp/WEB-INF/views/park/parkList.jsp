@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <style type="text/css">
  /* 웹 폰트 적용 */
  @font-face {
@@ -30,6 +29,7 @@
        header { /*헤더 %로 단위변경*/
             width: 100%;
             height: 155px;
+            position : relative;
             background-image :url("resources/images/park/logo.png");
             background-size: 320px 164px;
             background-repeat : no-repeat;
@@ -45,23 +45,6 @@
             text-align: center;
         }
         
- /* 로그인 버튼 */
-/*  
- #LoginBtn,#LogoutBtn {
-	border : none;
-	border-radius: 5px;
-	background-color:rgb(3, 104, 115);
-	font-size: 1.1rem;
-	color : white;
-	font-family: '고딕';
-	cursor: pointer;
-	padding: 4px 17px 4px 17px;
-	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
-	/* position: fixed;
-	right: 90px;
-	top: 100px; 
-} */
- 
 /* 로그인 버튼 */
 #LoginBtn,#LogoutBtn {
 	z-index: 9999;
@@ -84,10 +67,12 @@
  .logo{
 	white-space : nowrap;
  	display : flex;
-	margin-left: 630px;
-	margin-top: 0px;
-	
+ 	position : absolute;
+	right: 3%;
+	top: 93px;
+	align-items: flex-end;
 } 
+
 /* 마이페이지 연필 이미지 */
 .pencil{
 	width: 30px;
@@ -202,7 +187,7 @@
 }
 
 .navcon{
-	padding-top: 193px; 
+	padding-top: 36px; 
 	position: absolute; 
 	left:20px; 
 	right:20px;
@@ -326,16 +311,13 @@ footer > .foot > nav > a{
 	   $("#LoginBtn").on("click",function(){
 			
 		 location.href = "login";
-		 /*   $("#Loginform").attr("action","logins")
-			$("#Loginform").submit()   */
 		});  
 
 	 
-	 
 	//로그아웃 
-	/* $("#logoutBtn").on("click",function(){
-		location.href = "testLogout";
-	}); */
+	 $("#LogoutBtn").on("click",function(){
+		location.href = "logout";
+	}); 
 	
 	//검색
 	/* $("#searchBtn").on("click",function(){
@@ -343,14 +325,6 @@ footer > .foot > nav > a{
 		$("#page").val("1");
 		
 		reloadList();
-	}); */
-	
-	//검색창 엔터치면 검색이 되게 한다. 
-	/* $("#searchTxt").on("keypress",function(event){
-		if(event.keyCode ==13 ){
-			$("#searchBtn").click();
-			return false;
-		}
 	}); */
 	
 	//페이징
@@ -382,21 +356,8 @@ footer > .foot > nav > a{
 	
 });
 
-/*  var getIndex = function() {
-	  var select = document.querySelector('.select');
-	  var index = select.rowIndex;
-	  alert(index);
-	}; */
-
 //데이터 취득
  function reloadList(){
- 	/* var sendData = {
- 			"KEY" : "58446e7a71616b643239487a427157"
- 			,"TYPE" : "json"
- 			,"SERVICE" : "SearchParkInfoService"
- 			,"START_INDEX" : 1
- 			,"END_INDEX" : 10
- 	}; */
 	var params = $("#actionForm").serialize();
  	$.ajax({	//jquery의 ajax함수 호출  
 //  		url: "http://data.seoul.go.kr/dataList/OA-394/S/1/datasetView.do?"
@@ -469,11 +430,6 @@ footer > .foot > nav > a{
 	
 	$(".paging_wrap").html(html);
 }
-
-/*  function linkGo(url) {
-		location.href = url
-	} */
- 
 </script>
 </head>
 <body>
@@ -481,8 +437,7 @@ footer > .foot > nav > a{
  <div id="wrapper">
         <header id="header">
 		<div class="logo">
-			</div>
-			<div class="pencil"></div>
+						<div class="pencil"></div>
 						<c:choose>
 							<c:when test="${empty sMNo}">
 								<div class="login">
@@ -492,12 +447,13 @@ footer > .foot > nav > a{
 						<c:otherwise>
 							<div class="logout">
 								${sMNm}님 환영합니다.
-								<div class="pencil"></div>
 								<input type="button" value="로그아웃" id="LogoutBtn"/>
 							</div>
 						</c:otherwise>
 						</c:choose>
-						
+			</div>
+	</header>
+			
 			<div class="navcon">
 				<nav id="nav">
 					<div class="gnb_subbox"></div>
@@ -510,7 +466,7 @@ footer > .foot > nav > a{
 							</div>
 							<li class="sub Park">공원</a>	
 								<ul class="gnb_sub">
-									<li><a href="http://localhost/Seodery/parkList">공원 찾기</a></li>
+									<li><a href="parkList">공원 찾기</a></li>
 									<li><a href="http://localhost/Seodery/parkMap">길 찾기</a></li>
 								</ul>
 							</li>
@@ -557,7 +513,6 @@ footer > .foot > nav > a{
 					</div>
 				</nav>	
 			</div>
-	</header>
 		
 	<main>
       	<div class="Cpage"><h4>공원 > 공원찾기</h4></div>

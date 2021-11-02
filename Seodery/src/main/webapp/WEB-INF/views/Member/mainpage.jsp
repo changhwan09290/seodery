@@ -63,7 +63,7 @@
                      <li class="sub Park">공원</a>   
                         <ul class="gnb_sub">
                            <li><a href="parkList">공원 찾기</a></li>
-                           <li><a href="#">길 찾기</a></li>
+                           <li><a href="parkMap">길 찾기</a></li>
                         </ul>
                      </li>
                      <li class="sub WalkT">산책로</a>
