@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="resources/css/login/login.css">
      <link rel="stylesheet" href="resources/css/login/mainpage.css">
 	<script src="resources/script/login/login.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
-	
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
+
 	
 			<style type="text/css">
 		.main-body{
