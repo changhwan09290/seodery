@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -82,11 +80,11 @@ public class BicycleController {
 		URL url = new URL(addr);
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");	
+		conn.setRequestProperty("Content-Type", "application/json");	
 		if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-			bf = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			bf = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
 		} else {
-			bf = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+			bf = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
 		}
 		while ((line = bf.readLine()) != null) {
 			sb.append(line);
@@ -97,6 +95,7 @@ public class BicycleController {
 		return sb.toString();
 		}
 			
+	
 	@RequestMapping(value="/AfterServiceList")
 	public ModelAndView AfterServiceList(
 			@RequestParam HashMap<String, String> params, ModelAndView mav) throws Throwable{
@@ -132,7 +131,7 @@ public class BicycleController {
 			params.put("endCnt", Integer.toString(pb.getEndCount()));
 			
 			List<HashMap<String, String>> list = iBicycleService.getASList(params);
-			
+			System.out.println(list);
 			modelMap.put("list", list);
 			modelMap.put("pb", pb);
 		
@@ -164,6 +163,7 @@ public class BicycleController {
 	@ResponseBody
 	public String ASAddAjax(@RequestParam HashMap<String, String> params) throws Throwable {
 		ObjectMapper mapper = new ObjectMapper();
+		//System.out.println(params);
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 
 		String result = "success";
@@ -260,24 +260,13 @@ public class BicycleController {
 		return mapper.writeValueAsString(modelMap);
 	}
 	
-	/*
-	 * @RequestMapping(value = {"/login"}) public ModelAndView
-	 * login(HttpServletRequest req, HttpSession session, ModelAndView mav) {
-	 * System.out.println(req.getServletPath());
-	 * 
-	 * if(session.getAttribute("sMNo") != null) { //로그인 상태
-	 * //mav.setViewName("redirect:testList"); mav.setViewName("redirect:testO"); }
-	 * else { //로그인 안된 상태 mav.setViewName("M1/Login"); }
-	 * 
-	 * return mav; }
-	 */
 	
-	@RequestMapping(value = "/Logout")
+/*	@RequestMapping(value = "/logout")
 	public ModelAndView Logout (HttpSession session, ModelAndView mav) {
 		session.invalidate(); //session 정보 초기화
 		
-		mav.setViewName("redirect:Login");
+		mav.setViewName("redirect:login");
 		
 		return mav;
-	}
+	}*/
 }
