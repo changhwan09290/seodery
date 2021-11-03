@@ -51,9 +51,8 @@ public class NoticeDao implements INoticeDao{
 
 
 	@Override
-	public void updateHit(HashMap<String, String> params) throws Throwable {
-	
-		
+	public int updateHit(HashMap<String, String> params) throws Throwable {
+		return sqlSession.update("Notice.updateHit", params);	
 	}
 
 

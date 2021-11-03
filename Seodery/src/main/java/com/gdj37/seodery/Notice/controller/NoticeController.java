@@ -123,12 +123,13 @@ public class NoticeController {
 	  @RequestMapping(value = "/Notice")
 		public ModelAndView Notice(@RequestParam HashMap<String, String> params,
 								ModelAndView mav) throws Throwable {
-		  if(params.get("no") != null) {
-	
-				//데이터 조회
-			HashMap<String, String> data = iNoticeService.getNotice(params);
-				
+		  if(params.get("no") !=null) {
+			//조회수 증가
+			iNoticeService.updateHit(params);
 			
+			//데이터 조회  
+			HashMap<String, String> data = iNoticeService.getNotice(params);
+		
 			mav.addObject("data", data);
 			
 			mav.setViewName("Notice/Notice");
