@@ -17,4 +17,8 @@ public interface IParkDao {
 
 	public int addPK(HashMap<String, String> params)throws Throwable;
 
+	public int updatePCON(HashMap<String, String> params)throws Throwable;
+
+	public int deletePCON(HashMap<String, String> params)throws Throwable;
+
 }

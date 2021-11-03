@@ -364,19 +364,19 @@ footer > .foot > nav > a{
 	width: 95%;
 	margin: 0px auto;
 	border: 1px solid #444444; 
+	display: flex;
+	margin-left: 0px;
 }
 
 /* 댓글 감싸는 div */
 .write_area {
 	height: 100px;
-	display : inline-block;
-	position: relative;
 }
 
-/* 유저아이디 div */
 .user_info {
+	float : left;
 	display: inline-table;
-	width: 100px;
+	width: 10%;
 	height: 100px;
 	vertical-align: top;
 }
@@ -390,47 +390,68 @@ footer > .foot > nav > a{
 	font-size: 12pt;
 }
 
-/* 댓글 작성 폼  */
 .write_con_wrap {
-	width: 800px;
+	display: inline-block;
+	width: 75%;
 	height: 100px;
-	display : inline-block;
 	vertical-align: top;
-}
-/* 댓글 작성 아이템 */
-.write_con {
-	width: 95%;
-	height: 90px;
-	resize: none;
-	margin: 2px;
+	margin-top: -18px;
+	margin-left: 157px;
 }
 
-/* 작성, 수정, 취소 버튼 */
-.btn_wrap {
-	display: inline-block;
-	width: 140px;
-	height: 100px;
-	margin-left: 700px;
-	vertical-align: top;
+/*  */
+
+.write_con {
+	width: 75%;
+	height: 80px;
+	resize: none;
+	margin: 2px;
 	position: absolute;
 }
+
+.btn_wrap {
+	display: inline-block;
+	width: 400px;
+	height: 100px;
+	vertical-align: top;
+	margin-left:80%;
+	z-index: 55;
+}
+#addBtn{
+	margin-left: 157px;
+    margin-top: -16px;
+    height: 86px;
+    width: 69px;
+    background-color: rgb(3, 104, 115);
+    box-shadow: 0 1px 1px 0 rgb(3 104 115);
+    color: white;
+    font-family: '고딕';
+}
+
+
 .action_btn {
-	width: 100px;
-	height: 97px;
+	width: 126px;
+	height: 96px;
 	margin: 2px;
-	justify-content: flex-end;
-	
+	position: absolute;
+	left: 600px;
 }
 
 .action_btn2 {
-	width: 71px;
+	/* width: 71px;
 	height: 96px;
 	margin: 2px;
-}
-
-/* 댓글 작성 전체 div */
-.write_area{
-	width: 100%;
+	 */
+    width: 71px;
+    height: 44px;
+    margin-left: 157 px;
+    margin-top: -16 px;
+    height: 86 px;
+    width: 69 px;
+    background-color: rgb(3, 104, 115);
+    box-shadow: 0 1px 1px 0 rgb(3 104 115);
+    color: white;
+    font-family: '고딕';
 }
 
 .write_area .action_btn2 {
@@ -454,7 +475,7 @@ footer > .foot > nav > a{
 
 .data_req_wrap {
 	display: inline-table;
-	width: 600px;
+	width: 800px;
 	height: 100px;
 	border-top : 1px solid #444444;
 	margin-bottom: 5px;
@@ -462,7 +483,7 @@ footer > .foot > nav > a{
 
 .data_req {
 	display: table-cell;
-	width: 600px;
+	width: 800px;
 	height: 100px;
 	vertical-align: middle;
 	text-align: center;
@@ -475,8 +496,24 @@ footer > .foot > nav > a{
 }
 
 .con_info {
+	float: left;
 	display: inline-table;
-	width: 550px;
+	width: 70%;
+	height: 100px;
+	vertical-align: top;
+}
+
+/* 별점 div */
+.con_info2 {
+	display: inline-table;
+	width: 500px;
+	height: 100px;
+	vertical-align: top;
+}
+/* 작성날짜 div */
+.con_info3 {
+	display: inline-table;
+	width: 500px;
 	height: 100px;
 	vertical-align: top;
 }
@@ -493,12 +530,14 @@ footer > .foot > nav > a{
 .wcbox{
 	display: flex;
 }
+
 .write_con_wrap{
 	justify-content: center;
 }
 
 
-.imgbox { /*사이드바 %로 단위변경*/
+/* 상세보기 이미지 */
+.imgbox { 
   float: right;
   width: 40.25%;
   height: 200px;
@@ -519,7 +558,6 @@ $(document).ready(function(){
 	reloadList();
 	//reloadMap();
 	
-	
 	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	var options = { //지도를 생성할 때 필요한 기본 옵션
 		center: new kakao.maps.LatLng(37.5501402, 126.9903773), //지도의 중심좌표.
@@ -528,13 +566,6 @@ $(document).ready(function(){
 
 	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 	
-	 //글작성
-	/* $("#addBtn").on("click",function(){
-		$("#searchTxt").val($("#oldTxt").val());	//취소했을시 검색어유지
-		
-		$("#actionForm").attr("action","testABAdd");
-		$("#actionForm").submit();
-	}); */
 	
 	//로그인 
 	   $("#LoginBtn").on("click",function(){
@@ -554,21 +585,129 @@ $(document).ready(function(){
 		location.href = "logout";
 	}); 
 	
-	//검색
-	/* $("#searchBtn").on("click",function(){
-		$("#oldTxt").val($("#searchTxt").val());
-		$("#page").val("1");
-		
-		reloadList();
-	}); */
 	
-	//검색창 엔터치면 검색이 되게 한다. 
-	/* $("#searchTxt").on("keypress",function(event){
-		if(event.keyCode ==13 ){
-			$("#searchBtn").click();
-			return false;
+	//목록에서 수정버튼을 클릭했을 때 
+		$(".pc_list_wrap").on("click","#updateBtn",function(){
+					//updateBtn > btn_wrap > ob_data < coninfo < con
+			var con = $(this).parent().parent().children(".con_info").children(".con").html();
+			var cNum = $(this).parent().parent().find(".user_info").find("input[name='Cnum']")[0].value;
+			$("#wcform").find("input[name='Cnum']").val(cNum);
+			
+			$(".write_con").val(con);
+			
+			var mo = $(this).parent().attr("mo");
+			
+			$("#mo").val(mo);
+			
+			$(".write_area .action_btn").hide();
+			$(".write_area .action_btn2").show();
+		});
+	
+	/* 수정 -> 취소버튼을 클릭했을때 이벤트  */
+		$(".write_area #cancelBtn").on("click", function(){
+			$(".write_con").val("");
+			
+			$("#mo").val("");
+			
+			$(".write_area .action_btn").show();
+			$(".write_area .action_btn2").hide();
+		});
+	
+	//updBtn 글 수정 
+		$(".write_area").on("click","#updBtn",function(){
+			 if(checkVal("#con")) {
+					alert("내용을 입력해 주세요.");
+					$(".write_con").focus();
+				} else {
+					$("#wcform").attr("action", "parkupdate");
+					$("#wcform").submit();
+					makeCommentList(list);
+			};
+		});
+	
+// 댓글 목록 생성
+ function makeCommentList(list) {
+	
+	var strHtml = "";
+	
+	var sMNm =  '<%=(String)session.getAttribute("sMNm")%>';
+	var sMNo =  '<%=session.getAttribute("sMNo").toString()%>';
+	
+	for(var i=0; i<list.length; i++) {
+		var data = list[i];
+		
+		strHtml += "<div class='ob_data'>";
+		strHtml += 		"<div class='con-info2'>";
+		strHtml += 			"<div class='con-star' data-rate-value='" + data.SRATING + "'></div>";
+		strHtml += 		"</div>";
+		strHtml += 		"<div class='user_info'>";
+		strHtml += 			"<input type='hidden' name='Cnum' value='" + data.COMM_NUM + "'>";
+		strHtml += 		"<div class='user_name' name='mo'>" + sMNm + "</div>";
+		strHtml += 		"</div>";
+		strHtml += 		"<div class='con_info'>";
+		strHtml += 			"<div class='con' name='con'>" + data.CON + "</div>";
+		strHtml += 		"</div>";
+		strHtml += 		"<div class='con-info3'>";
+		strHtml += 			"<div class='con-date'>" + data.DT + "</div>";
+		strHtml += 		"</div>";
+		
+		strHtml += 		"<div class='btn_wrap' no='" + data.P_IDX + "' mo='" +sMNm + "' name='no' Cnum='" + data.COMM_NUM + "'>";
+		
+		// 로그인한 유저만 사용할 수있게 
+		if(data.MBER_NUM == sMNo) {
+			strHtml += 		"<input type='button' value='수정' class='action_btn2' id='updateBtn'/>";
+			strHtml += 		"<input type='button' value='삭제' class='action_btn2' id='deleteBtn'/>";
 		}
-	}); */
+		strHtml += 		"</div>";
+		strHtml += 	"</div>";
+		
+	}
+	
+	$(".pc_list_wrap").html(strHtml);
+			
+ }
+	
+//삭제
+$(".pc_list_wrap").on("click","#deleteBtn",function(){
+	
+	//삭제하기
+	if(confirm("삭제하시겠습니까?")){
+		var cNum = $(this).parent().parent().find(".user_info").find("input[name='Cnum']")[0].value;
+		$("#wcform").find("input[name='Cnum']").val(cNum);
+		
+		var params = $("#wcform").serialize();	//serialize() : form의 데이터를 문자열로 변환 
+		
+		$.ajax({	//jquery의 ajax함수 호출 
+			url: "parkDelete", //접속 주소
+			type: "post",	//전송 방식
+			dataType:"json",	//받아올 데이터 형태 
+			data : params,	//보낼 데이터(문자열 형태)
+			success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
+				if(res.result == "success"){
+					console.log("res", res.commentList);
+					makeCommentList(res.commentList);
+				}else if(res.result == "failed"){
+					alert("삭제에 실패하였습니다.");
+				}else {
+					alert("삭제 중 문제가 발생했습니다.");
+				}
+			},
+			error: function(request, status, error){	//실패 시 다음 함수 실행 
+				console.log(error);
+			}
+		});
+	}
+			
+// 			if(confirm("삭제하시겠습니까?")) {
+// 				var cNum = $(this).parent().parent().find(".user_info").find("input[name='Cnum']")[0].value;
+				
+// 				$("#wcform").find("input[name='Cnum']").val(cNum);
+// 				$("#wcform").attr("action", "parkDelete");
+// 				$("#wcform").submit();
+// 					//(#no).val()
+// 			};
+}); 
+	
 	
 	//페이징
 	// $(".paging_wrap").on("click","span",function(){
@@ -590,30 +729,58 @@ $(document).ready(function(){
 // 				$("#actionForm").attr("action", "parkadd");
 // 				$("#actionForm").submit();
 				var starNum = $("#rateBox")[0].innerText;
+				console.log("별점 값>>>>>>>>" + starNum);
+				
+				
+				console.log("addr>>" + $(this).parents('tr').find('td[name="paddr"]').text());
+				
+				alert("Cnum>>" + $(this));
+				
+				
 				$("input[name='srating']").val(starNum.substr(0,1));
 				$("#wcform").attr("action", "parkadd");
 				$("#wcform").submit();
 		};
 	});
 	
-	 /* 별점 구현 */
-	/* $('.starRev span').click(function(){
-		  $(this).parent().children('span').removeClass('on');
-		  $(this).addClass('on').prevAll('span').addClass('on');
-		  return false;
-		}); */
+	$(".pc_list_wrap .con-star").each(function() {
+		$(this).rate({
+			// 0：svg  1：Font class  2：Unicode
+			type: 0,
+			
+			// the number of stars
+			length: 5,
+			
+			value: $(this).attr("data-rate-value"),
+			
+			half:false,
+			
+			// supports decimal?
+			decimal:true,
+			
+			// is readonly?
+			readonly:true,
+			
+			// shows the current rating value on hover
+			hover:false,
+			
+			// shows rating text
+			text:true,
+			
+			// an array of rating text
+			textList: ['1점','2점','3점','4점','5점'],
+			// color
+			theme:'#FFB800',
+			// text/star size
+			size:'20px',
+			// space between stars
+			gutter:'3px',
+			// default CSS classes
+			selectClass:'fxss_rate_select'
+		});
+	});
 	
-	/* 기본등급 시스템 */
-	$("#rateBox").rate({
-		  // options here
-		});
-
-	/* 콜백함수 현재 등급 가져오기 */
-	$("#rateBox").rate({
-		  callback:function(object){
-		    console.log(object)
-		  }
-		});
+	
 
 	$("#rateBox").rate({
 		// 0：svg  1：Font class  2：Unicode
@@ -653,7 +820,10 @@ $(document).ready(function(){
 		
 		incompleteClass:'',
 		
-		customClass:''
+		customClass:'',
+		callback:function(object){
+		    console.log(object)
+		  }
 		});
  });
 
@@ -756,6 +926,20 @@ function reloadMap(){
 		  evt.currentTarget.className += " active";
 		}
 
+  
+  /* 별점 그리기 시도... */
+  /* function star(){
+	  	
+	  var innerHtml = ""
+	  for(var i=0; i<5; i++){
+		  if(i<2){
+			  innerHtml += '<div id="rateBox"></div>';
+		  }else{
+			innerHtml += "☆";
+	  }
+  } */
+  
+  
   /* 페이징 */
 /*  function drawPaging(pb){
 	console.log("pb", pb);
@@ -887,6 +1071,7 @@ function reloadMap(){
 							<input type="hidden" name="name"  value="${param.name}"/>
 							<input type="hidden" name="addr"  value="${param.addr}"/>
 							<input type="hidden" name="phon"  value="${param.phon}"/>
+							<input type="hidden" name="Cnum"  value="${param.Cnum}"/>
 					</form>
 					</div>
 				<div>
@@ -908,12 +1093,10 @@ function reloadMap(){
 				
 				<section id="Comm" class="tabcontent">
 					<h2>댓글</h2>	
-					
-					
 					<div class="pc_wrap">
 						<div class="write_area">
-					<div id="rateBox"></div>
-							<form action="#" id="wcform" method="post">
+							<div id="rateBox"></div>
+								<form action="#" id="wcform" method="post">
 							<c:choose>
 								<c:when test="${empty sMNo}">
 								<!-- 비 로그인 시 -->
@@ -929,25 +1112,28 @@ function reloadMap(){
 								<input type="hidden" name="name"  value="${param.name}"/>
 								<input type="hidden" name="addr"  value="${param.addr}"/>
 								<input type="hidden" name="phon"  value="${param.phon}"/>
+								<input type="hidden" name="Cnum"/>
 								<input type="hidden" name="srating"/>
 								<div class="wcbox">
-								<div class="user_info">
-									<div class="user_name">${sMNm}</div>
-								</div>
-								<div class="write_con_wrap">
-									<textarea class="write_con" id="con" name="con">${data.CON}</textarea>
-								</div>
-								<div class="btn_wrap" no="${no}" mo="${sMNo}" name="${name}" addr="${addr}" phon="${phon}">
-									<input type="button" value="저장" class="action_btn" id="addBtn"/>
-									<input type="button" value="수정" class="action_btn2" id="updBtn"/>
-									<input type="button" value="취소" class="action_btn2" id="cancelBtn"/>
-								</div>
-								</c:otherwise>
-						</c:choose>
-							</form>
+										<div class="user_info">
+											<div class="user_name">${sMNm}</div>
+										</div>
+										<div class="write_con_wrap">
+											<textarea class="write_con" id="con" name="con">${data.CON}</textarea>
+										</div>
+										<div class="btn_wrap" no="${no}" mo="${sMNo}" name="${name}" addr="${addr}" phon="${phon}">
+											<input type="button" value="저장" class="action_btn" id="addBtn"/>
+											<input type="button" value="수정" class="action_btn2" id="updBtn"/>
+											<input type="button" value="취소" class="action_btn2" id="cancelBtn"/>
+										</div>
+										</c:otherwise>
+								</c:choose>
+									</form>
 								</div>
 						</div>
 					</div>
+					
+					
 					
 					<div class="pc_list_wrap">
 					<c:choose>
@@ -959,23 +1145,30 @@ function reloadMap(){
 						</c:when>
 						<c:otherwise>
 							<c:forEach var="data" items="${list}">
-							<div class="ob_data">
-								<div class="user_info">
-									<div class="user_name" name="mo">${sMNm}</div>
-								</div>
-								<div class="con_info">
-									<div class="con" name="con">${data.CON}</div>
-								</div>
-								<div class="btn_wrap" no="${data.P_IDX}" mo="${sMNo}" name="no">
-								<!-- 로그인한 유저만 사용할 수있게 -->
-								<c:if test="${data.MBER_NUM eq sMNo}">
-									<input type="button" value="수정" class="action_btn2" id="updateBtn"/>
-									<input type="button" value="삭제" class="action_btn2" id="deleteBtn"/>
-								</c:if>
+								<div class="ob_data">
+										<div class="con-info2">
+											<div class="con-star" data-rate-value="${data.SRATING}"></div>
+										</div>
+										<div class="user_info">
+										<input type="hidden" name="Cnum" value="${data.COMM_NUM}">
+											<div class="user_name" name="mo">${sMNm}</div>
+										</div>
+										<div class="con_info">
+											<div class="con" name="con">${data.CON}</div>
+										</div>
+										<div class="con-info3">
+											<div class="con-date">${data.DT}</div>
+										</div>
+								<div class="btn_wrap" no="${data.P_IDX}" mo="${sMNo}" name="no" Cnum="${data.COMM_NUM}">
+									<!-- 로그인한 유저만 사용할 수있게 -->
+									<c:if test="${data.MBER_NUM eq sMNo}">
+										<input type="button" value="수정" class="action_btn2" id="updateBtn"/>
+										<input type="button" value="삭제" class="action_btn2" id="deleteBtn"/>
+									</c:if>
 								</div>
 							</div>
 							</c:forEach>
-						</c:otherwise>
+					     </c:otherwise>
 					</c:choose>
 					</div>
 	

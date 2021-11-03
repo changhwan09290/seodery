@@ -43,4 +43,14 @@ public class ParkService implements IParkService{
 	public int addPK(HashMap<String, String> params) throws Throwable {
 		return iParkDao.addPK(params);
 	}
+
+	@Override
+	public int updatePCON(HashMap<String, String> params) throws Throwable {
+		return iParkDao.updatePCON(params);
+	}
+
+	@Override
+	public int deletePCON(HashMap<String, String> params) throws Throwable {
+		return iParkDao.deletePCON(params);
+	}
 }
