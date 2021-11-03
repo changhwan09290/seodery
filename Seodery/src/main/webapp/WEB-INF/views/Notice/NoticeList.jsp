@@ -248,6 +248,9 @@ th {
 	padding: 5px;
 	background-color: rgb(212,212,212);
 }
+td img {
+	width: 15px;
+}
 
 /* 페이징 div */
 .page{
@@ -417,15 +420,19 @@ function drawList(list) {
 	
 	for(var data of list) {
 		html += "<tr no=\"" +  data.NOT_NUM + "\">       " ;
-		html += "<td>" + data.NOT_NUM + "</td>         " ;
-		html += "<td>" + data.TITLE + "</td>         " ;
-		html += data.ATACH;
+		html += "<td>" + data.NOT_NUM + "</td>         " ;		
+		html += "<td>";
+		html += data.TITLE;
+
 		
 		if(data.ATACH != null) {
 			html += "<img src=\"resources/images/attFile.png\" />";	
 		} 
+		
+		html += "</td>";
 		html += "<td>" + data.ID + "</td>       " ;
 		html += "<td>" + data.REGISTER_DT + "</td>      " ;
+		html += "<td>" + data.HIT + "</td>         " ;
 		html += "</tr>              " ;
 	}   
 	
@@ -572,6 +579,7 @@ function drawList(list) {
 		      			<th>제목</th>
 		      			<th>아이디</th>
 		      			<th>작성일</th>
+		      			<th>조회수</th>
 	      			</tr>	      			
 	      		</thead>
 	      		<tbody></tbody>	

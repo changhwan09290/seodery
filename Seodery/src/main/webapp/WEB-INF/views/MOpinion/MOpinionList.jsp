@@ -45,31 +45,32 @@
         }
         
  /* 로그인 버튼 */
-#LogoutBtn {
-	border : none;
-	border-radius: 5px;
-	background-color:rgb(3, 104, 115);
-	font-size: 1.1rem;
-	color : white;
-	font-family: '고딕';
-	cursor: pointer;
-	padding: 4px 17px 4px 17px;
-	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
-	/* position: fixed;
-	right: 90px;
-	top: 100px; */
-}
+#LoginBtn,#LogoutBtn {
+	z-index: 9999;
+   border : none;
+   border-radius: 5px;
+   background-color:rgb(3, 104, 115);
+   font-size: 1.1rem;
+   color : white;
+   font-family: '고딕';
+   cursor: pointer;
+   padding: 4px 17px 4px 17px;
+   box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
+   /* position: fixed;
+   right: 90px;
+   top: 100px; */
+} 
+ 
 
 /* 로그인버튼, 유저 로그인정보 div */
-.logout{
+ .logo{
 	white-space : nowrap;
  	display : flex;
  	position : absolute;
-	right: 8%;
+	right: 3%;
 	top: 93px;
 	align-items: flex-end;
-	
-}
+} 
 
 /* 마이페이지 연필 이미지 */
 .pencil{
@@ -81,7 +82,6 @@
 	margin-left : 7px;
 	background-size: contain;
 }
-
 
 /* 네비게이션바 전체 */
 .navi{
@@ -249,6 +249,10 @@ th {
 	background-color: rgb(212,212,212);
 }
 
+td img {
+	width: 15px;
+}
+
 /* 페이징 div */
 .page{
 	display: flex;
@@ -357,16 +361,16 @@ footer > .foot > nav > a{
 	}); 
 	
 	//로그인 
-	 $("#LoginBtn").on("click",function(){
-			$("#actionForm").attr("action","login")
-			$("#actionForm").submit()
-		});
-	
+	   $("#LoginBtn").on("click",function(){
+			
+		 location.href = "login";
+		});  
+
 	 
-	// 로그아웃 
-	$("#logoutBtn").on("click", function() {
+	//로그아웃 
+	 $("#LogoutBtn").on("click",function(){
 		location.href = "logout";
-	});
+	}); 
 	
 	
 	
@@ -418,12 +422,15 @@ function drawList(list) {
 	for(var data of list) {
 		html += "<tr no=\"" +  data.MBER_OPINI_NUM + "\">       " ;
 		html += "<td>" + data.MBER_OPINI_NUM + "</td>         " ;
-		html += "<td>" + data.TITLE + "</td>         " ;
-		html += data.ATACH;
+		html += "<td>";
+		html += data.TITLE;
+
 		
 		if(data.ATACH != null) {
 			html += "<img src=\"resources/images/attFile.png\" />";	
 		} 
+		
+		html += "</td>";
 		html += "<td>" + data.ID + "</td>       " ;
 		html += "<td>" + data.REGISTER_DT + "</td>      " ;
 		html += "</tr>              " ;
@@ -475,22 +482,21 @@ function drawList(list) {
 
 <div id="wrapper">
         <header id="header">
-			<div id="logo">
-				<form action="#" method="post" >
-					<div class="logout">
+		<div class="logo">
+						<div class="pencil"></div>
 						<c:choose>
 							<c:when test="${empty sMNo}">
-								<input type="button" value="로그인" id="LoginBtn" />
+								<div class="login">
+									<input type="button" value="로그인" id="LoginBtn"/>
+								</div>
 							</c:when>
-							<c:otherwise>
+						<c:otherwise>
+							<div class="logout">
 								${sMNm}님 환영합니다.
-								<div class="pencil"></div>
-								<input type="button" value="로그아웃" id="LogoutBtn" />
-							</c:otherwise>
-						</c:choose>						
-						<input type="button" value="로그아웃" id="LogoutBtn"/> 
-					</div>
-				</form>
+								<input type="button" value="로그아웃" id="LogoutBtn"/>
+							</div>
+						</c:otherwise>
+						</c:choose>
 			</div>
 			
 			<div class="navcon">

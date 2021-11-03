@@ -50,6 +50,13 @@ public class NoticeDao implements INoticeDao{
 	}
 
 
+	@Override
+	public void updateHit(HashMap<String, String> params) throws Throwable {
+	
+		
+	}
+
+
 	
 
 	

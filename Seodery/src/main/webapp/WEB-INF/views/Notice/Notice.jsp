@@ -367,17 +367,24 @@ footer > .foot > nav > a{
 </head>
 <body>
 
- <div id="wrapper">
+<div id="wrapper">
         <header id="header">
-			<div id="logo">
-				<form action="#" method="post" >
-					<div class="logout">
-						{000}님 환영합니다.
+		<div class="logo">
 						<div class="pencil"></div>
-						<input type="button" value="로그아웃" id="LogoutBtn"/>
-					</div>
-				</form>
-			</div> 
+						<c:choose>
+							<c:when test="${empty sMNo}">
+								<div class="login">
+									<input type="button" value="로그인" id="LoginBtn"/>
+								</div>
+							</c:when>
+						<c:otherwise>
+							<div class="logout">
+								${sMNm}님 환영합니다.
+								<input type="button" value="로그아웃" id="LogoutBtn"/>
+							</div>
+						</c:otherwise>
+						</c:choose>
+			</div>
 			
 			<div class="navcon">
 				<nav id="nav">
