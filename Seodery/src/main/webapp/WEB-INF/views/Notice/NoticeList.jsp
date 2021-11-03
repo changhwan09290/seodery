@@ -22,30 +22,24 @@
     font-style: normal;
 } 
     
-        #wrapper { /*85%로 너비값*/
-            width: 85%;
-            margin: 0 auto;
-        }
-       header { /*헤더 %로 단위변경*/
-            width: 100%;
-            height: 155px;
-            background-image :url("resources/images/park/logo.png");
-            background-size: 320px 164px;
-            background-repeat : no-repeat;
-            background-position : center;
-           /*  border-bottom: 2px solid black; */
-    }
-       
-       
-        footer{ /*푸터 %로 단위변경*/
-            clear: both; 
-            width: 85%;
-            height: 120px;
-            text-align: center;
-        }
-        
- /* 로그인 버튼 */
-#LogoutBtn {
+#wrapper { /*85%로 너비값*/
+	width: 85%;
+	margin: 0 auto;
+}
+
+header { /*헤더 %로 단위변경*/
+	width: 100%;
+	height: 155px;
+	background-image: url("resources/images/park/logo.png");
+	background-size: 320px 164px;
+	background-repeat: no-repeat;
+	background-position: center;
+	/*  border-bottom: 2px solid black; */
+}
+
+/* 로그인 버튼 */
+#LoginBtn, #LogoutBtn {
+	z-index: 9999;
 	border : none;
 	border-radius: 5px;
 	background-color:rgb(3, 104, 115);
@@ -55,55 +49,50 @@
 	cursor: pointer;
 	padding: 4px 17px 4px 17px;
 	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
-	/* position: fixed;
-	right: 90px;
-	top: 100px; */
 }
 
 /* 로그인버튼, 유저 로그인정보 div */
-.logout{
-	white-space : nowrap;
- 	display : flex;
- 	position : absolute;
+.logout {
+	white-space: nowrap;
+	display: flex;
+	position: absolute;
 	right: 8%;
 	top: 93px;
 	align-items: flex-end;
-	
 }
 
 /* 마이페이지 연필 이미지 */
-.pencil{
+.pencil {
 	width: 30px;
 	height: 30px;
 	background-image: url("resources/images/park/pencil.png");
 	background-repeat: no-repeat;
 	margin-right: 9px;
-	margin-left : 7px;
+	margin-left: 7px;
 	background-size: contain;
 }
 
-
 /* 네비게이션바 전체 */
-.navi{
+.navi {
 	list-style-type: none;
-   	margin-top : -55px;
-    padding: 0px; 
-    display: flex;		/* 가로정렬 */
-     background: white;   
-   /*  background : rgb(150, 210, 90);   */
-    width: 100%;
-   	overflow: auto;
+	margin-top: -55px;
+	padding: 0px;
+	display: flex; /* 가로정렬 */
+	background: white;
+	/*  background : rgb(150, 210, 90);   */
+	width: 100%;
+	overflow: auto;
 }
 
 /* 메뉴 */
-.navi > li{
-	line-height: 30px;   	/* 줄간격 */
-	/*text-align: center;		 텍스트 정렬 */ 	
+.navi>li {
+	line-height: 30px; /* 줄간격 */
+	/*text-align: center;		 텍스트 정렬 */
 	padding: 13px;
 	color: black;
 	text-decoration: none;
-	width: 25%; 
- 	font-size: 1.4rem;
+	width: 25%;
+	font-size: 1.4rem;
 }
 /* 메뉴바 세로선 */
 .navi > li.sub{
@@ -267,20 +256,17 @@ td img {
 	color: red;
 }
 /* footer */
-footer { 
+footer {
 	width: 85%;
-	height: 110px;
-	position: fixed;				
-	bottom : 0px; 
-	/* position: relative;				
-	top:580px;
-	bottom : 0px; */
-	padding-top: 15px;
+	height: 120px;
+	position: relative;
 	color: gray;
 	font-size: 0.8em;
 	text-align: center;
+	/* padding-left: 7.5%; */
+	bottom: 0;
 	margin: 0 auto;
-	
+	border-top: 1px solid black;
 }
 /* footer div */
 .foot{
@@ -359,18 +345,15 @@ footer > .foot > nav > a{
 		$("#actionForm").submit();
 	}); 
 	
-	//로그인 
-	 $("#LoginBtn").on("click",function(){
-			$("#actionForm").attr("action","login")
-			$("#actionForm").submit()
+		//로그인
+		$("#LoginBtn").on("click", function() {
+			location.href = "login";
 		});
-	
-	 
-	// 로그아웃 
-	$("#logoutBtn").on("click", function() {
-		location.href = "logout";
-	});
-	
+		
+		//로그아웃
+		$("#LogoutBtn").on("click", function() {
+			location.href = "logout";
+		});
 	
 	
 	//페이징
@@ -485,20 +468,18 @@ function drawList(list) {
 			<div id="logo">
 				<form action="#" method="post" >
 					<div class="logout">
-						<c:choose>
-							<c:when test="${empty sMNo}">
-								<input type="button" value="로그인" id="LoginBtn" />
-							</c:when>
-							<c:otherwise>
-								${sMNm}님 환영합니다.
-								<div class="pencil"></div>
-								<input type="button" value="로그아웃" id="LogoutBtn" />
-							</c:otherwise>
-						</c:choose>						
-						<input type="button" value="로그아웃" id="LogoutBtn"/> 
+					<c:choose>
+						<c:when test="${empty sMNo}">
+							<input type="button" value="로그인 " id="LoginBtn" />
+						</c:when>
+						<c:otherwise>
+							${sMNm}님 어서오세요.<div class="pencil"></div>
+							<input type="button" value="로그아웃 " id="LogoutBtn" />
+						</c:otherwise>
+					</c:choose>
 					</div>
 				</form>
-			</div>
+			</div> 
 			
 			<div class="navcon">
 				<nav id="nav">
@@ -566,10 +547,11 @@ function drawList(list) {
       		<form action="#" id="actionForm" method="post">
 	      	<div class="topbox">
 	      		<div class="menuBox"><h2>공지사항</h2></div>
-				<input type="hidden"  id="oldTxt" value="${param.searchTxt}" />
 				<input type="hidden"  name="page" id="page" value="${page}" />
 				<input type="hidden" name="no" id="no" />
-				<input type="button" value="작성" id="addBtn"/>
+				<c:if test="${!empty sMNo}">
+					<input type="button" value="작성" id="addBtn" />
+				</c:if>
 	      	</div>
 	      	</form>
 	      	<table id="table">
@@ -583,7 +565,8 @@ function drawList(list) {
 	      			</tr>	      			
 	      		</thead>
 	      		<tbody></tbody>	
-	      	</table>
+	      	</table><br>
+	      	
 		      		
 
 <div class="paging_wrap" align="center"></div>

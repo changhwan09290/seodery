@@ -27,11 +27,11 @@
 	
 	<select id="getNotice" parameterType="hashmap" resultType="hashmap">
 		SELECT N.NOT_NUM, ID, N.CON , N.ATACH,
-				TO_CHAR(REGISTER_DT, 'YYYY-MM-DD') AS  REGISTER_DT ,HIT
+				TO_CHAR(REGISTER_DT, 'YYYY-MM-DD') AS  REGISTER_DT
 		FROM NT N INNER JOIN UR U 
 		        ON N.MBER_NUM = U.MBER_NUM
 		WHERE 1 = 1
-		 AND NOT_NUM = #{no}
+		 AND N.NOT_NUM = #{no}
 	</select>
 	
 	
