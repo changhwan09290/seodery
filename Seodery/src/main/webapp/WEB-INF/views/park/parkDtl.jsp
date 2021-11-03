@@ -585,6 +585,20 @@ $(document).ready(function(){
 		location.href = "logout";
 	}); 
 	
+	/* 페이징 */
+	 if("${page}" > "${pb.maxPcount}"){
+			$("#page").val("${pb.maxPcount}");
+			$("#wcform").attr("action","parkDtl");
+			$("#wcform").submit();
+		};
+		
+		$(".paging_wrap").on("click", "span", function(){
+			$("page").val($(this).attr("page"));
+			$("#wcform").attr("action", "parkDtl");
+			$("#wcform").submit();
+		});
+	
+	
 	
 	//목록에서 수정버튼을 클릭했을 때 
 		$(".pc_list_wrap").on("click","#updateBtn",function(){
@@ -670,7 +684,6 @@ $(document).ready(function(){
 //삭제
 $(".pc_list_wrap").on("click","#deleteBtn",function(){
 	
-	//삭제하기
 	if(confirm("삭제하시겠습니까?")){
 		var cNum = $(this).parent().parent().find(".user_info").find("input[name='Cnum']")[0].value;
 		$("#wcform").find("input[name='Cnum']").val(cNum);
@@ -927,18 +940,6 @@ function reloadMap(){
 		}
 
   
-  /* 별점 그리기 시도... */
-  /* function star(){
-	  	
-	  var innerHtml = ""
-	  for(var i=0; i<5; i++){
-		  if(i<2){
-			  innerHtml += '<div id="rateBox"></div>';
-		  }else{
-			innerHtml += "☆";
-	  }
-  } */
-  
   
   /* 페이징 */
 /*  function drawPaging(pb){
@@ -1106,7 +1107,7 @@ function reloadMap(){
 								</c:when>
 								<c:otherwise>
 								<input type="hidden" id="mo" name="mo" value="${sMNo}"/>
-<%-- 							<input type="hidden" id="page" name="page" value="${page}"/> --%>
+ 								<input type="hidden" id="page" name="page" value="${page}"/> 
 								<input type="hidden" name="page"  value="${param.page}"/>
 								<input type="hidden" name="no"  value="${param.no}"/>
 								<input type="hidden" name="name"  value="${param.name}"/>
@@ -1132,7 +1133,6 @@ function reloadMap(){
 								</div>
 						</div>
 					</div>
-					
 					
 					
 					<div class="pc_list_wrap">
@@ -1171,7 +1171,34 @@ function reloadMap(){
 					     </c:otherwise>
 					</c:choose>
 					</div>
-	
+						<div class="paging_wrap">
+						<c:choose>
+							<c:when test="${page eq 1}">
+								<span page="1">이전</span>
+							</c:when>
+							<c:otherwise>
+								<span page="${page - 1}">이전</span>
+							</c:otherwise>
+						</c:choose>
+						<c:forEach var="i" begin="${pb.startPcount}" end="${pb.endPcount}" step="1">
+							<c:choose>
+								<c:when test="${page eq i}">
+									<span page="${i}"><b>${i}</b></span>
+								</c:when>
+								<c:otherwise>
+									<span page="${i}">${i}</span>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<c:choose>
+							<c:when test="${page eq pb.maxPcount}">
+								<span page="${pb.maxPcount}">다음</span>
+							</c:when>
+							<c:otherwise>
+								<span page="${page + 1}">다음</span>
+							</c:otherwise>
+						</c:choose>
+					</div>
 				</section>
 				
 				
@@ -1185,8 +1212,6 @@ function reloadMap(){
 					</form>
 					<div id="map" style="width:600px;height:400px;margin-left:auto;margin-right:auto;"></div>
 				</section>
-				
-			<div class="paging_wrap"></div>
     </main>
     
     

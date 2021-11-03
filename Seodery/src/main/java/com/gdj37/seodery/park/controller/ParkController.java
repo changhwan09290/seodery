@@ -307,7 +307,7 @@ public class ParkController {
 			String result = "success";
 			
 			try {
-				int cnt = iParkService.deletePCON(params);
+				int cnt = iParkService.deletePCON(params);	//댓글 삭제하기
 				
 				if(cnt ==0) {
 					result = "failed";
