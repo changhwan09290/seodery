@@ -98,9 +98,10 @@
 function reloadList(){
    // var params = $("#actionForm").serialize();
       var searchTxt = $("#searchTxt").val();
+      var page = $("#page").val();
    
    $.ajax({   
-    url : "apiwalk?searchTxt=" + searchTxt,
+    url : "apiwalk?searchTxt=" + searchTxt + "&page=" + page,
     type: "get",   
     dataType:"json",
      success : function(res){   
@@ -275,15 +276,14 @@ footer { /*푸터 %로 단위변경*/
 }
 
  /* 로그인버튼, 유저 로그인정보 div */
-/* .logout {
+.logout {
    white-space: nowrap; 
    display: flex;
    position: absolute;
-   position: absolute; 
    right: 8%;
    top: 93px;
    align-items: flex-end;
-}  */
+}  
 
 .logo {
    white-space: nowrap; 
@@ -569,7 +569,7 @@ footer>.foot>nav>a {
    <div id="wrapper">
       <header id="header">
          <div id="logo">
-              <!-- <div class="logout"> -->
+               <!-- <div class="logout"> -->
                <c:choose>
                   <c:when test="${empty sMNo}">
                   	<input type="button" value="로그인" id="LoginBtn"/>
@@ -580,7 +580,7 @@ footer>.foot>nav>a {
                   <input type="button" value="로그아웃" id="LogoutBtn" />
                  </c:otherwise>
                </c:choose>   
-              <!--  </div> -->
+             <!-- </div> -->
          </div>
 
          <div class="navcon">
@@ -652,8 +652,7 @@ footer>.foot>nav>a {
          </div>
          <form action="#" id="actionForm" method="post"></form>
          <select name="searchGbn" id="searchGbn">
-            <option value="0">지역</option>
-            <option value="1">소요시간</option>
+            <option value="0">코스명</option>
          </select> 
          <input type="text" class="search_txt" name="searchTxt"  id="searchTxt" placeholder="지역명을 입력해주세요" value="${param.searchTxt}">
          <input type="hidden" id="oldTxt" value="${param.searchTxt}">

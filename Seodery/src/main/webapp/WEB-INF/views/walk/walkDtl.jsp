@@ -84,20 +84,20 @@
               if(checkVal("#con")){
                     alert("내용을 입력하세요.");
                } else{
-	            	var starNum = $("#rateBox")[0].innerText;
-	   				/* console.log("별점 값>>>>>>>>" + starNum);
-	   				
-	   				
-	   				console.log("addr>>" + $(this).parents('tr').find('td[name="paddr"]').text());
-	   				
-	   				alert("Cnum>>" + $(this)); */
-	   				
-	   				
-	   				$("input[name='srating']").val(starNum.substr(0,1));
-	   				$("#walkForm").attr("action", "walkadd");
-	   				$("#walkForm").submit();
-	   		};
-	   	});                                        
+                  var starNum = $("#rateBox")[0].innerText;
+                  /* console.log("별점 값>>>>>>>>" + starNum);
+                  
+                  
+                  console.log("addr>>" + $(this).parents('tr').find('td[name="paddr"]').text());
+                  
+                  alert("Cnum>>" + $(this)); */
+                  
+                  
+                  $("input[name='srating']").val(starNum.substr(0,1));
+                  $("#walkForm").attr("action", "walkadd");
+                  $("#walkForm").submit();
+            };
+         });                                        
    });
    
    function checkVal(sel){
@@ -148,63 +148,63 @@
          callKakaoAPI(sortedRows);                 
       }
    
-	function callKakaoAPI(rows){
-		var linePath = [];
-		
-		for(var row of rows) {
-			var coords = new daum.maps.Coords(row.X * 2.5, row.Y * 2.5);
-			var latlng = coords.toLatLng(); // daum.maps.LatLng 객체 반환
-			latlng.toString(); // (37.56682596942951, 126.97865669538913)
-			linePath.push(latlng);
-		}
-		
-		console.log(linePath);
-		var lat = linePath[0].getLat();
-		var lng = linePath[0].getLng();
-		
-		console.log(lat);
-		console.log(lng);
-		
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+   function callKakaoAPI(rows){
+      var linePath = [];
+      
+      for(var row of rows) {
+         var coords = new daum.maps.Coords(row.X * 2.5, row.Y * 2.5);
+         var latlng = coords.toLatLng(); // daum.maps.LatLng 객체 반환
+         latlng.toString(); // (37.56682596942951, 126.97865669538913)
+         linePath.push(latlng);
+      }
+      
+      console.log(linePath);
+      var lat = linePath[0].getLat();
+      var lng = linePath[0].getLng();
+      
+      console.log(lat);
+      console.log(lng);
+      
+      var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
         mapOption = {
             center: new kakao.maps.LatLng(linePath[0].getLat(), linePath[0].getLng()), // 지도의 중심좌표
             level: 3 // 지도의 확대 레벨
         };
        
-		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-		var map = new kakao.maps.Map(mapContainer, mapOption);
-		
-		var bounds = new kakao.maps.LatLngBounds();    
-		
-		for(var i = 0 ; i < linePath.length ; i++) {
-			var line = linePath[i];
-			bounds.extend(line);
-			var marker = new kakao.maps.Marker({
-	            position: line, // 마커를 표시할 위치입니다
-	            map: map // 마커를 표시할 지도객체입니다
-	            
-	        });
-			
-			var iwContent = '<div style="padding:5px;">' + (i + 1) + "." + rows[i].CPI_NAME + '</div>';
+      // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+      var map = new kakao.maps.Map(mapContainer, mapOption);
+      
+      var bounds = new kakao.maps.LatLngBounds();    
+      
+      for(var i = 0 ; i < linePath.length ; i++) {
+         var line = linePath[i];
+         bounds.extend(line);
+         var marker = new kakao.maps.Marker({
+               position: line, // 마커를 표시할 위치입니다
+               map: map // 마커를 표시할 지도객체입니다
+               
+           });
+         
+         var iwContent = '<div style="padding:5px;">' + (i + 1) + "." + rows[i].CPI_NAME + '</div>';
 
-			// 인포윈도우를 생성합니다
-			var infowindow = new kakao.maps.InfoWindow({
-			    position : line, 
-			    content : iwContent,
-			});
-			infowindow.open(map, marker); 
-		}
-		
-		var polyline = new kakao.maps.Polyline({
-			map: map,
-			path: linePath, // 선을 구성하는 좌표배열 입니다
-			strokeWeight: 5, // 선의 두께 입니다
-			strokeColor: '#FFAE00', // 선의 색깔입니다
-			strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-			strokeStyle: 'solid' // 선의 스타일입니다
-		});
-		map.setBounds(bounds);
-	}
+         // 인포윈도우를 생성합니다
+         var infowindow = new kakao.maps.InfoWindow({
+             position : line, 
+             content : iwContent,
+         });
+         infowindow.open(map, marker); 
+      }
+      
+      var polyline = new kakao.maps.Polyline({
+         map: map,
+         path: linePath, // 선을 구성하는 좌표배열 입니다
+         strokeWeight: 5, // 선의 두께 입니다
+         strokeColor: '#FFAE00', // 선의 색깔입니다
+         strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+         strokeStyle: 'solid' // 선의 스타일입니다
+      });
+      map.setBounds(bounds);
+   }
                    
     // 좌표 변환 결과를 받아서 처리할 콜백함수 입니다.
     function transCoordCB(result, status) {
@@ -215,8 +215,32 @@
         
         // 정상적으로 검색이 완료됐으면 
         if (status === kakao.maps.services.Status.OK) {
-                                       
-			console.log(result);                                    
+           
+           //var arrresults = results.concat
+           
+           
+  
+           //linePath.push(new kakao.maps.LatLng(result));
+           /* for(var i=0; i<result.length; i++){
+              //console.log(result[i]);
+              linePath.push(new kakao.maps.LatLng(result));
+              //positions.push([new kakao.maps.LatLng(result[i].y, result[i].x)]);
+           } */
+           
+           
+            
+        // 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
+           /*  var linePath = [
+               new kakao.maps.LatLng(33.452344169439975, 126.56878163224233),
+               new kakao.maps.LatLng(33.452739313807456, 126.5709308145358),
+               new kakao.maps.LatLng(33.45178067090639, 126.5726886938753) 
+           ]; */
+           
+           
+         console.log(result);
+             
+           
+             
         }
     }
       </script>
@@ -597,6 +621,15 @@ ul {
    box-shadow: 0 1px 1px 0 rgb(3, 104, 115);
    white-space: nowrap;
 }
+
+#rateBox {
+	display: inline-block;
+}
+
+.login_req_wrap {
+	display: inline-block;
+}
+
 </style>
 
 </head>
@@ -675,15 +708,15 @@ ul {
       </header>
       
       <div>
-					<form action="#" id="actionForm" method="get">
-							<input type="hidden" name="searchGbn"  value="${param.searchGbn}"/>
-							<input type="hidden" name="searchTxt"  value="${param.searchTxt}"/>
-							<input type="hidden" name="mo"  value="${sMNo}"/>
-							<input type="hidden" name="cosn" value="${param.cosn}" />
-                            <input type="hidden" name="area" value="${param.area}" />
-                            <input type="hidden" name="time" value="${param.time}" />
-					</form>
-					</div>
+               <form action="#" id="actionForm" method="get">
+                     <input type="hidden" name="searchGbn"  value="${param.searchGbn}"/>
+                     <input type="hidden" name="searchTxt"  value="${param.searchTxt}"/>
+                     <input type="hidden" name="mo"  value="${sMNo}"/>
+                     <input type="hidden" name="cosn" value="${param.cosn}" />
+                     <input type="hidden" name="area" value="${param.area}" />
+                     <input type="hidden" name="time" value="${param.time}" />
+               </form>
+               </div>
 
       <main>
          <div class="com_map">
@@ -691,12 +724,13 @@ ul {
             <div id="map" style="width: 500px; height: 400px;"></div>
          </div>
       </main>
+      <input type="button" value="목록으로" class="back_btn" id="backBtn">
 
       <div class="comm_area">
          <div class="write_area">         
-            <div class="comm_sel">
-               <p>댓글</p>
-            </div>
+            <!-- <div class="comm_sel"> -->
+               <h2 class="comm_sel">댓글</h2>
+            <!-- </div> -->
             <div class="topbox">
                <div id="rateBox"></div>
 
@@ -724,8 +758,7 @@ ul {
                            <textarea class="menuBox" name="con" id="con">${data.CON}</textarea>
                         </div>
                         <div class="btn_wrap" mo="${sMNo}" cosn="${cosn}" area="${area}" time="${time}">
-                           <input type="button" value="작성" class="action_btn" id="writeBtn">
-                           <input type="button" value="목록으로" class="back_btn" id="backBtn">
+                           <input type="button" value="작성" class="action_btn" id="writeBtn">                           
                            <input type="hidden" value="수정" class="action_btn2" id="updateBtn">
                            <input type="hidden" value="취소" class="action_btn2" id="cancleBtn">                           
                         </div>

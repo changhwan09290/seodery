@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gdj37.seodery.common.bean.PagingBean;
 import com.gdj37.seodery.common.service.IPagingService;
 import com.gdj37.seodery.walk.service.IWalkService;
 
@@ -92,23 +93,24 @@ public class WalkController {
         ObjectMapper mapper = new ObjectMapper();   //jackson 객체
         Map<String, Object> modelMap = new HashMap<String, Object>();   //데이터를 담을 map
         
-        // System.out.println("#params: " + params);
+        int page = Integer.parseInt(params.get("page"));
         
-        //String search = params.get("searchTxt");
+        int cnt = 1000;
         
-        //String search = request.getParameter("searchTxt");
+        PagingBean pb = iPagingService.getPagingBean(page, cnt, 80, 10);
         
+        params.put("startCnt", Integer.toString(pb.getStartCount()));
+        params.put("endCnt", Integer.toString(pb.getEndCount()));
         
+        //final String searchTxt = params.get("searchTxt");
         
-        //System.out.println(request.getParameter("searchTxt"));
-        
-        final String searchTxt = params.get("searchTxt");
-        
-        String urlStr = "http://openapi.seoul.go.kr:8088/534b517a6f6e617931307348487965/json/SeoulGilWalkCourse/1/100/";
-        if (searchTxt != null && !searchTxt.isEmpty()) {
-           //urlStr += (URLEncoder.encode(searchTxt, "utf-8") + "/");
-           urlStr += ((searchTxt.replace(" ", "%20")) + "/");
-        }
+        String urlStr = "http://openapi.seoul.go.kr:8088/534b517a6f6e617931307348487965/json/SeoulGilWalkCourse/";
+        urlStr += params.get("startCnt") + "/" + params.get("endCnt");
+        /*
+       * if (searchTxt != null && !searchTxt.isEmpty()) { //urlStr +=
+       * (URLEncoder.encode(searchTxt, "utf-8") + "/"); urlStr +=
+       * ((searchTxt.replace(" ", "%20")) + "/"); }
+       */
         
         //URL url = new URL("http://openapi.seoul.go.kr:8088/534b517a6f6e617931307348487965/json/SeoulGilWalkCourse/1/13/");  
         StringBuilder sb = new StringBuilder();
@@ -116,6 +118,9 @@ public class WalkController {
         
         String line = ""; 
 
+        modelMap.put("pb", pb);
+        modelMap.put("page", page);
+        
         try {
            
          URL vURL = new URL(urlStr);
