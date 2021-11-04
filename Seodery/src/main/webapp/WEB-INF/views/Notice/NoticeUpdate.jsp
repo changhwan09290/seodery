@@ -450,9 +450,9 @@ function checkVal(sel) {
 		
 	<main>
 	
-      		<div class="Cpage"><h4>공지사항 > 고객의 소리함 > 작성페이지</h4></div>
+      		<div class="Cpage"><h4>공지사항 > 작성페이지</h4></div>
       		<div class="title">
-      			<h1>고객의 소리함</h1>
+      			<h1>공지사항</h1>
       		</div>
       		
 			<form id="fileForm" action="fileUploadAjax" method="post" enctype="multipart/form-data">
