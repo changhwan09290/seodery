@@ -363,6 +363,7 @@ footer > .foot > nav > a{
 
 //데이터 취득
  function reloadList(){
+	console.log("ddddd>>>");
 	 var params = $("#actionForm").serialize();
  	$.ajax({	//jquery의 ajax함수 호출  
 //  		url: "http://data.seoul.go.kr/dataList/OA-394/S/1/datasetView.do?"
@@ -370,11 +371,10 @@ footer > .foot > nav > a{
 		url : "apitest", 
 		type: "get",	//전송 방식
  		dataType:"json",	//받아올 데이터 형태 
- 		async: false,
  		data: params,
 //  		data : sendData,	//보낼 데이터(문자열 형태)
  		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
- 			console.log(res);
+ 			console.log("res>>>>>"+res);
  			makeTable(JSON.parse(res.resData));
  			console.log(makeTable(JSON.parse(res.resData)));
  			//drawList(res.list);

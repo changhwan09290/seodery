@@ -449,7 +449,7 @@ public class ParkController {
 
 		// 데이터 시작, 종료 번호 추가
 		params.put("startCnt", "1");
-		params.put("endCnt", "982");
+		params.put("endCnt", "500");
 
 //		StringBuffer result = new StringBuffer();
 //		String urlStr = "http://openAPI.seoul.go.kr:8088/58446e7a71616b643239487a427157/json/SearchParkInfoService/1/132?";

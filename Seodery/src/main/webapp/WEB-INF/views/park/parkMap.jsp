@@ -422,7 +422,6 @@ $(document).ready(function(){
 			url : "http://openAPI.seoul.go.kr:8088/58446e7a71616b643239487a427157/json/SearchParkInfoService/1/200", 
 			type: "get",	//전송 방식
 			dataType:"json",	//받아올 데이터 형태 
-			async: false,
 			data: params,
 	// 		data : sendData,	//보낼 데이터(문자열 형태)
 			success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
@@ -446,7 +445,6 @@ function reloadList(){
 		url : "apitest", 
 		type: "get",	//전송 방식
 		dataType:"json",	//받아올 데이터 형태 
-		async: false,
 		data: params,
 		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
 			makeTable(JSON.parse(res.resData)); // 목록 만듬
