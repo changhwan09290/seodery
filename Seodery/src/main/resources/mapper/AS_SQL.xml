@@ -24,16 +24,16 @@
 	</select>
 	
 	<insert id="getASAdd" parameterType="hashmap">
-		INSERT INTO BAS(QS_NUM, MBER_NUM, TITLE, BK_SERIAL_NUM, RENTSH_LOC, CON)
-		VALUES (BAS_SEQ.NEXTVAL, #{m_num}, #{title}, #{serialNum}, #{rentsh_loc}, #{con})
+		INSERT INTO BAS(QS_NUM, MBER_NUM, TITLE, BK_SERIAL_NUM, RENTSH_LOC, CON, ATACH)
+		VALUES (BAS_SEQ.NEXTVAL, #{m_num}, #{title}, #{serialNum}, #{rentsh_loc}, #{con}, #{dbFile})
 	</insert>
 	
 	<select id="getASDtl" parameterType="hashmap" resultType="hashmap">
-		SELECT B.TITLE, B.MBER_NUM, B.BK_SERIAL_NUM, B.RENTSH_LOC, U.ID, B.CON, B.ATACH
+		SELECT B.QS_NUM, B.TITLE, B.MBER_NUM, B.BK_SERIAL_NUM, B.RENTSH_LOC, U.ID, B.CON, B.ATACH
 		FROM BAS B INNER JOIN UR U
                         ON B.MBER_NUM = U.MBER_NUM
 		WHERE 1 = 1
-		AND B.MBER_NUM = #{m_num}
+		AND B.QS_NUM = #{qs_num}
 	</select>
 		
 	<update id="getASUpdate" parameterType="hashmap">
@@ -43,11 +43,11 @@
             CON = #{con},
             ATACH = #{dbFile}
 		WHERE 1 = 1
-		AND B.QS_NUM = #{qnum}
+		AND QS_NUM = #{qs_num}
 	</update>
 	
 	<update id="getASDelete" parameterType="hashmap">
 		UPDATE BAS SET DELC = 0
-		WHERE QS_NUM = #{qnum}
+		WHERE QS_NUM = #{qs_num}
 	</update>
 </mapper>

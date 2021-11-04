@@ -247,6 +247,9 @@ h1 {
 	padding-left: 10%;
 }
 
+.hide_btn {
+	display: none;
+}
 </style>
 <script type="text/javascript"
 		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
@@ -288,59 +291,59 @@ $(document).ready(function() {
 	$("#addBtn").on("click", function() {
 		//ck데이터 중에 con과 관련된 객체에서 데이터를 취득하여 textarea인 con에 값을 넣는다.
 		$("#con").val(CKEDITOR.instances['con'].getData());
+
 		
-		/* if() {} */
-		
-		if(checkVal("#title")) {
-			alert("제목을 입력해주세요.");
-			$("#title").focus();
-		} else if(checkVal("#serialNum")) {
-			alert("고유번호를 입력해주세요.");
-		} else if(checkVal("#rentsh_loc")) {
-			alert("대여소 위치를 입력해주세요.");
-		} else if(checkVal("#con")) {
-			alert("수리내용을 입력해주세요.");
-		} else {
-			//위에서 필터처리 먼저 한 후 success, error처리
-			var fileForm = $("#fileForm");
-			fileForm.ajaxForm({
-				success : function(res) {
-					if(res.result == "SUCCESS") {
-						//업로드 파일명 적용
-						if(res.fileName.length > 0) { //업로드한 파일이 있는 경우
-							$("#dbFile").val(res.fileName[0]);
-						}
-						//글 저장
-						var params = $("#addForm").serialize();
-						$.ajax({
-							url: "ASAddAjax",
-							type: "post",
-							dataType: "json",
-							data: params,
-							success: function(res) {
-								if(res.result == "success") {
-									location.href = "AfterServiceList";
-								} else if(res.result == "failed") {
-									alert("작성에 실패하였습니다.");
-								} else {
-									alert("작성 중 문제가 발생하였습니다.");
-								}
-							},
-							error: function(request, status, error) {
-								console.log(error);
+			if(checkVal("#title")) {
+				alert("제목을 입력해주세요.");
+				$("#title").focus();
+			} else if(checkVal("#serialNum")) {
+				alert("고유번호를 입력해주세요.");
+			} else if(checkVal("#rentsh_loc")) {
+				alert("대여소 위치를 입력해주세요.");
+			} else if(checkVal("#con")) {
+				alert("수리내용을 입력해주세요.");
+			} else {
+				//위에서 필터처리 먼저 한 후 success, error처리
+				var fileForm = $("#fileForm");
+				fileForm.ajaxForm({
+					success : function(res) {
+						if(res.result == "SUCCESS") {
+							//업로드 파일명 적용
+							if(res.fileName.length > 0) { //업로드한 파일이 있는 경우
+								$("#dbFile").val(res.fileName[0]);
 							}
-						});
-					} else {
-						alert("파일 업로드에 실패하였습니다.");
+							//글 저장
+							var params = $("#addForm").serialize();
+							$.ajax({
+								url: "ASAddAjax",
+								type: "post",
+								dataType: "json",
+								data: params,
+								success: function(res) {
+									if(res.result == "success") {
+										location.href = "AfterServiceList";
+									} else if(res.result == "failed") {
+										alert("작성에 실패하였습니다.");
+									} else {
+										alert("작성 중 문제가 발생하였습니다.");
+									}
+								},
+								error: function(request, status, error) {
+									console.log(error);
+								}
+							});
+						} else {
+							alert("파일 업로드에 실패하였습니다.");
+						}
+					},
+					error : function(reg, status, error) {
+						console.log(error);
+						alert("파일 업로드 중 문제가 발생하였습니다.");
 					}
-				},
-				error : function(reg, status, error) {
-					console.log(error);
-					alert("파일 업로드 중 문제가 발생하였습니다.");
-				}
-			});
-			fileForm.submit();
-		}
+				});
+				fileForm.submit();
+			}
+		
 	});
 });
 function checkVal(sel) {
@@ -355,6 +358,22 @@ function checkVal(sel) {
 <body>
 <div id="wrapper">
 <header id="header">
+<div id="logo">
+	<form action="#" method="post" >
+		<div class="logout">
+			<c:choose>
+				<c:when test="${empty sMNo}">
+					<input type="button" value="로그인" id="LoginBtn"/>
+				</c:when>
+				<c:otherwise>
+					${sMNm}님 환영합니다.
+					<div class="pencil"></div>
+					<input type="button" value="로그아웃" id="LogoutBtn" />
+				</c:otherwise>
+			</c:choose>
+		</div>
+	</form>
+</div> 
 <div class="navcon">
 <nav id="nav">
 	<div class="gnb_subbox"></div>
@@ -425,23 +444,21 @@ function checkVal(sel) {
 <form id="fileForm" name="fileForm" action="fileUploadAjax" method="post" enctype="multipart/form-data">
 	<input type="file" name="att" id="att">
 </form>
-<form action="AfterServiceList" method="post" id="goForm">
-	<input type="hidden" name="page" value="${param.page}">
-</form>
 <div>
-	<%-- <c:choose></c:choose> --%>
-			<form action="#" id="addForm" method="post">
-				제목 : <input type="text" id="title" name="title" /><br>
-				고유번호 : <input type="text" id="serialNum" name="serialNum" /><br>
-				대여소 위치 : <input type="text" id="rentsh_loc" name="rentsh_loc" /><br>
-				작성자 : ${sMNm}<input type="hidden" value="${sMNo}" name="m_num" /><br>
-				<%-- <input type="hidden" value="${data.m_num}" name="m_num" /> --%>
-				내용
-				<textarea rows="5" cols="5" id="con" name="con"></textarea><br/>
-				첨부파일 : <input type="button" id="attach" value="첨부파일선택" /><br>
-				<span id="fileName"></span>
-				<input type="hidden" name="dbFile" id="dbFile" /><!-- DB저장용 -->
-			</form>
+	<form action="AfterServiceList" method="post" id="goForm">
+		<input type="hidden" name="page" value="${param.page}">
+	</form>
+	<form action="#" id="addForm" method="post">
+		제목 : <input type="text" id="title" name="title" /><br>
+		고유번호 : <input type="text" id="serialNum" name="serialNum" /><br>
+		대여소 위치 : <input type="text" id="rentsh_loc" name="rentsh_loc" /><br>
+		작성자 : ${sMNm}<input type="hidden" value="${sMNo}" name="m_num" /><br>
+		내용
+		<textarea rows="5" cols="5" id="con" name="con"></textarea><br/>
+		첨부파일 : <input type="button" id="attach" value="첨부파일선택" /><br>
+		<span id="fileName"></span>
+		<input type="hidden" name="dbFile" id="dbFile" /><!-- DB저장용 -->
+	</form>	
 </div>
 <input type="button" value="등록" id="addBtn" />
 <input type="button" value="목록" id="ListBtn" />
