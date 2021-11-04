@@ -63,11 +63,13 @@ public class WalkController {
      }
      
      @RequestMapping("moveDtl")
-     public ModelAndView moveDtl(ModelAndView mav, @RequestParam("cosn") String cosn){
+     public ModelAndView moveDtl(ModelAndView mav, @RequestParam("cosn") String cosn, @RequestParam("area") String area, @RequestParam("time") String time){
           //var url = "http://openapi.seoul.go.kr:8088/534b517a6f6e617931307348487965/json/SeoulGilWalkCourse/"+pageNum+"/"+pageNum+"/";
           
           System.out.println(cosn);
           mav.addObject("cosn", cosn);
+          mav.addObject("area", area);
+          mav.addObject("time", time);
           mav.setViewName("walk/walkDtl");
 
          return mav;
@@ -108,15 +110,9 @@ public class WalkController {
            urlStr += ((searchTxt.replace(" ", "%20")) + "/");
         }
         
-        //URL url = new URL("http://openapi.seoul.go.kr:8088/534b517a6f6e617931307348487965/json/SeoulGilWalkCourse/1/13/");
-
-        //ObjectMapper mapper = new ObjectMapper();
+        //URL url = new URL("http://openapi.seoul.go.kr:8088/534b517a6f6e617931307348487965/json/SeoulGilWalkCourse/1/13/");  
         StringBuilder sb = new StringBuilder();
-        BufferedReader br;
-        
-        //List<Map<String, Object>> listMap = new ArrayList<Map<String,Object>>();
-        //String searchTxt = request.getParameter("searchTxt");
-        //List<HashMap<String, String>> list = request.getParameter(params);
+        BufferedReader br;           
         
         String line = ""; 
 
@@ -165,13 +161,12 @@ public class WalkController {
         return line;
       }
      
+    
      @RequestMapping(value="/walkapiDtl", method=RequestMethod.GET, produces = "text/json;charset=UTF-8")
      @ResponseBody
      public String walkapiDtl(Model model, @RequestParam("cosn") String cosn) throws Exception {
         //데이터 하나만 가져오기(상세페이지)
-        System.out.println("cosn:"+cosn);
-        //String urlStr = "http://openapi.seoul.go.kr:8088/534b517a6f6e617931307348487965/json/SeoulGilWalkCourse/"+pageNum+"/"+pageNum+"/";
-        //String urlStr = "http://openapi.seoul.go.kr:8088/534b517a6f6e617931307348487965/json/SeoulGilWalkCourse/"+pageNum+"/100/고덕산/고덕중학교/";
+        //System.out.println("cosn:"+cosn);
         String urlStr = "http://openapi.seoul.go.kr:8088/534b517a6f6e617931307348487965/json/SeoulGilWalkCourse/1/100/"+cosn.replace(" ", "%20")+"/";
         System.out.println("urlStr:"+urlStr);
         
@@ -229,5 +224,31 @@ public class WalkController {
         System.out.println(line);
         return line;
      }     
-
+     
+     @RequestMapping(value="walkadd")
+     public ModelAndView walkadd(
+          @RequestParam HashMap<String, String> params, HttpServletRequest request,
+          ModelAndView mav) throws Throwable {
+        
+        
+        String name = request.getParameter("name");
+        
+        System.out.println(name);
+        
+        
+        mav.addObject("name", name);
+        
+        String nmExists = iWalkService.getWalkNmExists(params);
+        
+        if(nmExists == null || nmExists.equals("N")) { // 'N'
+          // insert(PK)
+          int addPK = iWalkService.addWK(params);   //공원번호,이름,주소,번호 추가하기
+       } else if(nmExists.equals("Y")){ // 'Y'
+          int update = iWalkService.updateWK(params);
+       }
+       int add = iWalkService.addWalk(params);
+     
+     return mav;
+     
+}
 }

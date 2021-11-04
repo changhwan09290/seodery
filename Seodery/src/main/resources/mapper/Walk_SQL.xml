@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="walk">
+
+	<update id="updateWK" parameterType="hashmap">
+		 UPDATE WK SET REGION = #{area}, LTIME = #{time}
+		 WHERE COS_NM = #{cosn}
+	</update>
+
+	<insert id="addWK" parameterType="hashmap">
+		INSERT INTO WK(COS_NM, REGION, LTIME)
+		VALUES(#{cosn},#{area},#{time})
+	</insert>
+	
+	<select id="getWalkNmExists" parameterType="hashmap" resultType="String">
+		SELECT ( 
+			    CASE WHEN EXISTS ( SELECT COS_NM FROM WK 
+			                        WHERE COS_NM = #{cosn} ) 
+			     THEN 'Y' ELSE 'N' END ) AS IS_EXISTS 
+		FROM DUAL
+	</select>
+	
+	<insert id="addWalk" parameterType="hashmap">
+		INSERT INTO WC(COMM_NUM,MBER_NUM,COS_NM,SRATING,CON,WRDATE,DELC)
+		VALUES (WC_SEQ.NEXTVAL,#{mo},#{cosn},#{srating},#{con},SYSDATE, 0)
+	</insert>
+	
+	
+
+</mapper>
