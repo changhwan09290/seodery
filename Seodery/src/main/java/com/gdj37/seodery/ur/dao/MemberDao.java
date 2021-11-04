@@ -36,22 +36,7 @@ public class MemberDao {
 	     * Oracle의 date형식과 연동되는 java의 Date는 java.sql.Date 클래스이다. </pre>
 	     * @param member 회원정보를 담고있는 TO
 	     * @return java.sql.Date
-	     */
-	    public Date stringToDate(MemberBean member)
-	    {
-	        String year = member.getBirthyy();
-	        String month = member.getBirthmm();
-	        String day = member.getBirthdd();
-	        
-	        Date birthday  = null;
-	        
-	        if(year != null && month != null && day != null)
-	            birthday = Date.valueOf(year+"-"+month+"-"+day);
-	        
-	        return birthday;
-	        
-	    } // end stringToDate()
-	    
+	     *
 	    
 	    /**
 	     * 회원정보를 JSP_MEMBER 테이블에 저장하는 메서드
@@ -82,12 +67,11 @@ public class MemberDao {
 	             */
 	            pstmt = conn.prepareStatement(sql.toString());
 	            pstmt.setString(1, member.getId());
-	            pstmt.setString(2, member.getpw());
-	            pstmt.setString(3, member.getName());
-	            pstmt.setString(4, member.getgender());
-	            pstmt.setString(5, member.getMail()+"@"+member.getMail());
-	            pstmt.setString(6, member.getPhone());
-	            pstmt.setString(7, member.getAddress());
+				/*
+				 * pstmt.setString(2, member.getName()); pstmt.setString(3, member.getgender());
+				 * pstmt.setString(4, member.getMail()+"@"+member.getMail()); pstmt.setString(5,
+				 * member.getPhone()); pstmt.setString(6, member.getAddress());
+				 */
 	            
 	            // 쿼리 실행
 	            pstmt.executeUpdate();
@@ -153,17 +137,7 @@ public class MemberDao {
 	                // 자바빈에 정보를 담는다.
 	                member = new MemberBean();
 	                member.setId(rs.getString("id"));
-	                member.setPassword(rs.getString("password"));
-	                member.setName(rs.getString("name"));
-	                member.setGender(rs.getString("gender"));
-	                member.setBirthyy(year);
-	                member.setBirthmm(month);
-	                member.setBirthdd(day);
-	                member.setMail1(mail1);
-	                member.setMail2(mail2);
-	                member.setPhone(rs.getString("phone"));
-	                member.setAddress(rs.getString("address"));
-	                member.setReg(rs.getTimestamp("reg"));
+	              
 	            }
 	 
 	            return member;
@@ -206,15 +180,7 @@ public class MemberDao {
 	            {
 	                member = new MemberBean();
 	                member.setId(rs.getString("id"));
-	                member.setPassword(rs.getString("password"));
-	                member.setName(rs.getString("name"));
-	                member.setGender(rs.getString("gender"));
-	                member.setBirthyy(rs.getDate("birth").toString());
-	                member.setMail1(rs.getString("mail"));
-	                member.setPhone(rs.getString("phone"));
-	                member.setAddress(rs.getString("address"));
-	                member.setReg(rs.getTimestamp("reg"));
-	                memberList.add(member);
+	                member.setpw(rs.getString("pw"));
 	            }
 	            
 	            return memberList;
@@ -256,10 +222,7 @@ public class MemberDao {
 	            // 자동 커밋을 false로 한다.
 	            conn.setAutoCommit(false);
 	            
-	            pstmt.setString(1, member.getPassword());
-	            pstmt.setString(2, member.getMail1()+"@"+member.getMail2());
-	            pstmt.setString(3, member.getPhone());
-	            pstmt.setString(4, member.getAddress());
+	           
 	            pstmt.setString(5, member.getId());
 	 
 	            int flag = pstmt.executeUpdate();
@@ -331,6 +294,7 @@ public class MemberDao {
 	                    x = 0; // 비밀번호 비교결과 - 다름
 	                }
 	            }
+	 
 	 
 	            return x;
 	 

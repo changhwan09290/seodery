@@ -9,16 +9,20 @@
 <link rel="stylesheet" href="resources/css/login/default.css">
 <link rel="stylesheet" href="resources/css/login/mainpage.css">
 	
-<link rel="stylesheet" href="resources/css/login/justdoit.css">
-<link rel="stylesheet" href="resources/css/login/login.css">
+<!-- <link rel="stylesheet" href="resources/css/login/justdoit.css">-->
+ <link rel="stylesheet" href="resources/css/login/mypage.css">
 <link rel="stylesheet" href="resources/css/login/member.css">
 
 <style>
 
 </style>
  <script type="text/javascript">
-    
- <script>
+$(document).ready(function() {
+	loadMyPage();
+	
+	
+	
+	
 	$(function(){
 		if(${msg ne null}){
 			alert('${msg}');
@@ -40,24 +44,52 @@
 			}
 		}));
 	})
+});
+
+function loadMyPage() {
+	$.ajax({
+		url: "myPageAjax",
+		type: "post",
+		dataType: "json",
+		success: function(result) {
+			$("member_no").val(result.data.MEMBER_NO);
+			$("member_name").val(result.MEMBER_NAME);
+			$("member_no").val(result.MEMBER_NO);
+			$("member_no").val(result.MEMBER_NO);
+			$("member_no").val(result.MEMBER_NO);
+			$("member_no").val(result.MEMBER_NO);
+			$("member_no").val(result.MEMBER_NO);
+		},
+		error(request, status, error): function() {
+			console.log(error);
+		}
+	});
+}
 </script>
 
-
-    </script>
     
 </head>
 <body>
 
 <div id="wrapper">
-        <header id="header">
-			<div id="logo">
-				<img src="resources/images/login/logo.png" alt=""> 
-				<form action="#" method="post" >
-					<div class="login">
-						<input type="button" value="로그인" id="LoginBtn"/>
-					</div>
-				</form>
-			</div> 
+       <header id="header">
+         <div class="logo">
+            <img src="resources/images/login/logo.png" alt="">
+         </div> 
+            <c:choose>
+               <c:when test="${empty sMNo }">
+                  <div class="login">
+                     <input type="button" value="로그인" id="LoginBtn" onclick="linkGo('login')"/>
+                  </div>
+               </c:when>
+               <c:otherwise>
+                  <div class="logout">
+                     ${sMNm }님 환영합니다.
+                     <div class="pencil"></div>
+                     <input type="button" value="로그아웃" id="LogoutBtn" onclick="linkGo('logout')"/>
+                  </div>
+               </c:otherwise>
+            </c:choose>
 			
 			<div class="navcon">
 				<nav id="nav">
@@ -123,8 +155,9 @@
 
 <main>
     <!-- div 왼쪽, 오른쪽 바깥여백을 auto로 주면 중앙정렬된다.  -->
+     
     <div id="wrap">
-    	
+    	<table class="jointable">
     	<div class="wp1">
 	        <br><br>
 	        <b>회원정보 수정</b>
@@ -133,8 +166,9 @@
         
         <!-- 입력한 값을 전송하기 위해 form 태그를 사용한다 -->
         <!-- 값(파라미터) 전송은 POST 방식, 전송할 페이지는 JoinPro.jsp -->
+        
         <form id="myForm" action="../member/update_mypage" method="post">
-            <table class="jointable">
+           
                 <tr>
                     <td id="title">아이디</td>
                     <td>
@@ -156,11 +190,12 @@
                         <input type="password" name="passwordcheck" maxlength="50">
                     </td>
                 </tr>
-                    
+                    <br>
+                       <br>
                 <tr>
                     <td id="title">이름</td>
                     <td>
-                        <input type="text" name="name" maxlength="50">
+                        <input type="text" name="name" maxlength="50" disabled>
                     </td>
                 </tr>
                     

@@ -27,4 +27,10 @@ public class UrService implements IUrService {
 	public int join(HashMap<String, String> params) throws Throwable {
 		return iUrDao.join(params);
 	}
+
+	@Override
+	public HashMap<String, String> get_user_info(HashMap<String, String> params) throws Throwable {
+		// TODO Auto-generated method stub
+		return iUrDao.get_user_info(params);
+	}
 }

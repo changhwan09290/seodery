@@ -47,5 +47,11 @@ public class UrDao implements IUrDao  {
 		public int join_member(MemberDTO member) throws Exception{
 			return sqlsession.insert("member.join_member", member);
 		}
+
+		@Override
+		public HashMap<String, String> get_user_info(HashMap<String, String> params) throws Throwable {
+			// TODO Auto-generated method stub
+			return sqlsession.selectOne("mypage.get_user_info", params);
+		}
 	}
 
