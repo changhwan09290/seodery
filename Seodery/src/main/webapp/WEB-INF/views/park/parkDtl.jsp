@@ -549,6 +549,88 @@ footer > .foot > nav > a{
 	margin-left: 50%;
 	margin-top:50px;
 }
+
+/* table 공원번호 숨기기 */
+#hidN{
+	display: none;
+}
+/* 공원 이름 css */
+#PnameC{
+	font-size: 38px;
+	font-weight: 600;
+}
+
+/* 공원 전화번호 */
+#PphonC{
+	font-size:20px;
+}
+
+#PphonC img{
+	margin-right:28px;
+	margin-left: 8px;
+	height: 20px;
+	margin-top: 8px;
+}
+/* 공원 주소 */
+#PaddrC {
+	font-size:20px;
+}
+#PaddrC img{
+	width:30px; 
+	height:30px;
+	margin-top:5px;
+	margin-right:28px;
+}
+#PaddrC span{
+	font-weight: 600;
+}
+
+/* 개원일 */
+#PopenC {
+	font-size: 20px;
+}
+#PopenC img{
+	width:30px; 
+	height:35px;
+	margin-top:5px;
+	margin-right:28px;
+	padding-bottom:0px;
+}
+
+#PopenC span{
+	font-weight: 600;
+}
+
+/* 주요시설 */
+#PfaciC {
+	font-size:20px;
+}
+#PfaciC img{
+	width:30px; 
+	height:35px;
+	margin-top:5px;
+	padding-bottom:0px;
+	margin-right:28px;
+}
+#PfaciC span{
+	font-weight: 600;
+}
+
+/* 주요식물 */
+#PplantC{
+	font-size:20px;
+}
+#PplantC img{
+	width:30px; 
+	height:35px;
+	margin-top:5px;
+	padding-bottom:0px;
+	margin-right:28px;
+}
+#PplantC span{
+	font-weight: 600;
+}
+	
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -612,7 +694,10 @@ $(document).ready(function(){
 	 */
 	//}  //    <- 이거 지우기 
 	
-	
+	//로고 누르면 메인으로 이동(로고가 아니라 헤더 전체,,)
+	/* $("#header").on("click", function() {
+		location.href = "mainpage";
+	}); */
 	
 	//로그인 
 	   $("#LoginBtn").on("click",function(){
@@ -633,31 +718,7 @@ $(document).ready(function(){
 	}); 
 	
 	
-	  /* table 공원번호 숨기기 */
-		/* $("#hidN").attr('style',"display:none;"); */
-		/* 공원 이름 css */
-		/* $("#PnameC").attr('style',"font-size:38px;font-weight:600;"); */
-		/* 공원 전화번호 */
-		/* $("#PphonC").attr('style',"font-size:20px;");
-		$("#PphonC img").attr('style',"margin-right:28px;margin-left:8px;height:20px;margin-top:8px;"); */
-		/* 공원 주소 */
-		/* $("#PaddrC").attr('style',"font-size:20px;");
-		$("#PaddrC img").attr('style',"width:30px; height:30px;margin-top:5px;margin-right:28px;");
-		$("#PaddrC span").attr('style',"font-weight:600;"); */
-		/* 개원일 */
-		/* $("#PopenC").attr('style',"font-size:20px;");
-		$("#PopenC img").attr('style',"width:30px; height:35px;margin-top:5px;margin-right:28px;padding-bottom:0px;");
-		$("#PopenC span").attr('style',"font-weight:600;"); */
-		/* 주요시설 */
-		/* $("#PfaciC").attr('style',"font-size:20px;");
-		$("#PfaciC img").attr('style',"width:30px; height:35px;margin-top:5px;padding-bottom:0px;margin-right:28px;");
-		$("#PfaciC span").attr('style',"font-weight:600;"); */
-		/* 주요식물 */
-		/*$("#PplantC").attr('style',"font-size:20px;");
-		$("#PplantC img").attr('style',"width:30px; height:35px;margin-top:5px;padding-bottom:0px;margin-right:28px;");
-		$("#PplantC span").attr('style',"font-weight:600;");
-		 */
-	
+	  
 	//목록에서 수정버튼을 클릭했을 때 
 		$(".pc_list_wrap").on("click","#updateBtn",function(){
 					//updateBtn > btn_wrap > ob_data < coninfo < con

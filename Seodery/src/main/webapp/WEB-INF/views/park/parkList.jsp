@@ -311,6 +311,11 @@ footer > .foot > nav > a{
 		$("#actionForm").submit();
 	}); */
 
+	//로고 누르면 메인으로 이동(로고가 아니라 헤더 전체,,)
+	/* $("#header").on("click", function() {
+		location.href = "mainpage";
+	}); */
+	
 	//로그인 
 	   $("#LoginBtn").on("click",function(){
 			
@@ -524,22 +529,12 @@ footer > .foot > nav > a{
       	<div class="Cpage"><h4>공원 > 공원찾기</h4></div>
       	<div>
 	<form action="#" id="actionForm" method="get">
-		<select name="searchGbn" id="searchGbn">
-			<option value="0">지역</option>
-		</select>
-		<input type="text" class="search_txt" name="searchTxt" id="searchTxt" value="${param.searchTxt}" placeholder="지역명을 입력해주세요"/>
-		<input type="hidden" name="oldTxt" value="${param.searchTxt}"/>
 		<input type="hidden" name="page" id="page" value="${page}"/>
 		<input type="hidden" name="no" id="no"/>
 		<input type="hidden" name="mo" id="mo"/>
 		<input type="hidden" name="name" id="name"/>
 		<input type="hidden" name="addr" id="addr"/>
 		<input type="hidden" name="phon" id="phon"/>
-		<input type="button" value="검색" id="searchBtn"/>
-		<!-- 로그인한 상태라면 작성버튼 -->
-		<%-- <c:if test="${!empty sMNo}">
-			<input type="button" value="작성" id="addBtn"/>
-		</c:if> --%>
 	</form>
 </div>
 <div align="center">
