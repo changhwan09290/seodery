@@ -306,6 +306,12 @@ footer>.foot>nav>a {
 		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	
+	//로고 누르면 메인으로 이동(로고가 아니라 헤더 전체라서 로그인 안먹음ㅠ)
+	/* $("#header").on("click", function() {
+		location.href = "mainpage";
+	}); */
+	
 	//페이징 처리
 	$("#PagingWrap").on("click", "span", function() {
 		$("#page").val($(this).attr("page"));		
@@ -501,6 +507,7 @@ function drawPaging(pb) {
 </div>
 <c:choose>
 	<c:when test="${empty sMNo}">
+	<!-- 비로그인 시 작성버튼 숨김 -->
 	<form action="#" id="actionForm" method="post">
 		<input type="hidden" name="page" id="page" value="${page}" />
 		<input type="hidden" name="qs_num" id="qs_num" />
