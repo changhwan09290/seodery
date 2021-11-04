@@ -291,6 +291,15 @@ footer>.foot>nav>a {
 	padding: 5px;
 } */
 
+.hideBtn {
+	display: none;
+}
+
+#addBtn {
+	font-family: '고딕';
+	cursor: pointer;
+}
+
 </style>
 
 <script type="text/javascript"
@@ -309,11 +318,10 @@ $(document).ready(function() {
 		$("#actionForm").submit();
 	});
 	
-	//상세보기로 이동(제목 누르면)
+	//상세보기로 이동
 	$("tbody").on("click", "tr", function() {
-		$("#title").val($(this).attr("title"));
-		$("#searchTxt").val($("#oldTxt").val());
 		$("#actionForm").attr("action", "ASDtl");
+		$("#actionForm").find("#qs_num").val($(this).attr("qs_num"));
 		$("#actionForm").submit();
 	});
 	
@@ -352,18 +360,23 @@ function drawList(list) {
 	var html = "";
 	
 	for(var data of list) {
-		html += "<tr title=\"" + data.TITLE + "\"> ";
+		html += "<tr qs_num=\"" + data.QS_NUM + "\"> ";
 		html += "<td>" + data.QS_NUM + "</td>		";
 		html += "<td>";		
 		html += data.TITLE;
 		if(data.ATACH != null) {
-	    	html += "<img src=\"resources/images/bicycle/attach_icon.png\" />";
+	    	html += "<img src=\"resources/images/attFile.png\" />";	
 	    }
 	    html += "</td>";
 		html += "<td>" + data.ID + "</td>		";
 		html += "<td>" + data.WRDATE + "</td>		";
-		html += "<td>" + data.AWER + "</td>	";
-		/* if 관리자가 답을 달면 처리완료, 안달면 null? */
+		html += "<td>" + data.AWER;
+		if(data.AWER != null) {
+			html += "처리완료";
+		} else {
+			html += "미처리";
+		}
+		html += "</td>";
 		html += "</tr>						";
 	}
 	
@@ -398,17 +411,6 @@ function drawPaging(pb) {
 </script>
 </head>
 <body>
-<%-- <div>
-	<c:choose>
-		<c:when test="${empty sMNo}">
-			<input type="button" value="로그인" id="LoginBtn" />
-		</c:when>
-		<c:otherwise>
-			${sMNm}님 어서오세요.<input type="button" value="로그아웃" id="LogoutBtn" />
-		</c:otherwise>
-	</c:choose>
-</div> --%>
-
 <!-- 기본테마 -->
 <div id="wrapper">
         <header id="header">
@@ -497,11 +499,22 @@ function drawPaging(pb) {
 		<div class="title">
 	<h1>자전거 수리문의</h1>
 </div>
-<form action="#" id="actionForm" method="post">
-	<input type="hidden" name="page" id="page" value="${page}" />
-	<input type="hidden" name="title" id="title" />
-	<input type="button" value="작성" id="addBtn" />
-</form>
+<c:choose>
+	<c:when test="${empty sMNo}">
+	<form action="#" id="actionForm" method="post">
+		<input type="hidden" name="page" id="page" value="${page}" />
+		<input type="hidden" name="qs_num" id="qs_num" />
+		<input type="button" value="작성" id="addBtn" class="hideBtn"/>
+	</form>
+	</c:when>
+	<c:otherwise>
+		<form action="#" id="actionForm" method="post">
+		<input type="hidden" name="page" id="page" value="${page}" />
+		<input type="hidden" name="qs_num" id="qs_num" />
+		<input type="button" value="작성" id="addBtn"/>
+	</form>
+	</c:otherwise>
+</c:choose>
 <div class="tabled" align="center">
 <table class="table">
 	<colgroup>
