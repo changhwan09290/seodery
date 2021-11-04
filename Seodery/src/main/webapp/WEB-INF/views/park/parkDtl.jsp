@@ -557,7 +557,7 @@ $(document).ready(function(){
 	} */
 	gnbSlideInit();
 	reloadList();
-	//reloadMap();
+	reloadMap();
 	
 	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	var options = { //지도를 생성할 때 필요한 기본 옵션
@@ -566,6 +566,52 @@ $(document).ready(function(){
 	};
 
 	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+	
+	// 마커 만들기
+	/*  function makeMakers(list) {
+		console.log("makeMakers###########");
+		var positions = [];
+		console.log(list);
+		for( var i=0; i<list.length; i++) {
+		    var data = list[i];
+		    
+			var marker = new kakao.maps.Marker({
+		        map: map, // 마커를 표시할 지도
+		        position: new kakao.maps.LatLng(data.LAT, data.LNG), // 마커를 표시할 위치
+		        title : data.PARKING_NAME, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+		        idx : overlays.length
+		    });
+			
+			var idx = overlays.length;
+			
+//			var iwPosition = new kakao.maps.LatLng(data.LATITUDE, data.LONGITUDE); //인포윈도우 표시 위치입니다
+			var iwContent = 
+			'<div class="wrap">' + '<div class="info">' + '<div name="pIdx">' + data.PARKING_CODE +'</div>'
+			+'<div class="title">' + data.PARKING_NAME + '<div class="close close_info" idx="' + idx + '" title="닫기"></div>' + 
+           '</div>' + '<div class="desc">' + 
+           '<div class="ellipsis">'+data.ADDR +'</div>' + 
+           '<input type="button" value="상세보기" id="DtlBtn">'+
+           '</div>' + 
+           '</div>';
+           
+				var overlay = new kakao.maps.CustomOverlay({
+				    content: iwContent,
+				    map: map,
+//				    position: iwPosition      
+				    position: marker.getPosition()  
+				});
+				
+				overlays.push(overlay);
+				
+				// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+				kakao.maps.event.addListener(marker, 'click', function() {
+					overlay.setMap(map);
+					
+				});
+		}
+	 */
+	//}  //    <- 이거 지우기 
+	
 	
 	
 	//로그인 
@@ -586,29 +632,32 @@ $(document).ready(function(){
 		location.href = "logout";
 	}); 
 	
-	/* table 공원번호 숨기기 */
-	$("#hidN").attr('style',"display:none;");
-	/* 공원 이름 css */
-	$("#PnameC").attr('style',"font-size:38px;font-weight:600;");
-	/* 공원 전화번호 */
-	$("#PphonC").attr('style',"font-size:20px;");
-	$("#PphonC img").attr('style',"margin-right:28px;margin-left:7px;height:20px;margin-top:8px;");
-	/* 공원 주소 */
-	$("#PaddrC").attr('style',"font-size:20px;");
-	$("#PaddrC img").attr('style',"width:30px; height:30px;margin-top:5px;margin-right:28px;");
-	$("#PaddrC span").attr('style',"font-weight:600;");
-	/* 개원일 */
-	$("#PopenC").attr('style',"font-size:20px;");
-	$("#PopenC img").attr('style',"width:30px; height:35px;margin-top:5px;margin-right:28px;padding-bottom:0px;");
-	$("#PopenC span").attr('style',"font-weight:600;");
-	/* 주요시설 */
-	$("#PfaciC").attr('style',"font-size:20px;");
-	$("#PfaciC img").attr('style',"width:30px; height:35px;margin-top:5px;padding-bottom:0px;margin-right:28px;");
-	$("#PfaciC span").attr('style',"font-weight:600;");
-	/* 주요식물 */
-	$("#PplantC").attr('style',"font-size:20px;");
-	$("#PplantC img").attr('style',"width:30px; height:35px;margin-top:5px;padding-bottom:0px;margin-right:28px;");
-	$("#PplantC span").attr('style',"font-weight:600;");
+	
+	  /* table 공원번호 숨기기 */
+		/* $("#hidN").attr('style',"display:none;"); */
+		/* 공원 이름 css */
+		/* $("#PnameC").attr('style',"font-size:38px;font-weight:600;"); */
+		/* 공원 전화번호 */
+		/* $("#PphonC").attr('style',"font-size:20px;");
+		$("#PphonC img").attr('style',"margin-right:28px;margin-left:8px;height:20px;margin-top:8px;"); */
+		/* 공원 주소 */
+		/* $("#PaddrC").attr('style',"font-size:20px;");
+		$("#PaddrC img").attr('style',"width:30px; height:30px;margin-top:5px;margin-right:28px;");
+		$("#PaddrC span").attr('style',"font-weight:600;"); */
+		/* 개원일 */
+		/* $("#PopenC").attr('style',"font-size:20px;");
+		$("#PopenC img").attr('style',"width:30px; height:35px;margin-top:5px;margin-right:28px;padding-bottom:0px;");
+		$("#PopenC span").attr('style',"font-weight:600;"); */
+		/* 주요시설 */
+		/* $("#PfaciC").attr('style',"font-size:20px;");
+		$("#PfaciC img").attr('style',"width:30px; height:35px;margin-top:5px;padding-bottom:0px;margin-right:28px;");
+		$("#PfaciC span").attr('style',"font-weight:600;"); */
+		/* 주요식물 */
+		/*$("#PplantC").attr('style',"font-size:20px;");
+		$("#PplantC img").attr('style',"width:30px; height:35px;margin-top:5px;padding-bottom:0px;margin-right:28px;");
+		$("#PplantC span").attr('style',"font-weight:600;");
+		 */
+	
 	//목록에서 수정버튼을 클릭했을 때 
 		$(".pc_list_wrap").on("click","#updateBtn",function(){
 					//updateBtn > btn_wrap > ob_data < coninfo < con
@@ -857,15 +906,14 @@ function reloadMap(){
 	console.log("reload ##########");
 	var params = $("#actionForm2").serialize();
 	$.ajax({	//jquery의 ajax함수 호출  
-		url : "http://openapi.seoul.go.kr:8088/5576534466616b6432324c6b586b48/json/GetParkInfo/1/982", 
+		url : "http://openapi.seoul.go.kr:8088/5576534466616b6432324c6b586b48/json/GetParkInfo/1/500", 
 		type: "get",	//전송 방식
 		dataType:"json",	//받아올 데이터 형태 
-		async: false,
 		data: params,
 // 		data : sendData,	//보낼 데이터(문자열 형태)
 		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
 			console.log("res >>>>" +res);
-			makeMakers(JSON.parse(res.resData).GetParkInfo.row); // 좌표목록 만듬
+			makeMakers(res.GetParkInfo.row); // 좌표목록 만듬
 			//drawList(res.list);
 			//drawPaging(res.pb);
 		},
@@ -883,7 +931,6 @@ function reloadMap(){
  		url : "apiDtl", 
 		type: "get",	//전송 방식
  		dataType:"json",	//받아올 데이터 형태 
- 		async: false,
  		data: params, 
  		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
  			console.log(res);
@@ -940,7 +987,6 @@ function reloadMap(){
 		}
 
   
-  
   /* 페이징 */
 /*  function drawPaging(pb){
 	console.log("pb", pb);
@@ -975,7 +1021,6 @@ function reloadMap(){
 	
 	$(".paging_wrap").html(html);
 } */
- 
 </script>
 </head>
 <body>
