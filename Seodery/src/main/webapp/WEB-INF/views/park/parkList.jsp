@@ -362,7 +362,9 @@ footer > .foot > nav > a{
 		$("#actionForm").submit();
 	});  
 	
-	
+	$(".pencil").on("click", function(){
+		location.href = "mypage";
+	});
 	
 });
 

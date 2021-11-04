@@ -320,6 +320,10 @@ $(document).ready(function(){
 		location.href = "logout";
 	}); 
 	
+	 $(".pencil").on("click", function(){
+			location.href = "mypage";
+		});
+	
 	//상세보기 버튼을 클릭했을 때 이벤트 
 	 $("tbody").on("click", "input", function(){
 		console.log("no >>" + $(this).parents('tr').find('td[name="pIdx"]').text());
