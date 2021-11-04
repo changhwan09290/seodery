@@ -40,7 +40,7 @@
 	
 	<!-- 회원 가입 -->
 	<insert id="join_member" parameterType="member">
-		insert into member values(#{id}, #{pw}, #{email}, now(), now(), 'false', #{approval_key})
+		insert into member values(#{id}, #{pw}, #{email},)
 	</insert>
 	
 
