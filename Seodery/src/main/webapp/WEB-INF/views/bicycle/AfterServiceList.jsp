@@ -296,8 +296,19 @@ footer>.foot>nav>a {
 }
 
 #addBtn {
-	font-family: '고딕';
-	cursor: pointer;
+	border: none;
+    border-radius: 5px;
+    width: 55px;
+    height: 28px;
+    background-color: rgb(3, 104, 115);
+    color: white;
+    font-family: '고딕';
+    cursor: pointer;
+    box-shadow: 0 1px 1px 0 rgb(3 104 115);
+    white-space: nowrap;
+    position: absolute;
+    right: 14%;
+    top: 255px;
 }
 
 img {

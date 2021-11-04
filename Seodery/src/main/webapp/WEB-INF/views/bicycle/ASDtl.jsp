@@ -245,8 +245,17 @@ h1 {
 }
 
 #updateBtn, #ListBtn, #deleteBtn {
-	font-family: '고딕';
-	cursor: pointer;
+	margin-top: 5px;
+    border: none;
+    border-radius: 4px;
+    width: fit-content;
+    height: 24px;
+    background-color: rgb(3, 104, 115);
+    color: white;
+    font-family: '고딕';
+    cursor: pointer;
+    box-shadow: 0 1px 1px 0 rgb(3 104 115);
+    white-space: nowrap;
 }
 
 </style>

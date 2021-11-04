@@ -250,6 +250,19 @@ h1 {
 .hide_btn {
 	display: none;
 }
+
+#addBtn, #ListBtn, #attach {
+	border: none;
+    border-radius: 5px;
+    width: fit-content;
+    height: 28px;
+    background-color: rgb(3, 104, 115);
+    color: white;
+    font-family: '고딕';
+    cursor: pointer;
+    box-shadow: 0 1px 1px 0 rgb(3 104 115);
+    white-space: nowrap;
+}
 </style>
 <script type="text/javascript"
 		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
