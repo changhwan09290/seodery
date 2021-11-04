@@ -73,10 +73,21 @@
              }
          });  
           
-          $(".LoginBtn").on("click",function(){
-           
-            location.href = "login";
+          $("#LogoutBtn").on("click",function(){
+              location.href= "logout";        
            });
+            
+            $("#LoginBtn").on("click",function(){
+              location.href = "login";   
+           });  
+            
+            $(".LoginBtn").on("click",function(){
+                location.href = "login";   
+             }); 
+            
+            $(".pencil").on("click", function(){
+          	  location.href = "mypage";  
+            });
           
         //로고 누르면 메인으로 이동(로고가 아니라 헤더 전체,,)
       	/* $("#header").on("click", function() {
@@ -290,21 +301,21 @@ footer { /*푸터 %로 단위변경*/
    text-align: center;
 }
 
-/* 로그인 버튼 */
-#LogoutBtn {
-   border: none;
+#LoginBtn,#LogoutBtn,.LoginBtn {
+	z-index: 9999;
+   border : none;
    border-radius: 5px;
-   background-color: rgb(3, 104, 115);
+   background-color:rgb(3, 104, 115);
    font-size: 1.1rem;
-   color: white;
+   color : white;
    font-family: '고딕';
    cursor: pointer;
    padding: 4px 17px 4px 17px;
-   box-shadow: 0 1px 1px 0 rgb(3, 104, 115);
+   box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
    /* position: fixed;
    right: 90px;
    top: 100px; */
-}
+} 
 
 /* 로그인버튼, 유저 로그인정보 div */
 .logout {
@@ -429,7 +440,7 @@ footer { /*푸터 %로 단위변경*/
 }
 
 .navcon {
-   padding-top: 193px;
+   padding-top: 36px;
    position: absolute;
    left: 20px;
    right: 20px;
@@ -638,28 +649,36 @@ ul {
 </head>
 <body>
    <div id="wrapper">
-      <header id="header">
-         <div id="logo">
-            <form action="#" method="post">
-               <div class="logout">
-                  {000}님 환영합니다.
-                  <div class="pencil"></div>
-                  <input type="button" value="로그아웃" id="LogoutBtn" />
-               </div>
-            </form>
-         </div>
-
-         <div class="navcon">
-            <nav id="nav">
-               <div class="gnb_subbox"></div>
-               <div class="gnb">
-                  <ul class="navi">
-                     <div class="dvbox">
-                        <div class="dv"></div>
-                        <div class="dv"></div>
-                        <div class="dv">${param.SOUTH_NORTH_DIV}</div>
-                     </div>
-                     <li class="sub Park">공원
+        <header id="header">
+			<div class="logo">
+						<div class="pencil"></div>
+						<c:choose>
+							<c:when test="${empty sMNo}">
+								<div class="login">
+									<input type="button" value="로그인" id="LoginBtn"/>
+								</div>
+							</c:when>
+						<c:otherwise>
+							<div class="logout">
+								${sMNm}님 환영합니다.
+								<input type="button" value="로그아웃" id="LogoutBtn"/>
+							</div>
+						</c:otherwise>
+						</c:choose>
+			</div>
+	</header>
+			
+			<div class="navcon">
+				<nav id="nav">
+					<div class="gnb_subbox"></div>
+					<div class="gnb">
+						<ul class="navi">
+							<div class="dvbox">
+								<div class="dv"></div>
+								<div class="dv"></div>
+								<div class="dv"></div>
+							</div>
+							<li class="sub Park">공원
 								<ul class="gnb_sub">
 									<li><a href="parkList">공원 찾기</a></li>
 									<li><a href="parkMap">길 찾기</a></li>
@@ -702,13 +721,12 @@ ul {
 									<li><a href="#">추억저장</a></li>
 									<li><a href="#">공지사항</a></li>
 									<li><a href="#">고객의 소리함</a></li>
-                        </ul>
-                     </li>
-                  </ul>
-               </div>
-            </nav>
-         </div>
-      </header>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</nav>	
+			</div>
       
       <div>
                <form action="#" id="actionForm" method="get">
