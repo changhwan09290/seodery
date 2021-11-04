@@ -475,41 +475,41 @@ footer > .foot > nav > a{
 								<div class="dv"></div>
 								<div class="dv"></div>
 							</div>
-							<li class="sub Park">공원</a>	
+							<li class="sub Park">공원
 								<ul class="gnb_sub">
 									<li><a href="parkList">공원 찾기</a></li>
 									<li><a href="parkMap">길 찾기</a></li>
 								</ul>
 							</li>
-							<li class="sub WalkT">산책로</a>
+							<li class="sub WalkT">산책로
 								<ul class="gnb_sub">
-									<li><a href="#">산책로 찾기</a></li>
+									<li><a href="walkList">산책로 찾기</a></li>
 								</ul>
 							</li>
-							<li class="sub Bike">자전거</a>
+							<li class="sub Bike">자전거
 								<ul class="gnb_sub">
-									<li><a href="#">실시간 대여정보</a></li>
-									<li><a href="#">자전거 이용안내</a></li>
-									<li><a href="#">자전거 수리문의</a></li>
+									<li><a href="RentalShop">실시간 대여정보</a></li>
+									<li><a href="use_info">자전거 이용안내</a></li>
+									<li><a href="AfterServiceList">자전거 수리문의</a></li>
 								</ul>
 							</li>
-							<li class="sub FDust">미세먼지</a>
+							<li class="sub FDust">미세먼지
 								<ul class="gnb_sub">
 									<li><a href="dust">미세먼지 현황</a></li>
 								</ul>
 							</li>
-							<li class="sub Memory">추억저장</a>
+							<li class="sub Memory">추억저장
 								<ul class="gnb_sub">
-									<li><a href="#">추억저장</a></li>
+									<li><a href="memoryList">추억저장</a></li>
 								</ul>
 							</li>
-							<li class="sub Notice">공지사항</a>
+							<li class="sub Notice">공지사항
 								<ul class="gnb_sub">
-									<li><a href="#">고객의 소리</a></li>
-									<li><a href="#">공지사항</a></li>
+									<li><a href="MOpinionList">고객의 소리</a></li>
+									<li><a href="NoticeList">공지사항</a></li>
 								</ul>
 							</li>
-							<li class="sub Manager" id="manager">관리자</a>
+							<li class="sub Manager" id="manager">관리자
 								<ul class="gnb_sub">
 									<li><a href="#">공원댓글</a></li>
 									<li><a href="#">산책로댓글</a></li>

@@ -267,6 +267,14 @@ $(document).ready(function() {
 		location.href = "mainpage";
 	}); */
 	
+	$("#LogoutBtn").on("click",function(){
+        location.href= "logout";        
+     });
+      
+    $("#LoginBtn").on("click",function(){
+        location.href = "login";   
+     });
+	
 	var container = document.getElementById('map');
 	var options = {
 		center: new kakao.maps.LatLng(37.55564880, 126.91062927), //생성자는 위도, 경도순으로 넣기
@@ -434,15 +442,14 @@ $(document).ready(function() {
 					<div class="logout">
 						<c:choose>
 							<c:when test="${empty sMNo}">
-								<input type="button" value="로그인" id="LoginBtn" onclick="console.log('!');" /> 
+								<input type="button" value="로그인" id="LoginBtn" /> 
 							</c:when>
 							<c:otherwise>
 								${sMNm}님 환영합니다.
 								<div class="pencil"></div>
 								<input type="button" value="로그아웃" id="LogoutBtn" />
 							</c:otherwise>
-						</c:choose>						
-						<!-- <input type="button" value="로그아웃" id="LogoutBtn"/> -->
+						</c:choose>
 					</div>
 				</form>
 			</div>
