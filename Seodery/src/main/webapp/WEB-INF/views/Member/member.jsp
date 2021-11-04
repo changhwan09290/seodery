@@ -15,7 +15,7 @@
  
 //취소 버튼 클릭시 첫화면으로 이동
  function goFirstForm() {
-     location.href="MainForm.do";
+     location.href="mainpage";
  }    
  
  // 아이디 중복체크 화면open
@@ -48,7 +48,7 @@
         
         <!-- 입력한 값을 전송하기 위해 form 태그를 사용한다 -->
         <!-- 값(파라미터) 전송은 POST 방식, 전송할 페이지는 JoinPro.jsp -->
- <form method="post" action="MemberJoinAction.do" 
+ <form method="post" action="login" 
                 name="userInfo" onsubmit="return checkValue()">
 
 
