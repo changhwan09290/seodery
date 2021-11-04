@@ -550,6 +550,8 @@ footer > .foot > nav > a{
 	margin-top:50px;
 }
 
+/* -----------------상세보기 css--------------------- */
+
 /* table 공원번호 숨기기 */
 #hidN{
 	display: none;
