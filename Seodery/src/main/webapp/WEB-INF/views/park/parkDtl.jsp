@@ -547,6 +547,7 @@ footer > .foot > nav > a{
 }
 .imgbox img {
 	margin-left: 50%;
+	margin-top:50px;
 }
 </style>
 <script type="text/javascript">
@@ -585,7 +586,29 @@ $(document).ready(function(){
 		location.href = "logout";
 	}); 
 	
-	
+	/* table 공원번호 숨기기 */
+	$("#hidN").attr('style',"display:none;");
+	/* 공원 이름 css */
+	$("#PnameC").attr('style',"font-size:38px;font-weight:600;");
+	/* 공원 전화번호 */
+	$("#PphonC").attr('style',"font-size:20px;");
+	$("#PphonC img").attr('style',"margin-right:28px;margin-left:7px;height:20px;margin-top:8px;");
+	/* 공원 주소 */
+	$("#PaddrC").attr('style',"font-size:20px;");
+	$("#PaddrC img").attr('style',"width:30px; height:30px;margin-top:5px;margin-right:28px;");
+	$("#PaddrC span").attr('style',"font-weight:600;");
+	/* 개원일 */
+	$("#PopenC").attr('style',"font-size:20px;");
+	$("#PopenC img").attr('style',"width:30px; height:35px;margin-top:5px;margin-right:28px;padding-bottom:0px;");
+	$("#PopenC span").attr('style',"font-weight:600;");
+	/* 주요시설 */
+	$("#PfaciC").attr('style',"font-size:20px;");
+	$("#PfaciC img").attr('style',"width:30px; height:35px;margin-top:5px;padding-bottom:0px;margin-right:28px;");
+	$("#PfaciC span").attr('style',"font-weight:600;");
+	/* 주요식물 */
+	$("#PplantC").attr('style',"font-size:20px;");
+	$("#PplantC img").attr('style',"width:30px; height:35px;margin-top:5px;padding-bottom:0px;margin-right:28px;");
+	$("#PplantC span").attr('style',"font-weight:600;");
 	//목록에서 수정버튼을 클릭했을 때 
 		$(".pc_list_wrap").on("click","#updateBtn",function(){
 					//updateBtn > btn_wrap > ob_data < coninfo < con
@@ -663,7 +686,6 @@ $(document).ready(function(){
 	}
 	
 	$(".pc_list_wrap").html(strHtml);
-			
  }
 	
 //삭제
@@ -883,15 +905,15 @@ function reloadMap(){
 
       $data = "";
       for (var idx in rows) {
-          $data += '<tr><td>' + rows[idx].P_IDX + '</td><tr><td>' + rows[idx].P_PARK + '</td></tr><tr><td>'+'<img src="resources/images/park/phone-call.png">'+rows[idx].P_ADMINTEL 
-          + '</td></tr><td>'+'<img src="resources/images/park/location.png">' + "공원 주소 : " + rows[idx].P_ADDR + '</td><tr><td>'+ '<img src="resources/images/park/right.png">' + "개원일 : " + rows[idx].OPEN_DT + '</td></tr><tr><td>' 
-          + '<img src="resources/images/park/right.png">' + "주요 시설 : " + rows[idx].MAIN_EQUIP 
-          + '</td></tr><tr><td>' + "주요 식물 : " + rows[idx].MAIN_PLANTS + '</td></tr>';
+          $data += '<tr id="hidN"><td>' + rows[idx].P_IDX + '</td><tr id="PnameC"><td>' + rows[idx].P_PARK + '</td></tr><tr id="PphonC"><td>'+'<img src="resources/images/park/phone-call.png" width="20px;">'+rows[idx].P_ADMINTEL 
+          + '</td></tr><tr id="PaddrC"><td>'+'<img src="resources/images/park/location.png">' + '<span>'+"공원 주소 : "+ '</span>'+ rows[idx].P_ADDR + '</tr></td><tr id="PopenC"><td>'+ '<img src="resources/images/park/right.png">' + '<span>'+"개원일 : "+'</span>' + rows[idx].OPEN_DT + '</td></tr><tr id="PfaciC"><td>' 
+          + '<img src="resources/images/park/right.png">' +'<span>' +"주요 시설 : "+'</span>' + rows[idx].MAIN_EQUIP 
+          + '</td></tr><tr id="PplantC"><td>'+'<img src="resources/images/park/right.png">' + '<span>'+"주요 식물 : "+'</span>' + rows[idx].MAIN_PLANTS + '</td></tr>';
           
        }
       
       $("#table").html($data);
-      $(".imgbox").html('<img src=\"' + rows[idx].P_IMG + '\">');
+      $(".imgbox").html('<img src=\"' + rows[idx].P_IMG + '\" width="270px;heigt="230px">');
    }
  
  
@@ -1039,7 +1061,7 @@ function reloadMap(){
 			</div>
 		
 	<main>
-		      	<div class="Cpage"><h4>공원 > 공원찾기> 상세페이지 ${no}번</h4></div>
+		      	<div class="Cpage"><h4>공원 > 공원찾기> ${no}번 공원</h4></div>
 			      	<div>
 					<form action="#" id="actionForm" method="get">
 							<input type="hidden" name="searchGbn"  value="${param.searchGbn}"/>
