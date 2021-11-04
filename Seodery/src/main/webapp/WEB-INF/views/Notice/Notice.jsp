@@ -47,7 +47,8 @@
         }
         
  /* 로그인 버튼 */
-#LogoutBtn {
+#LoginBtn, #LogoutBtn {
+	z-index: 9999;
 	border : none;
 	border-radius: 5px;
 	background-color:rgb(3, 104, 115);
@@ -57,29 +58,26 @@
 	cursor: pointer;
 	padding: 4px 17px 4px 17px;
 	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
-	/* position: fixed;
-	right: 90px;
-	top: 100px; */
 }
 
 /* 로그인버튼, 유저 로그인정보 div */
-.logout{
-	white-space : nowrap;
- 	display : flex;
- 	position : absolute;
+.logout {
+	white-space: nowrap;
+	display: flex;
+	position: absolute;
 	right: 8%;
 	top: 93px;
 	align-items: flex-end;
-	
 }
+
 /* 마이페이지 연필 이미지 */
-.pencil{
+.pencil {
 	width: 30px;
 	height: 30px;
 	background-image: url("resources/images/park/pencil.png");
 	background-repeat: no-repeat;
 	margin-right: 9px;
-	margin-left : 7px;
+	margin-left: 7px;
 	background-size: contain;
 }
 
@@ -369,22 +367,22 @@ footer > .foot > nav > a{
 
 <div id="wrapper">
         <header id="header">
-		<div class="logo">
-						<div class="pencil"></div>
+			<div id="logo">
+				<form action="#" method="post" >
+					<div class="logout">
 						<c:choose>
 							<c:when test="${empty sMNo}">
-								<div class="login">
-									<input type="button" value="로그인" id="LoginBtn"/>
-								</div>
+								<input type="button" value="로그인" id="LoginBtn"/>
 							</c:when>
-						<c:otherwise>
-							<div class="logout">
+							<c:otherwise>
 								${sMNm}님 환영합니다.
-								<input type="button" value="로그아웃" id="LogoutBtn"/>
-							</div>
-						</c:otherwise>
+								<div class="pencil"></div>
+								<input type="button" value="로그아웃" id="LogoutBtn" />
+							</c:otherwise>
 						</c:choose>
-			</div>
+					</div>
+				</form>
+			</div> 
 			
 			<div class="navcon">
 				<nav id="nav">

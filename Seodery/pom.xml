@@ -165,7 +165,12 @@
 			<version>2.3</version>
 		</dependency>
 
-
+<!-- jstl -->
+		<dependency>
+		   <groupId>jstl</groupId>
+		   <artifactId>jstl</artifactId>
+		   <version>1.2</version>
+	    </dependency>
 
 <!-- Java Mail API -->
 		<dependency>

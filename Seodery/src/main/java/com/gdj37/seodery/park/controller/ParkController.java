@@ -202,7 +202,7 @@ public class ParkController {
 		}
 		
 		//글 개수
-		int cnt = iParkService.getPDCnt(params); 
+		int cnt = iParkService.getPDCnt(params);    //댓글 목록 총 건수조회
 		PagingBean pb = iPagingService.getPagingBean(page, cnt, 10,5);
 		
 		
@@ -210,16 +210,12 @@ public class ParkController {
 		 params.put("startCnt",Integer.toString(pb.getStartCount()));
 		 params.put("endCnt",Integer.toString(pb.getEndCount()));
 		
-		 List<HashMap<String, String>> list = iParkService.getPDList(params);
+		 List<HashMap<String, String>> list = iParkService.getPDList(params);	//댓글 목록
 		 System.out.println("list >>>>>>>> " + list);
 		
 		//HashMap<String, String> data = new HashMap<String, String>();
 		
-		 //상세보기 목록 번호 받아오기
-			/*
-			 * data.put("PARK_NUM","no"); data.put("MBER_NUM","1"); data.put("CON","test");
-			 * data.put("COMM_NUM","1"); data.put("SRATING", "3");
-			 */
+		 
 		String no = request.getParameter("no");
 		String name = request.getParameter("name");
 		String addr = request.getParameter("addr");
@@ -236,7 +232,6 @@ public class ParkController {
 		mav.addObject("name", name);
 		mav.addObject("addr", addr);
 		mav.addObject("phon", phon);
-		mav.addObject("page", page);
 
 		mav.setViewName("park/parkDtl");
 		return mav;
