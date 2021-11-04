@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -207,39 +208,12 @@ main > table > tr,td {
 	border: 1px solid black;
 }
 
-
-/* body 전체 */
-/* #wrap{
-	min-height: 100vh;
- 	position: relative;
-	width: 86%;
-} */
-
-/* 표 */
-#table {
-	width: 85%;
-	height : 50%;
-	border-collapse: collapse;
-	margin-left: auto;
-	margin-right: auto;
-	font-family: '고딕';
-	font-size: 1.1rem;
-}
-
-#table > th,td{
+th,td{
 	border : 1px solid black;
 	padding: 5px;
 	text-align: center;
 }
 
-th {
-	border : 1px solid black;
-	padding: 5px;
-	background-color: rgb(212,212,212);
-}
-td img {
-	width: 15px;
-}
 
 /* 페이징 div */
 .page{
@@ -282,25 +256,16 @@ footer > .foot > nav > a{
 .cont{
   width:720px;
 }
-.container{
-  display:flex;
-  flex-wrap:wrap;
-  width:720px;
-  justify-content:flex-start;
-  text-align: center;
-  top: 45%;
-  left: 50%;
-  transform:translate(-50%, -30%); 
-  position: absolute;
-}
+
 .single-item{
-  width:200px;
-  height:200px;
+  width:250px;
+  height:250px;
   display:flex;
   align-items:center;
   justify-content:center;
   background-color:#f3f3f3;
   margin: 20px;
+  padding:30px;
   border-radius: 10px;
   color:#888;
 }
@@ -327,7 +292,15 @@ footer > .foot > nav > a{
 	right: 14%;
 	top: 255px;
 }
-
+.container{
+  height : 50%;
+  display:flex;
+  flex-wrap:wrap;
+  width:1050px;
+  align-items:center;
+  justify-content:center;
+  margin: 0 auto;
+}
 
 </style>
 <script type="text/javascript"
@@ -365,7 +338,7 @@ footer > .foot > nav > a{
 	}); 
 	
 	//tr을 클릭했을 때 이벤트 
-	 $("tbody").on("click", "tr", function(){
+	 $(".container").on("click", "tr", function(){
 		$("#no").val($(this).attr("no"));
 		
 		$("#actionForm").attr("action","memory");
@@ -402,21 +375,13 @@ function drawList(list) {
 	var html ="";
 	
 	for(var data of list) {
-		html += "<tr no=\"" +  data.MY_NUM + "\">       " ;
-		html += "<td>";
-		html += data.TITLE;
-
-		
-		if(data.ATACH != null) {
-			html += "<img src=\"resources/images/attFile.png\" />";	
-		} 
-		
-		html += "</td>";
-		html += "<td>" + data.PLACE + "</td>       " ;
-		html += "</tr>              " ;
+		html += "<div class=\"single-item\" no=\"" +  data.MY_NUM + "\">" ;
+		html += data.TITLE + "<br/>";
+		html += data.PLACE;
+		html += "</div>" ;
 	}   
 	
-	$("tbody").html(html);
+	$(".container").html(html);
 }	
 
 
@@ -550,15 +515,10 @@ function drawList(list) {
 				<input type="button" value="작성" id="addBtn"/>
 	      	</div>
 	      	</form>
-	      	<table id="table">
-	      		<thead>
-	      			<tr>
-		      			<th>제목</th>
-		      			<th>장소</th>
-	      			</tr>	      			
-	      		</thead>
-	      		<tbody></tbody>	
-	      	</table><br>
+		      	<div class="container">
+	   				 				
+	      		</div>	
+	      	<br>
 	      	
 		      		
 

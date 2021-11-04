@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <style type="text/css">
  /* 웹 폰트 적용 */
  @font-face {
@@ -29,7 +31,6 @@
        header { /*헤더 %로 단위변경*/
             width: 100%;
             height: 155px;
-            position : relative;
             background-image :url("resources/images/park/logo.png");
             background-size: 320px 164px;
             background-repeat : no-repeat;
@@ -45,45 +46,40 @@
             text-align: center;
         }
         
-/* 로그인 버튼 */
-#LoginBtn,#LogoutBtn {
+ /* 로그인 버튼 */
+#LoginBtn, #LogoutBtn {
 	z-index: 9999;
-   border : none;
-   border-radius: 5px;
-   background-color:rgb(3, 104, 115);
-   font-size: 1.1rem;
-   color : white;
-   font-family: '고딕';
-   cursor: pointer;
-   padding: 4px 17px 4px 17px;
-   box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
-   /* position: fixed;
-   right: 90px;
-   top: 100px; */
-} 
- 
+	border : none;
+	border-radius: 5px;
+	background-color:rgb(3, 104, 115);
+	font-size: 1.1rem;
+	color : white;
+	font-family: '고딕';
+	cursor: pointer;
+	padding: 4px 17px 4px 17px;
+	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
+}
 
 /* 로그인버튼, 유저 로그인정보 div */
- .logo{
-	white-space : nowrap;
- 	display : flex;
- 	position : absolute;
-	right: 3%;
+.logout {
+	white-space: nowrap;
+	display: flex;
+	position: absolute;
+	right: 8%;
 	top: 93px;
 	align-items: flex-end;
-} 
+}
 
 /* 마이페이지 연필 이미지 */
-.pencil{
+.pencil {
 	width: 30px;
 	height: 30px;
 	background-image: url("resources/images/park/pencil.png");
 	background-repeat: no-repeat;
 	margin-right: 9px;
-	margin-left : 7px;
+	margin-left: 7px;
 	background-size: contain;
 }
-
 /* 네비게이션바 전체 */
 .navi{
 	list-style-type: none;
@@ -187,7 +183,7 @@
 }
 
 .navcon{
-	padding-top: 36px; 
+	padding-top: 193px; 
 	position: absolute; 
 	left:20px; 
 	right:20px;
@@ -215,39 +211,8 @@ main > .Cpage {
 	font-weight: 900;
 }
 
-/* 상세보기 버튼 */
-#DtlBtn {
-	/* border : none; */
-	border-radius: 5px;
-	background-color:rgb(3, 104, 115);
-	font-size: 1.1rem;
-	color : white;
-	font-family: '고딕';
-	cursor: pointer;
-	padding: 4px 17px 4px 17px;
-	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
-}
-
-
-
-/* 표 */
-#table {
-	/* width: 85%;
-	height : 50%; */
-	border-collapse: collapse;
-	margin-left: auto;
-	margin-right: auto;
-	font-family: '고딕';
-	font-size: 1.1rem;
-}
-
-
 main > table > tr,td {
-	border-top: 1px solid black;
-}
-
-th {
-	padding: 5px;
+	border: 1px solid black;
 }
 
 
@@ -258,11 +223,48 @@ th {
 	width: 86%;
 } */
 
+/* 표 */
+#table {
+	width: 85%;
+	height : 50%;
+	border-collapse: collapse;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: '고딕';
+	font-size: 1.1rem;
+}
+
+#table > th,td{
+	border : 1px solid black;
+	padding: 5px;
+	text-align: center;
+}
+
+th {
+	border : 1px solid black;
+	padding: 5px;
+	background-color: rgb(212,212,212);
+}
+
+/* 페이징 div */
+.page{
+	display: flex;
+	justify-content: center;
+	margin-top: 25px;
+}
+
+.paging{
+	margin-right: 7px;
+}
+/* 1번째 페이지 */
+#one{
+	color: red;
+}
 /* footer */
 footer { 
 	width: 85%;
 	height: 110px;
-	position: relative;				
+	position: fixed;				
 	bottom : 0px; 
 	/* position: relative;				
 	top:580px;
@@ -285,175 +287,101 @@ footer > .foot > nav > a{
 	color: black;
 }
 
-.paging_wrap{
-	margin-top : 5%;;
-	margin-left: 40%;
+.cont{
+  width:720px;
 }
-
+.container{
+  display:flex;
+  flex-wrap:wrap;
+  width:720px;
+  justify-content:flex-start;
+  text-align: center;
+  top: 45%;
+  left: 50%;
+  transform:translate(-50%, -30%); 
+  position: absolute;
+}
+.single-item{
+  width:200px;
+  height:200px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background-color:#f3f3f3;
+  margin: 20px;
+  border-radius: 10px;
+  color:#888;
+}
+.topbox {
+	display: flex;
+	height: 50px;
+	margin-bottom: 10px; 
+	margin-left: 10px;
+}
 </style>
 <script type="text/javascript"
 		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
  $(document).ready(function(){
-	/* if("${param.searchGbn}"!=""){
-		$("#searchGbn").val("${param.searchGbn}");
-	} */
-	reloadList();
-	 //글작성
-	/* $("#addBtn").on("click",function(){
-		$("#searchTxt").val($("#oldTxt").val());	//취소했을시 검색어유지
+	 $("#listBtn").on("click", function(){
+			$("#actionForm").attr("action", "memoryList");
+			$("#actionForm").submit();
+		});
 		
-		$("#actionForm").attr("action","testABAdd");
-		$("#actionForm").submit();
-	}); */
+		$("#updateBtn").on("click", function(){
+			$("#actionForm").attr("action", "memoryUpdate");
+			$("#actionForm").submit();
+		});
 
-	//로그인 
-	   $("#LoginBtn").on("click",function(){
+		$("#deleteBtn").on("click", function(){
+			if(confirm("삭제하시겠습니까?")) {
+				var params = $("#aciotnForm").serialize();
 			
-		 location.href = "login";
-		});  
-
-	 
-	//로그아웃 
-	 $("#LogoutBtn").on("click",function(){
-		location.href = "logout";
-	}); 
-	
-	//검색
-	/* $("#searchBtn").on("click",function(){
-		$("#oldTxt").val($("#searchTxt").val());
-		$("#page").val("1");
+				$.ajax({
+					url: "memoryDeletes",
+					type: "post",
+					dataType: "json",
+					data: params,
+					success: function(res){
+						if(res.result == "success") {
+							location.href = "memoryList";
+						}else if(res.result == "failed") {
+							alert("삭제에 실패하였습니다.");
+						} else {
+							alert("삭제중 문제가 발생하였습니다.");
+						}
+					},
+					error: function(request, status, error) {
+						console.log(error);
+					}
+				});
+			}
+		});
+	});
 		
-		reloadList();
-	}); */
-	
-	//페이징
-	 $(".paging_wrap").on("click","span",function(){
-		 $("#page").val($(this).attr("page"));
-		 /* $("#searchTxt").val($("#oldTxt").val());  */
-		
-		reloadList();
-	}); 
-	
-	//상세보기 버튼을 클릭했을 때 이벤트 
-	 $("tbody").on("click", "input", function(){
-		console.log("no >>" + $(this).parents('tr').find('td[name="pIdx"]').text());
-		console.log("name>>" + $(this).parents('tr').find('td[name="pname"]').text());
-		console.log("addr>>" + $(this).parents('tr').find('td[name="paddr"]').text());
-		console.log("phon>>" + $(this).parents('tr').find('td[name="pphon"]').text());
-		//$("#no").attr($(this).parents('tr').find('td[name="pIdx"]').text()); 
-		
-		$("#no").val($(this).parents('tr').find('td[name="pIdx"]').text());
-		$("#name").val($(this).parents('tr').find('td[name="pname"]').text());
-		$("#addr").val($(this).parents('tr').find('td[name="paddr"]').text());
-		$("#phon").val($(this).parents('tr').find('td[name="pphon"]').text());
-		
-		$("#actionForm").attr("action","parkDtl");
-		$("#actionForm").submit();
-	});  
-	
-	
-	
-});
 
-//데이터 취득
- function reloadList(){
-	var params = $("#actionForm").serialize();
- 	$.ajax({	//jquery의 ajax함수 호출  
-//  		url: "http://data.seoul.go.kr/dataList/OA-394/S/1/datasetView.do?"
-// 					+"KEY=58446e7a71616b643239487a427157&TYPE=json&SERVICE=SearchParkInfoService&START_INDEX=1&END_INDEX=10", //접속 주소
-		url : "apitest", 
-		type: "get",	//전송 방식
- 		dataType:"json",	//받아올 데이터 형태 
- 		async: false,
- 		data: params,
-//  		data : sendData,	//보낼 데이터(문자열 형태)
- 		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
- 			console.log(res);
- 			makeTable(JSON.parse(res.resData));
- 			console.log(makeTable(JSON.parse(res.resData)));
- 			//drawList(res.list);
- 			drawPaging(res.pb);
- 		},
- 		error: function(request, status, error){	//실패 시 다음 함수 실행 
- 			console.log(request);
- 			console.log(error);
- 		}
- 	});
- }
-
-
-//목록 그리기 
-  function makeTable(jsonData) {
-      var rows = jsonData.SearchParkInfoService.row;
-      $data = "";
-      
-      for (var idx in rows) {
-         $data += '<tr><td name="pIdx">'+ rows[idx].P_IDX + '</td><td name="pname">' + rows[idx].P_PARK + '</td><td name="paddr">'+ rows[idx].P_ADDR 
-         		+ '</td><td name="pphon">'+ rows[idx].P_ADMINTEL + '</td><td>' + '<input type="button" value="상세보기" id="DtlBtn" mo="${sMNo}">' + '</td></tr>';
-      }
-      
-      $("#table").html($data);
-   }
- 
- 
- /* 페이징 */
- function drawPaging(pb){
-	console.log("pb", pb);
-	 
-	var html ="";
-	
-	html += "<span page=\"1\">처음</span>      " ;
-	
-	//현재페이지가 1인지 확인
-	if($("#page").val()=="1"){
-		html +=  "<span page=\"1\">이전</span>";
-	}else{
-		html += "<span page=\""+($("#page").val()*1-1)+"\">이전</span>";
-	}
-	
-	
-	for(var i = pb.startPcount; i<= pb.endPcount ; i++){
-		if($("#page").val()==i){
-			html += "<span page=\""+ i + "\"><b>"+i+"</b></span>";
-		}else{
-			html += "<span page=\""+ i + "\">"+ i + "</span>";
-		}
-	}
-	
-	if($("#page").val()== pb.maxPcount){
-		html += "<span page=\""+pb.maxPcount +"\">다음</span>      ";
-	}else {
-		html += "<span page=\""+ ($("#page").val()*1 +1) +"\">다음</span>      ";
-	}
-	
-	html += "<span page=\""+pb.maxPcount +"\">마지막</span>      ";
-	
-	$(".paging_wrap").html(html);
-}
 </script>
 </head>
 <body>
 
- <div id="wrapper">
+<div id="wrapper">
         <header id="header">
-		<div class="logo">
-						<div class="pencil"></div>
+			<div id="logo">
+				<form action="#" method="post" >
+					<div class="logout">
 						<c:choose>
 							<c:when test="${empty sMNo}">
-								<div class="login">
-									<input type="button" value="로그인" id="LoginBtn"/>
-								</div>
+								<input type="button" value="로그인" id="LoginBtn"/>
 							</c:when>
-						<c:otherwise>
-							<div class="logout">
+							<c:otherwise>
 								${sMNm}님 환영합니다.
-								<input type="button" value="로그아웃" id="LogoutBtn"/>
-							</div>
-						</c:otherwise>
+								<div class="pencil"></div>
+								<input type="button" value="로그아웃" id="LogoutBtn" />
+							</c:otherwise>
 						</c:choose>
-			</div>
-	</header>
+					</div>
+				</form>
+			</div> 
 			
 			<div class="navcon">
 				<nav id="nav">
@@ -467,8 +395,8 @@ footer > .foot > nav > a{
 							</div>
 							<li class="sub Park">공원</a>	
 								<ul class="gnb_sub">
-									<li><a href="parkList">공원 찾기</a></li>
-									<li><a href="parkMap">길 찾기</a></li>
+									<li><a href="#">공원 찾기</a></li>
+									<li><a href="#">길 찾기</a></li>
 								</ul>
 							</li>
 							<li class="sub WalkT">산책로</a>
@@ -484,8 +412,8 @@ footer > .foot > nav > a{
 								</ul>
 							</li>
 							<li class="sub FDust">미세먼지</a>
-								<ul class="gnb_sub">
-									<li><a href="dust">미세먼지 현황</a></li>
+								<ul class="gnb_sub"> v
+									<li><a href="#">미세먼지 현황</a></li>
 								</ul>
 							</li>
 							<li class="sub Memory">추억저장</a>
@@ -514,49 +442,60 @@ footer > .foot > nav > a{
 					</div>
 				</nav>	
 			</div>
+	</header>
 		
 	<main>
-      	<div class="Cpage"><h4>공원 > 공원찾기</h4></div>
-      	<div>
-	<form action="#" id="actionForm" method="get">
-		<select name="searchGbn" id="searchGbn">
-			<option value="0">지역</option>
-		</select>
-		<input type="text" name="searchTxt" id="searchTxt" value="${param.searchTxt}"/>
-		<input type="hidden" name="oldTxt" value="${param.searchTxt}"/>
-		<input type="hidden" name="page" id="page" value="${page}"/>
-		<input type="hidden" name="no" id="no"/>
-		<input type="hidden" name="mo" id="mo"/>
-		<input type="hidden" name="name" id="name"/>
-		<input type="hidden" name="addr" id="addr"/>
-		<input type="hidden" name="phon" id="phon"/>
-		<input type="button" value="검색" id="searchBtn"/>
-		<!-- 로그인한 상태라면 작성버튼 -->
-		<%-- <c:if test="${!empty sMNo}">
-			<input type="button" value="작성" id="addBtn"/>
-		</c:if> --%>
-	</form>
-</div>
-<div align="center">
-            <table style="text-align:center;">
-            	<thead>
-			<tr>
-				<th>번호</th>
-				<th>공원이름</th>
-				<th>공원 주소</th>
-				<th>전화번호</th>
-				<th>상세보기</th>
-			</tr>
-		</thead>
-               <colgroup><col width="200"/><col width="200"/></colgroup>
-               <tbody id="table">
-               
-               </tbody>   
-            </table>
-</div>
+      		<div class="Cpage"><h4>공지사항 > 고객의 소리함</h4></div>
+      		<form action="#" id="actionForm" method="post">
+	      	<div class="topbox">
+	      		<div class="menuBox"><h2>고객의 소리함</h2></div>
+				<input type="hidden" name="searchGbn" value="${param.searchGbn}" />
+				<input type="hidden" name="searchTxt" value="${param.searchTxt}" />
+				<input type="hidden" name="page" value="${param.page}" />	
+				<input type="hidden" name="no" value="${param.no}" />	
+	      	</div>
+	      	</form>
+	      	
+				<div>
+					제목 :  ${data.TITLE}
+				</div>
+				<div>
+					작성자 :  ${data.ID}
+				</div>
+				<div>
+					장소 :  ${data.PLACE}
+				</div>
+				<div>
+					내용<br>
+					${data.CON}
+				</div>
+			<c:if test="${!empty data.ATACH}">
+				<div>
+					<!--c:set => 변수선언  -->
+					<!--length(값) => 문자열 : 문자열길이, 리스트나 배열 : 개수   -->
+					<c:set var="len" value="${fn:length(data.ATACH)}"></c:set>
+					첨부파일 :
+					<!--fn:substring(값, 숫자1, 숫자2) => 인텍스 숫자1번째부터 숫자2미만까지 자름 -->
+					<!-- a의download : href의 파일을 다운로드 하겠다. 만약 download에 값이 있는 경우
+							해당 이름으로 다운로드 하겠다 
+					-->
+					<a href="resources/upload/${fn:replace(fn:replace(data.ATACH, '[', '%5B'), ']', '%5D')}" download="${fn:substring(data.ATACH, 20, len)}">
+					${fn:substring(data.ATACH, 20, len)}
+					</a>
+				</div>
+				
+				
+				
+				
+			</c:if>
+		      	<c:if test="${data.MBER_NUM eq sMNo}">
+					<input type="button" value="수정" id="updateBtn" />
+					<input type="button" value="삭제" id="deleteBtn" />
+				</c:if>
+				<input type="button" value="목록" id="listBtn" />
 
-<div class="paging_wrap" ></div>
     </main>
+    
     
     
     <footer>
