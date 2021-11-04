@@ -16,7 +16,7 @@ public interface INoticeDao {
 	public int UpdateNotice(HashMap<String, String> params)throws Throwable;
 
 	public int deleteNotice(HashMap<String, String> params)throws Throwable;
-
-
+	
+	public int updateHit(HashMap<String, String> params)throws Throwable;
 	
 }

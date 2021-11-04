@@ -44,6 +44,11 @@ public class NoticeService implements INoticeService{
 		return iNoticeDao.deleteNotice(params);
 	}
 
+	@Override
+	public void updateHit(HashMap<String, String> params) throws Throwable {
+		iNoticeDao.updateHit(params);
+	}
+
 	
 	
 }

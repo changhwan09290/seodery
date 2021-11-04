@@ -202,7 +202,7 @@ public class ParkController {
 		}
 		
 		//글 개수
-		int cnt = iParkService.getPDCnt(params); 
+		int cnt = iParkService.getPDCnt(params);    //댓글 목록 총 건수조회
 		PagingBean pb = iPagingService.getPagingBean(page, cnt, 10,5);
 		
 		
@@ -210,16 +210,12 @@ public class ParkController {
 		 params.put("startCnt",Integer.toString(pb.getStartCount()));
 		 params.put("endCnt",Integer.toString(pb.getEndCount()));
 		
-		 List<HashMap<String, String>> list = iParkService.getPDList(params);
+		 List<HashMap<String, String>> list = iParkService.getPDList(params);	//댓글 목록
 		 System.out.println("list >>>>>>>> " + list);
 		
 		//HashMap<String, String> data = new HashMap<String, String>();
 		
-		 //상세보기 목록 번호 받아오기
-			/*
-			 * data.put("PARK_NUM","no"); data.put("MBER_NUM","1"); data.put("CON","test");
-			 * data.put("COMM_NUM","1"); data.put("SRATING", "3");
-			 */
+		 
 		String no = request.getParameter("no");
 		String name = request.getParameter("name");
 		String addr = request.getParameter("addr");
@@ -236,7 +232,6 @@ public class ParkController {
 		mav.addObject("name", name);
 		mav.addObject("addr", addr);
 		mav.addObject("phon", phon);
-		mav.addObject("page", page);
 
 		mav.setViewName("park/parkDtl");
 		return mav;
@@ -276,29 +271,75 @@ public class ParkController {
 	}
 	
 	
-	/*
-	 * @RequestMapping(value ="/testO") public ModelAndView testO(@RequestParam
-	 * HashMap<String, String> params, ModelAndView mav) throws Throwable{
-	 * 
-	 * List<HashMap<String, String>> list = iTestOService.getO1List(params);
-	 * System.out.println("list >>>>>>>> " + list);
-	 * 
-	 * // HashMap<String, String> data = new HashMap<String, String>();
-	 * 
-	 * 
-	 * data.put("O_NO","1"); data.put("M_NO","18"); data.put("M_NM","test");
-	 * data.put("CON","가나다라");
-	 * 
-	 * 
-	 * //list.add(data);
-	 * 
-	 * mav.addObject("page",page); mav.addObject("pb",pb);
-	 * mav.addObject("list",list);
-	 * 
-	 * mav.setViewName("testO/testO");
-	 * 
-	 * return mav; }
-	 */
+	//수정
+		@RequestMapping(value = "/parkupdate")
+		public ModelAndView parkupdate(@RequestParam HashMap<String, String> params,
+										ModelAndView mav) throws Throwable{
+			
+			int cnt = iParkService.updatePCON(params);
+			
+			if(cnt > 0) {
+				mav.setViewName("redirect:parkDtl");
+			} else {
+				mav.addObject("msg", "수정중 문제가 발생했습니다.");
+				mav.setViewName("park/failedAction");
+			}
+			
+			return mav;
+		}
+		
+		//댓글 삭제 ajax
+		@RequestMapping(value = "/parkDelete",method = RequestMethod.POST,
+				produces = "text/json;charset=UTF-8")
+		@ResponseBody
+		public String parkDelete(@RequestParam HashMap<String, String>params) throws Throwable{
+			
+			ObjectMapper mapper = new ObjectMapper();
+			
+			Map<String, Object> modelMap = new HashMap<String, Object>();
+			
+			
+			String result = "success";
+			
+			try {
+				int cnt = iParkService.deletePCON(params);	//댓글 삭제하기
+				
+				if(cnt ==0) {
+					result = "failed";
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+				result = "error";
+			}
+			
+			// 댓글 조회
+			int page = 1;
+
+			if (params.get("page") != null) { // 넘어오는 현재 p데이터가 존재 시 page =
+				page = Integer.parseInt(params.get("page"));
+			}
+			
+			//글 개수
+			int cnt = iParkService.getPDCnt(params); 
+			PagingBean pb = iPagingService.getPagingBean(page, cnt, 10,5);
+			
+			
+			// 조회 시작 및 종료번호 할당
+			 params.put("startCnt",Integer.toString(pb.getStartCount()));
+			 params.put("endCnt",Integer.toString(pb.getEndCount()));
+			
+			 List<HashMap<String, String>> commentList = iParkService.getPDList(params);
+			 System.out.println("list >>>>>>>> " + commentList);
+			
+			modelMap.put("result", result);
+			modelMap.put("commentList", commentList);
+			
+			
+			return mapper.writeValueAsString(modelMap);
+		}
+		
+		
 
 	@RequestMapping(value = "/apiDtl", method = RequestMethod.GET, produces = "text/json;charset=UTF-8")
 	@ResponseBody

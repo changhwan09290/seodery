@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,8 +46,8 @@
             text-align: center;
         }
         
- /* 로그인 버튼 */
-#LogoutBtn,#LogoutBtn {
+/* 로그인 버튼 */
+#LoginBtn, #LogoutBtn {
 	z-index: 9999;
 	border : none;
 	border-radius: 5px;
@@ -57,29 +58,26 @@
 	cursor: pointer;
 	padding: 4px 17px 4px 17px;
 	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
-	/* position: fixed;
-	right: 90px;
-	top: 100px; */
 }
 
 /* 로그인버튼, 유저 로그인정보 div */
-.login{
-	white-space : nowrap;
- 	display : flex;
- 	position : absolute;
+.logout {
+	white-space: nowrap;
+	display: flex;
+	position: absolute;
 	right: 8%;
 	top: 93px;
 	align-items: flex-end;
-	
 }
+
 /* 마이페이지 연필 이미지 */
-.pencil{
+.pencil {
 	width: 30px;
 	height: 30px;
 	background-image: url("resources/images/park/pencil.png");
 	background-repeat: no-repeat;
 	margin-right: 9px;
-	margin-left : 7px;
+	margin-left: 7px;
 	background-size: contain;
 }
 
@@ -641,17 +639,17 @@ footer > .foot > nav > a{
 					<div class="logout">
 						<c:choose>
 							<c:when test="${empty sMNo}">
-								<input type="button" value="로그인" id="LoginBtn" />
+								<input type="button" value="로그인" id="LoginBtn"/>
 							</c:when>
 							<c:otherwise>
 								${sMNm}님 환영합니다.
 								<div class="pencil"></div>
 								<input type="button" value="로그아웃" id="LogoutBtn" />
 							</c:otherwise>
-						</c:choose>							
+						</c:choose>
 					</div>
 				</form>
-			</div>
+			</div> 
 			
 			
 			<div class="navcon">

@@ -9,9 +9,9 @@
 	
 	
 	<select id="getNoticeList" parameterType="hashmap" resultType="hashmap">		
-		SELECT N.NOT_NUM, N.TITLE, ID ,N.REGISTER_DT, N.ATACH
+		SELECT N.NOT_NUM, N.TITLE, ID ,N.REGISTER_DT,N.HIT, N.ATACH
 		FROM (SELECT N.NOT_NUM, N.TITLE, ID,
-				TO_CHAR(N.REGISTER_DT, 'YYYY-MM-DD') AS  REGISTER_DT, ATACH,
+				TO_CHAR(N.REGISTER_DT, 'YYYY-MM-DD') AS  REGISTER_DT, HIT,ATACH,
 				ROW_NUMBER() OVER(ORDER BY N.NOT_NUM DESC) AS RNUM
 		FROM NT N INNER JOIN UR U 
 		        ON N.MBER_NUM = U.MBER_NUM
@@ -31,7 +31,7 @@
 		FROM NT N INNER JOIN UR U 
 		        ON N.MBER_NUM = U.MBER_NUM
 		WHERE 1 = 1
-		 AND NOT_NUM = #{no}
+		 AND N.NOT_NUM = #{no}
 	</select>
 	
 	
@@ -47,7 +47,10 @@
 		WHERE NOT_NUM = #{no}
 	</update>
 	
-	
+	<update id="updateHit" parameterType="hashmap">
+		UPDATE NT SET HIT = HIT + 1
+		WHERE NOT_NUM = #{no}
+	</update>
 	
 	
 	
