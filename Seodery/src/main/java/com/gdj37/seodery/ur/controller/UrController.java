@@ -1,28 +1,16 @@
 package com.gdj37.seodery.ur.controller;
 
-import java.awt.PageAttributes.MediaType;
 import java.util.HashMap;
-import java.util.Random;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.gdj37.seodery.ur.dto.MemberDTO;
 import com.gdj37.seodery.ur.service.IUrService;
-import com.gdj37.seodery.ur.service.MemberService;
 /*import com.gdj37.seodery.ur.service.service;
 */import com.gdj37.seodery.util.Utils;
 
@@ -104,10 +92,24 @@ public class UrController {
 		return mav;
 	}
 	// 마이페이지 이동
-		@RequestMapping(value = "/mypage.do")
-		public String mypage() throws Exception{
-			return "/member/mypage";
+		@RequestMapping(value = "/mypage")
+		public ModelAndView mypage(ModelAndView mav) throws Exception{
+			
+			
+			mav.setViewName("Member/mypage");
+			
+			return mav;
 		}
+		
+		// 중복체크 이동
+				@RequestMapping(value = "/IdCheckForm")
+				public ModelAndView IdCheckForm(ModelAndView mav) throws Exception{
+					
+					
+					mav.setViewName("Member/IdCheckForm");
+					
+					return mav;
+				}
 		
 		/*
 		 * // mypage 수정
