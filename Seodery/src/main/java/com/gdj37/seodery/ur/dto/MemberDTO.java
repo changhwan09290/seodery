@@ -36,6 +36,10 @@ public class MemberDTO {
 
 		this.name = name;
 	}
+	
+	
+	
+	
 
 	public String getMail() {
 
