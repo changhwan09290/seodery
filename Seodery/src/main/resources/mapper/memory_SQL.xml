@@ -20,9 +20,14 @@
 		WHERE RNUM BETWEEN #{startCnt} AND #{endCnt}
 	</select>
 
+<!--회원정보 수정  -->
 
-
-
+<update id="memverUpdate">
+	UPDATE MP_MEMBER SET 
+		USERPASS = #{userPass},
+		USERNAME = #{userName}
+		WHERE USERID = #{userId}
+</update>
 
 
 

@@ -6,14 +6,23 @@
 <meta charset="UTF-8">
 
 
+<link rel="stylesheet" href="resources/css/login/default.css">
+<link rel="stylesheet" href="resources/css/login/mainpage.css">
+	
+<!-- <link rel="stylesheet" href="resources/css/login/justdoit.css">-->
+ <link rel="stylesheet" href="resources/css/login/mypage.css">
 <link rel="stylesheet" href="resources/css/login/member.css">
 
 <style>
 
 </style>
  <script type="text/javascript">
-    
- <script>
+$(document).ready(function() {
+	loadMyPage();
+	
+	
+	
+	
 	$(function(){
 		if(${msg ne null}){
 			alert('${msg}');
@@ -35,16 +44,120 @@
 			}
 		}));
 	})
+});
+
+function loadMyPage() {
+	$.ajax({
+		url: "myPageAjax",
+		type: "post",
+		dataType: "json",
+		success: function(result) {
+			$("member_no").val(result.data.MEMBER_NO);
+			$("member_name").val(result.MEMBER_NAME);
+			$("member_no").val(result.MEMBER_NO);
+			$("member_no").val(result.MEMBER_NO);
+			$("member_no").val(result.MEMBER_NO);
+			$("member_no").val(result.MEMBER_NO);
+			$("member_no").val(result.MEMBER_NO);
+		},
+		error(request, status, error): function() {
+			console.log(error);
+		}
+	});
+}
 </script>
 
-
-    </script>
     
 </head>
 <body>
+
+<div id="wrapper">
+       <header id="header">
+         <div class="logo">
+            <img src="resources/images/login/logo.png" alt="">
+         </div> 
+            <c:choose>
+               <c:when test="${empty sMNo }">
+                  <div class="login">
+                     <input type="button" value="로그인" id="LoginBtn" onclick="linkGo('login')"/>
+                  </div>
+               </c:when>
+               <c:otherwise>
+                  <div class="logout">
+                     ${sMNm }님 환영합니다.
+                     <div class="pencil"></div>
+                     <input type="button" value="로그아웃" id="LogoutBtn" onclick="linkGo('logout')"/>
+                  </div>
+               </c:otherwise>
+            </c:choose>
+			
+			<div class="navcon">
+				<nav id="nav">
+					<div class="gnb_subbox"></div>
+					<div class="gnb">
+						<ul class="navi">
+							<div class="dvbox">
+								<div class="dv"></div>
+								<div class="dv"></div>
+								<div class="dv"></div>
+							</div>
+							<li class="sub Park">공원</a>	
+								<ul class="gnb_sub">
+									<li><a href="#">공원 찾기</a></li>
+									<li><a href="#">길 찾기</a></li>
+								</ul>
+							</li>
+							<li class="sub WalkT">산책로</a>
+								<ul class="gnb_sub">
+									<li><a href="#">산책로 찾기</a></li>
+								</ul>
+							</li>
+							<li class="sub Bike">자전거</a>
+								<ul class="gnb_sub">
+									<li><a href="#">실시간 대여정보</a></li>
+									<li><a href="#">자전거 이용안내</a></li>
+									<li><a href="#">자전거 수리문의</a></li>
+								</ul>
+							</li>
+							<li class="sub FDust">미세먼지</a>
+								<ul class="gnb_sub">
+									<li><a href="#">미세먼지 현황</a></li>
+								</ul>
+							</li>
+							<li class="sub Memory">추억저장</a>
+								<ul class="gnb_sub">
+									<li><a href="#">추억저장</a></li>
+								</ul>
+							</li>
+							<li class="sub Notice">공지사항</a>
+								<ul class="gnb_sub">
+									<li><a href="#">고객의 소리</a></li>
+									<li><a href="#">공지사항</a></li>
+								</ul>
+							</li>
+							<li class="sub Manager" id="manager">관리자</a>
+								<ul class="gnb_sub">
+									<li><a href="#">공원댓글</a></li>
+									<li><a href="#">산책로댓글</a></li>
+									<li><a href="#">수리문의</a></li>
+									<li><a href="#">회원관리</a></li>
+									<li><a href="#">추억저장</a></li>
+									<li><a href="#">공지사항</a></li>
+									<li><a href="#">고객의 소리함</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</nav>	
+			</div>
+	</header>
+
+
+<main>
     <!-- div 왼쪽, 오른쪽 바깥여백을 auto로 주면 중앙정렬된다.  -->
+     
     <div id="wrap">
-    	
+    	<table class="jointable">
     	<div class="wp1">
 	        <br><br>
 	        <b>회원정보 수정</b>
@@ -53,13 +166,14 @@
         
         <!-- 입력한 값을 전송하기 위해 form 태그를 사용한다 -->
         <!-- 값(파라미터) 전송은 POST 방식, 전송할 페이지는 JoinPro.jsp -->
-        <form id="myForm" action="../member/update_mypage.do" method="post">
-            <table class="jointable">
+        
+        <form id="myForm" action="../member/update_mypage" method="post">
+           
                 <tr>
                     <td id="title">아이디</td>
                     <td>
                         <input type="text" name="id" maxlength="50">   
-                        <input type="button" value="중복확인" id="btnId"></td>
+                        <input type="button" value="중복확인" id="btnId" onclick="linkGo('idCheckForm')"></td>
                     </td>
                 </tr>
                         
@@ -76,11 +190,12 @@
                         <input type="password" name="passwordcheck" maxlength="50">
                     </td>
                 </tr>
-                    
+                    <br>
+                       <br>
                 <tr>
                     <td id="title">이름</td>
                     <td>
-                        <input type="text" name="name" maxlength="50">
+                        <input type="text" name="name" maxlength="50" disabled>
                     </td>
                 </tr>
                     
@@ -156,6 +271,24 @@
             </div>
         </form>
     </div>
+    </main>
+     <footer>
+       <div class="foot">
+			<nav>
+			<br/>
+				<a href="http://naver.com" target="_blank">웹사이트 소개</a>
+				<a href="http://naver.com" target="_blank">개인정보 처리방침</a>
+				<a href="http://naver.com" target="_blank">이용약관</a>
+				<a href="http://naver.com" target="_blank">인재채용</a>
+			</nav>
+				<p>
+					<span>프로젝트 : 서드리 프로젝트</span><br/>
+					<span>조원 : 권나영, 박현지, 손창환, 송윤태, 임지혜 </span><br/>
+				</p>
+		</div>
+    </footer>
+    
+    
 </body>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>

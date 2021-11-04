@@ -263,9 +263,17 @@ footer > .foot > nav > a{
 $(document).ready(function() {
 	
 	//로고 누르면 메인으로 이동(로고가 아니라 헤더 전체,,)
-	$("#header").on("click", function() {
+	/* $("#header").on("click", function() {
 		location.href = "mainpage";
-	});
+	}); */
+	
+	$("#LogoutBtn").on("click",function(){
+        location.href= "logout";        
+     });
+      
+    $("#LoginBtn").on("click",function(){
+        location.href = "login";   
+     });
 	
 	var container = document.getElementById('map');
 	var options = {
@@ -434,15 +442,14 @@ $(document).ready(function() {
 					<div class="logout">
 						<c:choose>
 							<c:when test="${empty sMNo}">
-								<input type="button" value="로그인" id="LoginBtn" onclick="console.log('!');" /> 
+								<input type="button" value="로그인" id="LoginBtn" /> 
 							</c:when>
 							<c:otherwise>
 								${sMNm}님 환영합니다.
 								<div class="pencil"></div>
 								<input type="button" value="로그아웃" id="LogoutBtn" />
 							</c:otherwise>
-						</c:choose>						
-						<!-- <input type="button" value="로그아웃" id="LogoutBtn"/> -->
+						</c:choose>
 					</div>
 				</form>
 			</div>

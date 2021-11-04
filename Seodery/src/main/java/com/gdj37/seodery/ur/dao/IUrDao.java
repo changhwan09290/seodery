@@ -10,4 +10,6 @@ public interface IUrDao {
 
 	int join(HashMap<String, String> params)throws Throwable;
 
+	HashMap<String, String> get_user_info(HashMap<String, String> params)throws Throwable;
+
 }

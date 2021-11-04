@@ -1,28 +1,20 @@
 package com.gdj37.seodery.ur.controller;
 
-import java.awt.PageAttributes.MediaType;
 import java.util.HashMap;
-import java.util.Random;
+import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.gdj37.seodery.ur.dto.MemberDTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gdj37.seodery.ur.service.IUrService;
-import com.gdj37.seodery.ur.service.MemberService;
 /*import com.gdj37.seodery.ur.service.service;
 */import com.gdj37.seodery.util.Utils;
 
@@ -103,31 +95,34 @@ public class UrController {
 		
 		return mav;
 	}
-	// 마이페이지 이동
-		@RequestMapping(value = "/mypage.do")
-		public String mypage() throws Exception{
-			return "/member/mypage";
-		}
+	
+	@RequestMapping(value = "/mypage")
+	public ModelAndView mypage(ModelAndView mav, @RequestParam HashMap<String, String> params) throws Exception{
 		
 		/*
-		 * // mypage 수정
+		 * HashMap<String, String> data = iUrService.get_user_info(params);
 		 * 
-		 * @RequestMapping(value = "/update_mypage.do", method = RequestMethod.POST)
-		 * public String update_mypage(@ModelAttribute MemberDTO member, HttpSession
-		 * session, RedirectAttributes rttr) throws Exception{
-		 * session.setAttribute("member", MemberService.update_mypage(member));
-		 * rttr.addFlashAttribute("msg", "회원정보 수정 완료"); return
-		 * "redirect:/member/mypage.do"; }
-		 * 
-		 * // 비밀번호 변경
-		 * 
-		 * @RequestMapping(value = "/update_pw.do", method = RequestMethod.POST) public
-		 * String update_pw(@ModelAttribute MemberDTO member, @RequestParam("old_pw")
-		 * String old_pw, HttpSession session, HttpServletResponse response,
-		 * RedirectAttributes rttr) throws Exception{ session.setAttribute("member",
-		 * MemberService.update_pw(member, old_pw, response));
-		 * rttr.addFlashAttribute("msg", "비밀번호 수정 완료"); return
-		 * "redirect:/member/mypage.do"; }
+		 * mav.addObject("get_user_info",get_user_info);
 		 */
+		mav.setViewName("Member/mypage");
+		
+		return mav;
+	}
 	
+	@RequestMapping(value = "/myPageAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String myPageAjax(HttpSession session) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		HashMap<String, Object> data = Service.getMemberData(session.getAttribute("sMNo"));
+		
+		modelMap.put("data", data);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
 }
+	
+	

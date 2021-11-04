@@ -4,9 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="resources/css/login/default.css">
+<link rel="stylesheet" href="resources/css/login/mainpage.css">
+<link rel="stylesheet" href="resources/css/login/mypage.css">
+<link rel="stylesheet" href="resources/css/login/member.css">>
 
-
-<link rel="stylesheet" href="resources/css/login/member.css">
 
 <style>
 
@@ -30,34 +32,108 @@
  // 이렇게 하는 이유는 중복체크 후 다시 아이디 창이 새로운 아이디를 입력했을 때
  // 다시 중복체크를 하도록 한다.
  function inputIdChk(){
-     document.userInfo.idDuplication.value ="idUncheck";
+     document.userInfo.idDuplication.value ="idCheckForm";
  }
 
 </script>
     
 </head>
 <body>
+
+<div id="wrapper">
+        <header id="header">
+			<div id="logo">
+				<img src="resources/images/login/logo.png" alt=""> 
+				<form action="#" method="post" >
+					<div class="login">
+						<input type="button" value="로그인" id="LoginBtn"/>
+					</div>
+				</form>
+			</div> 
+			
+			<div class="navcon">
+				<nav id="nav">
+					<div class="gnb_subbox"></div>
+					<div class="gnb">
+						<ul class="navi">
+							<div class="dvbox">
+								<div class="dv"></div>
+								<div class="dv"></div>
+								<div class="dv"></div>
+							</div>
+							<li class="sub Park">공원</a>	
+								<ul class="gnb_sub">
+									<li><a href="#">공원 찾기</a></li>
+									<li><a href="#">길 찾기</a></li>
+								</ul>
+							</li>
+							<li class="sub WalkT">산책로</a>
+								<ul class="gnb_sub">
+									<li><a href="#">산책로 찾기</a></li>
+								</ul>
+							</li>
+							<li class="sub Bike">자전거</a>
+								<ul class="gnb_sub">
+									<li><a href="#">실시간 대여정보</a></li>
+									<li><a href="#">자전거 이용안내</a></li>
+									<li><a href="#">자전거 수리문의</a></li>
+								</ul>
+							</li>
+							<li class="sub FDust">미세먼지</a>
+								<ul class="gnb_sub">
+									<li><a href="#">미세먼지 현황</a></li>
+								</ul>
+							</li>
+							<li class="sub Memory">추억저장</a>
+								<ul class="gnb_sub">
+									<li><a href="#">추억저장</a></li>
+								</ul>
+							</li>
+							<li class="sub Notice">공지사항</a>
+								<ul class="gnb_sub">
+									<li><a href="#">고객의 소리</a></li>
+									<li><a href="#">공지사항</a></li>
+								</ul>
+							</li>
+							<li class="sub Manager" id="manager">관리자</a>
+								<ul class="gnb_sub">
+									<li><a href="#">공원댓글</a></li>
+									<li><a href="#">산책로댓글</a></li>
+									<li><a href="#">수리문의</a></li>
+									<li><a href="#">회원관리</a></li>
+									<li><a href="#">추억저장</a></li>
+									<li><a href="#">공지사항</a></li>
+									<li><a href="#">고객의 소리함</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</nav>	
+			</div>
+	</header>
+
+
+<main>
     <!-- div 왼쪽, 오른쪽 바깥여백을 auto로 주면 중앙정렬된다.  -->
+     
     <div id="wrap">
-    	
+    	<table class="jointable">
     	<div class="wp1">
 	        <br><br>
-	        <b>서드리 회원가입</b>
+	        <b>★서드리 회원가입★</b>
 	        <br><br><br>
         </div>
         
         <!-- 입력한 값을 전송하기 위해 form 태그를 사용한다 -->
         <!-- 값(파라미터) 전송은 POST 방식, 전송할 페이지는 JoinPro.jsp -->
- <form method="post" action="login" 
-                name="userInfo" onsubmit="return checkValue()">
-
-
+        
+        <form id="myForm" action="../member/update_mypage" method="post">
+           
                 <tr>
                     <td id="title">아이디</td>
                     <td>
                         <input type="text" name="id" maxlength="50">   
-                       <input type="button" value="중복확인" onclick="openIdChk()">    
-                        <input type="hidden" name="idDuplication" value="idUncheck" >
+                        <input type="button" value="중복확인" id="btnId" onclick="linkGo('idCheckForm')"></td>
                     </td>
                 </tr>
                         
@@ -146,10 +222,32 @@
             <br>
             
             <div class="wp2">
-            	<input type="submit" value="가입"/>  <input type="button" value="취소">
+            	<input type="submit" value="가입"/>  
+            	<input type="button" value="취소" onclick="location='login.jsp'">
+            	
+
+
             </div>
         </form>
     </div>
+    </main>
+     <footer>
+       <div class="foot">
+			<nav>
+			<br/>
+				<a href="http://naver.com" target="_blank">웹사이트 소개</a>
+				<a href="http://naver.com" target="_blank">개인정보 처리방침</a>
+				<a href="http://naver.com" target="_blank">이용약관</a>
+				<a href="http://naver.com" target="_blank">인재채용</a>
+			</nav>
+				<p>
+					<span>프로젝트 : 서드리 프로젝트</span><br/>
+					<span>조원 : 권나영, 박현지, 손창환, 송윤태, 임지혜 </span><br/>
+				</p>
+		</div>
+    </footer>
+    
+    
 </body>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
