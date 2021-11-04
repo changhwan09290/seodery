@@ -20,6 +20,10 @@
    $(document).ready(function(){
       reloadList();
       
+    //로고 누르면 메인으로 이동(로고가 아니라 헤더 전체,,)
+  	$("#header").on("click", function() {
+  		location.href = "mainpage";
+  	});
       
       $("#searchBtn").on("click", function(){
          if(checkVal("#searchTxt")){
