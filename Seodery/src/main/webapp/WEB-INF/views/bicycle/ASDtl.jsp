@@ -254,6 +254,12 @@ h1 {
 		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	
+	//로고 누르면 메인으로 이동(로고가 아니라 헤더 전체,,)
+	$("#header").on("click", function() {
+		location.href = "mainpage";
+	});
+	
 	$("#ListBtn").on("click", function(){
 		$("#actionForm").attr("action", "AfterServiceList");
 		$("#actionForm").submit();
@@ -310,64 +316,64 @@ $(document).ready(function() {
 	</form>
 </div> 
 <div class="navcon">
-<nav id="nav">
-	<div class="gnb_subbox"></div>
-		<div class="gnb">
-			<ul class="navi">
-				<div class="dvbox">
-					<div class="dv"></div>
-					<div class="dv"></div>
-					<div class="dv"></div>
-				</div>
-				<li class="sub Park">공원
-					<ul class="gnb_sub">
-						<li><a href="parkList">공원 찾기</a></li>
-						<li><a href="parkMap">길 찾기</a></li>
-				</ul>
-				</li>
-				<li class="sub WalkT">산책로
-					<ul class="gnb_sub">
-						<li><a href="walkList">산책로 찾기</a></li>
-					</ul>
-				</li>
-				<li class="sub Bike">자전거
-					<ul class="gnb_sub">
-						<li><a href="RentalShop">실시간 대여정보</a></li>
-						<li><a href="use_info">자전거 이용안내</a></li>
-						<li><a href="AfterServiceList">자전거 수리문의</a></li>
-					</ul>
-				</li>
-				<li class="sub FDust">미세먼지
-					<ul class="gnb_sub">
-						<li><a href="dust">미세먼지 현황</a></li>
-					</ul>
-				</li>
-				<li class="sub Memory">추억저장
-					<ul class="gnb_sub">
-						<li><a href="#">추억저장</a></li>
-					</ul>
-				</li>
-				<li class="sub Notice">공지사항
-					<ul class="gnb_sub">
-						<li><a href="#">고객의 소리</a></li>
-						<li><a href="MOpinionList">공지사항</a></li>
-					</ul>
-				</li>
-				<li class="sub Manager" id="manager">관리자
-					<ul class="gnb_sub">
-						<li><a href="#">공원댓글</a></li>
-						<li><a href="#">산책로댓글</a></li>
-						<li><a href="#">수리문의</a></li>
-						<li><a href="#">회원관리</a></li>
-						<li><a href="#">추억저장</a></li>
-						<li><a href="#">공지사항</a></li>
-						<li><a href="#">고객의 소리함</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-	</nav>	
-</div>
+				<nav id="nav">
+					<div class="gnb_subbox"></div>
+					<div class="gnb">
+						<ul class="navi">
+							<div class="dvbox">
+								<div class="dv"></div>
+								<div class="dv"></div>
+								<div class="dv"></div>
+							</div>
+							<li class="sub Park">공원
+								<ul class="gnb_sub">
+									<li><a href="parkList">공원 찾기</a></li>
+									<li><a href="parkMap">길 찾기</a></li>
+								</ul>
+							</li>
+							<li class="sub WalkT">산책로
+								<ul class="gnb_sub">
+									<li><a href="walkList">산책로 찾기</a></li>
+								</ul>
+							</li>
+							<li class="sub Bike">자전거
+								<ul class="gnb_sub">
+									<li><a href="RentalShop">실시간 대여정보</a></li>
+									<li><a href="use_info">자전거 이용안내</a></li>
+									<li><a href="AfterServiceList">자전거 수리문의</a></li>
+								</ul>
+							</li>
+							<li class="sub FDust">미세먼지
+								<ul class="gnb_sub">
+									<li><a href="dust">미세먼지 현황</a></li>
+								</ul>
+							</li>
+							<li class="sub Memory">추억저장
+								<ul class="gnb_sub">
+									<li><a href="memoryList">추억저장</a></li>
+								</ul>
+							</li>
+							<li class="sub Notice">공지사항
+								<ul class="gnb_sub">
+									<li><a href="MOpinionList">고객의 소리</a></li>
+									<li><a href="NoticeList">공지사항</a></li>
+								</ul>
+							</li>
+							<li class="sub Manager" id="manager">관리자
+								<ul class="gnb_sub">
+									<li><a href="#">공원댓글</a></li>
+									<li><a href="walkComm">산책로댓글</a></li>
+									<li><a href="AfterServiceList">수리문의</a></li>
+									<li><a href="#">회원관리</a></li>
+									<li><a href="memoryList">추억저장</a></li>
+									<li><a href="NoticeList">공지사항</a></li>
+									<li><a href="MOpinionList">고객의 소리함</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</nav>	
+			</div>
 </header>
 <main style="padding-bottom: 3%;">
 <div class="Cpage">

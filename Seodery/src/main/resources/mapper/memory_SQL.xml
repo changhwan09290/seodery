@@ -8,10 +8,14 @@
 	</select>
 		
 
-	<select id="getMOpinionList" parameterType="hashmap" resultType="hashmap">		
+	<select id="getmemoryList" parameterType="hashmap" resultType="hashmap">		
 		SELECT  TITLE, PLACE
-		FROM MS 
-		WHERE DELC =1 
+		FROM (SELECT  M.TITLE, PLACE, M.CON,
+				TO_CHAR(M.REGISTER_DT, 'YYYY-MM-DD') AS REGISTER_DT, P.PICT_NM,
+				ROW_NUMBER() OVER(ORDER BY M.MY_NUM DESC) AS RNUM
+		FROM MS M INNER JOIN MP P 
+                  ON M.MY_NUM = P.MY_NUM
+		WHERE M.DELC = 1
 		) MS
 		WHERE RNUM BETWEEN #{startCnt} AND #{endCnt}
 	</select>
