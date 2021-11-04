@@ -187,10 +187,15 @@ public class BicycleController {
 	@RequestMapping(value="/ASDtl")
 	public ModelAndView ASDtl(
 			@RequestParam HashMap<String, String> params, ModelAndView mav) throws Throwable{
-		HashMap<String, String> data = iBicycleService.getASDtl(params);
 		
-		mav.addObject("data", data);
-		mav.setViewName("bicycle/ASDtl");
+		if(params.get("qs_num") != null) {
+			HashMap<String, String> data = iBicycleService.getASDtl(params);
+			//System.out.println(params);
+			mav.addObject("data", data);
+			mav.setViewName("bicycle/ASDtl");
+		
+		} else { mav.setViewName("redirect:AfterServiceList"); }
+			 
 		
 		return mav;
 	}
@@ -199,7 +204,7 @@ public class BicycleController {
 	public ModelAndView ASUpdate(
 			@RequestParam HashMap<String, String> params, ModelAndView mav) throws Throwable{
 
-		if(params.get("qnum") != null) {
+		if(params.get("qs_num") != null) {
 			HashMap<String, String> data = iBicycleService.getASDtl(params);
 
 			mav.addObject("data", data);
@@ -235,7 +240,7 @@ public class BicycleController {
 		return mapper.writeValueAsString(modelMap);
 	}
 	
-	@RequestMapping(value = "/ASDelete", method = RequestMethod.POST,
+	@RequestMapping(value = "/ASDeleteAjax", method = RequestMethod.POST,
 			produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String ASDelete(@RequestParam HashMap<String, String> params) throws Throwable {
