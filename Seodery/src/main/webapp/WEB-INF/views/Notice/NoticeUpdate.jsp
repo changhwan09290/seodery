@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <style type="text/css">
  /* 웹 폰트 적용 */
  @font-face {
@@ -29,7 +31,6 @@
        header { /*헤더 %로 단위변경*/
             width: 100%;
             height: 155px;
-            position : relative;
             background-image :url("resources/images/park/logo.png");
             background-size: 320px 164px;
             background-repeat : no-repeat;
@@ -46,43 +47,40 @@
         }
         
 /* 로그인 버튼 */
-#LoginBtn,#LogoutBtn {
+#LoginBtn, #LogoutBtn {
 	z-index: 9999;
-   border : none;
-   border-radius: 5px;
-   background-color:rgb(3, 104, 115);
-   font-size: 1.1rem;
-   color : white;
-   font-family: '고딕';
-   cursor: pointer;
-   padding: 4px 17px 4px 17px;
-   box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
-   /* position: fixed;
-   right: 90px;
-   top: 100px; */
-} 
- 
+	border : none;
+	border-radius: 5px;
+	background-color:rgb(3, 104, 115);
+	font-size: 1.1rem;
+	color : white;
+	font-family: '고딕';
+	cursor: pointer;
+	padding: 4px 17px 4px 17px;
+	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
+}
 
 /* 로그인버튼, 유저 로그인정보 div */
- .logo{
-	white-space : nowrap;
- 	display : flex;
- 	position : absolute;
-	right: 3%;
+.logout {
+	white-space: nowrap;
+	display: flex;
+	position: absolute;
+	right: 8%;
 	top: 93px;
 	align-items: flex-end;
-} 
+}
 
 /* 마이페이지 연필 이미지 */
-.pencil{
+.pencil {
 	width: 30px;
 	height: 30px;
 	background-image: url("resources/images/park/pencil.png");
 	background-repeat: no-repeat;
 	margin-right: 9px;
-	margin-left : 7px;
+	margin-left: 7px;
 	background-size: contain;
 }
+
 
 /* 네비게이션바 전체 */
 .navi{
@@ -187,7 +185,7 @@
 }
 
 .navcon{
-	padding-top: 36px; 
+	padding-top: 193px; 
 	position: absolute; 
 	left:20px; 
 	right:20px;
@@ -215,39 +213,10 @@ main > .Cpage {
 	font-weight: 900;
 }
 
-/* 상세보기 버튼 */
-#DtlBtn {
-	/* border : none; */
-	border-radius: 5px;
-	background-color:rgb(3, 104, 115);
-	font-size: 1.1rem;
-	color : white;
-	font-family: '고딕';
-	cursor: pointer;
-	padding: 4px 17px 4px 17px;
-	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
-}
-
-
-
-/* 표 */
-#table {
-	/* width: 85%;
-	height : 50%; */
-	border-collapse: collapse;
-	margin-left: auto;
-	margin-right: auto;
-	font-family: '고딕';
-	font-size: 1.1rem;
-}
 
 
 main > table > tr,td {
-	border-top: 1px solid black;
-}
-
-th {
-	padding: 5px;
+	border: 1px solid black;
 }
 
 
@@ -262,7 +231,7 @@ th {
 footer { 
 	width: 85%;
 	height: 110px;
-	position: relative;				
+	position: fixed;				
 	bottom : 0px; 
 	/* position: relative;				
 	top:580px;
@@ -285,175 +254,138 @@ footer > .foot > nav > a{
 	color: black;
 }
 
-.paging_wrap{
-	margin-top : 5%;;
-	margin-left: 40%;
-}
+
 
 </style>
 <script type="text/javascript"
 		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
+<script type="text/javascript"
+ 		src="resources/script/jquery/jquery.form.js"></script>
+<script type="text/javascript"
+ 		src="resources/script/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
- $(document).ready(function(){
-	/* if("${param.searchGbn}"!=""){
-		$("#searchGbn").val("${param.searchGbn}");
-	} */
-	reloadList();
-	 //글작성
-	/* $("#addBtn").on("click",function(){
-		$("#searchTxt").val($("#oldTxt").val());	//취소했을시 검색어유지
+$(document).ready(function(){
+	CKEDITOR.replace("con", {
+		resize_enabled : false,
+		language : "ko",
+		enterMode : "2"
+	});
+	//취소버튼
+	$("#cancelBtn").on("click", function(){
+		$("#backForm").submit();
+	});
+	
+	//엔터키 폼실행 막기
+	$("#updateForm").on("keypress", "input" , function(event){
+		if(event.keyCode == 13) {//엔터키가 눌러졌을때
+			return false;	//form실행 이벤트를 하지않음 필수
+		}
+	});
 		
-		$("#actionForm").attr("action","testABAdd");
-		$("#actionForm").submit();
-	}); */
+	//첨부파일 버튼
+	$("#fileBtn").on("click", function(){
+		$("#att").click();
+	});
+	
+	//첨부파일 선택 시
+	$("#att").on("change", function(){
+		$("#fileName").html($(this).val().substring($(this).val().lastIndexOf("\\") + 1));
+	});
+	
+	//첨부파일 삭제 버튼
+	$("#fileDelBtn").on("click", function(){
+		$("#fileName").html("");//사용자에게 보여지는 파일명
+		$("#atach").val("");//DB에 올라갈 파일명
+		$("#fileBtn").attr("class", "");//첨부파일 선택 버튼 보이기
+		$(this).remove(); //첨부파일 삭제버튼 제거
+	});	
+	
+	//수정 버튼
+	$("#updateBtn").on("click", function() {
+		//ck에디터 중에 con과 관련된 객체에서 데이터를 취득하여textarea인 con에 값을 넣는다
+		$("#con").val(CKEDITOR.instances['con'].getData());		
 
-	//로그인 
-	   $("#LoginBtn").on("click",function(){
+	if(checkVal("#title")) {
+			alert("제목을 입력해 주세요.");
+			$("#title").focus();
+		}else if(checkVal("#con")) {
+			alert("내용을 입력해 주세요.");
+		}else{	
+			var fileForm = $("#fileForm");
 			
-		 location.href = "login";
-		});  
-
-	 
-	//로그아웃 
-	 $("#LogoutBtn").on("click",function(){
-		location.href = "logout";
-	}); 
-	
-	//검색
-	/* $("#searchBtn").on("click",function(){
-		$("#oldTxt").val($("#searchTxt").val());
-		$("#page").val("1");
-		
-		reloadList();
-	}); */
-	
-	//페이징
-	 $(".paging_wrap").on("click","span",function(){
-		 $("#page").val($(this).attr("page"));
-		 /* $("#searchTxt").val($("#oldTxt").val());  */
-		
-		reloadList();
-	}); 
-	
-	//상세보기 버튼을 클릭했을 때 이벤트 
-	 $("tbody").on("click", "input", function(){
-		console.log("no >>" + $(this).parents('tr').find('td[name="pIdx"]').text());
-		console.log("name>>" + $(this).parents('tr').find('td[name="pname"]').text());
-		console.log("addr>>" + $(this).parents('tr').find('td[name="paddr"]').text());
-		console.log("phon>>" + $(this).parents('tr').find('td[name="pphon"]').text());
-		//$("#no").attr($(this).parents('tr').find('td[name="pIdx"]').text()); 
-		
-		$("#no").val($(this).parents('tr').find('td[name="pIdx"]').text());
-		$("#name").val($(this).parents('tr').find('td[name="pname"]').text());
-		$("#addr").val($(this).parents('tr').find('td[name="paddr"]').text());
-		$("#phon").val($(this).parents('tr').find('td[name="pphon"]').text());
-		
-		$("#actionForm").attr("action","parkDtl");
-		$("#actionForm").submit();
-	});  
-	
-	
-	
+			fileForm.ajaxForm({
+				success : function(res) {
+					if(res.result == "SUCCESS") {
+					//업로드 파일명 적용
+						if(res.fileName.length > 0) {//업로드한 파일이 있는 경우
+							$("#atach").val(res.fileName[0]);
+						}
+					
+						//글 수정
+						var params = $("#updateForm").serialize();
+						
+						$.ajax({
+							url: "NoticeUpdates",
+							type: "post",
+							dataType: "json",
+							data: params,
+							success: function(res){
+								if(res.result == "success") {
+									$("#backForm").submit();
+								}else if(res.result == "failed") {
+									alert("수정에 실패하였습니다.");
+								} else {
+									alert("수정중 문제가 발생하였습니다.");
+								}
+							},
+							error: function(request, status, error) {
+								console.log(error);
+							}
+						});
+					} else {
+						alert("파일 업로드에 실패하였습니다.");
+					}
+				},
+				error : function(req, status, error) {
+					console.log(error);
+					alert("파일 업로드중에 문제가 발생하였습니다.");
+				}
+			});
+			
+			fileForm.submit();
+		}
+	});
 });
 
-//데이터 취득
- function reloadList(){
-	var params = $("#actionForm").serialize();
- 	$.ajax({	//jquery의 ajax함수 호출  
-//  		url: "http://data.seoul.go.kr/dataList/OA-394/S/1/datasetView.do?"
-// 					+"KEY=58446e7a71616b643239487a427157&TYPE=json&SERVICE=SearchParkInfoService&START_INDEX=1&END_INDEX=10", //접속 주소
-		url : "apitest", 
-		type: "get",	//전송 방식
- 		dataType:"json",	//받아올 데이터 형태 
- 		async: false,
- 		data: params,
-//  		data : sendData,	//보낼 데이터(문자열 형태)
- 		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
- 			console.log(res);
- 			makeTable(JSON.parse(res.resData));
- 			console.log(makeTable(JSON.parse(res.resData)));
- 			//drawList(res.list);
- 			drawPaging(res.pb);
- 		},
- 		error: function(request, status, error){	//실패 시 다음 함수 실행 
- 			console.log(request);
- 			console.log(error);
- 		}
- 	});
- }
-
-
-//목록 그리기 
-  function makeTable(jsonData) {
-      var rows = jsonData.SearchParkInfoService.row;
-      $data = "";
-      
-      for (var idx in rows) {
-         $data += '<tr><td name="pIdx">'+ rows[idx].P_IDX + '</td><td name="pname">' + rows[idx].P_PARK + '</td><td name="paddr">'+ rows[idx].P_ADDR 
-         		+ '</td><td name="pphon">'+ rows[idx].P_ADMINTEL + '</td><td>' + '<input type="button" value="상세보기" id="DtlBtn" mo="${sMNo}">' + '</td></tr>';
-      }
-      
-      $("#table").html($data);
-   }
- 
- 
- /* 페이징 */
- function drawPaging(pb){
-	console.log("pb", pb);
-	 
-	var html ="";
-	
-	html += "<span page=\"1\">처음</span>      " ;
-	
-	//현재페이지가 1인지 확인
-	if($("#page").val()=="1"){
-		html +=  "<span page=\"1\">이전</span>";
-	}else{
-		html += "<span page=\""+($("#page").val()*1-1)+"\">이전</span>";
+function checkVal(sel) {
+	if($.trim($(sel).val()) == "") {
+		return true;
+	} else {
+		return false;
 	}
-	
-	
-	for(var i = pb.startPcount; i<= pb.endPcount ; i++){
-		if($("#page").val()==i){
-			html += "<span page=\""+ i + "\"><b>"+i+"</b></span>";
-		}else{
-			html += "<span page=\""+ i + "\">"+ i + "</span>";
-		}
-	}
-	
-	if($("#page").val()== pb.maxPcount){
-		html += "<span page=\""+pb.maxPcount +"\">다음</span>      ";
-	}else {
-		html += "<span page=\""+ ($("#page").val()*1 +1) +"\">다음</span>      ";
-	}
-	
-	html += "<span page=\""+pb.maxPcount +"\">마지막</span>      ";
-	
-	$(".paging_wrap").html(html);
 }
 </script>
 </head>
 <body>
 
- <div id="wrapper">
+<div id="wrapper">
         <header id="header">
-		<div class="logo">
-						<div class="pencil"></div>
+			<div id="logo">
+				<form action="#" method="post" >
+					<div class="logout">
 						<c:choose>
 							<c:when test="${empty sMNo}">
-								<div class="login">
-									<input type="button" value="로그인" id="LoginBtn"/>
-								</div>
+								<input type="button" value="로그인" id="LoginBtn"/>
 							</c:when>
-						<c:otherwise>
-							<div class="logout">
+							<c:otherwise>
 								${sMNm}님 환영합니다.
-								<input type="button" value="로그아웃" id="LogoutBtn"/>
-							</div>
-						</c:otherwise>
+								<div class="pencil"></div>
+								<input type="button" value="로그아웃" id="LogoutBtn" />
+							</c:otherwise>
 						</c:choose>
-			</div>
-	</header>
+					</div>
+				</form>
+			</div> 
 			
 			<div class="navcon">
 				<nav id="nav">
@@ -467,8 +399,8 @@ footer > .foot > nav > a{
 							</div>
 							<li class="sub Park">공원</a>	
 								<ul class="gnb_sub">
-									<li><a href="parkList">공원 찾기</a></li>
-									<li><a href="parkMap">길 찾기</a></li>
+									<li><a href="#">공원 찾기</a></li>
+									<li><a href="#">길 찾기</a></li>
 								</ul>
 							</li>
 							<li class="sub WalkT">산책로</a>
@@ -485,7 +417,7 @@ footer > .foot > nav > a{
 							</li>
 							<li class="sub FDust">미세먼지</a>
 								<ul class="gnb_sub">
-									<li><a href="dust">미세먼지 현황</a></li>
+									<li><a href="#">미세먼지 현황</a></li>
 								</ul>
 							</li>
 							<li class="sub Memory">추억저장</a>
@@ -514,48 +446,51 @@ footer > .foot > nav > a{
 					</div>
 				</nav>	
 			</div>
+	</header>
 		
 	<main>
-      	<div class="Cpage"><h4>공원 > 공원찾기</h4></div>
-      	<div>
-	<form action="#" id="actionForm" method="get">
-		<select name="searchGbn" id="searchGbn">
-			<option value="0">지역</option>
-		</select>
-		<input type="text" name="searchTxt" id="searchTxt" value="${param.searchTxt}"/>
-		<input type="hidden" name="oldTxt" value="${param.searchTxt}"/>
-		<input type="hidden" name="page" id="page" value="${page}"/>
-		<input type="hidden" name="no" id="no"/>
-		<input type="hidden" name="mo" id="mo"/>
-		<input type="hidden" name="name" id="name"/>
-		<input type="hidden" name="addr" id="addr"/>
-		<input type="hidden" name="phon" id="phon"/>
-		<input type="button" value="검색" id="searchBtn"/>
-		<!-- 로그인한 상태라면 작성버튼 -->
-		<%-- <c:if test="${!empty sMNo}">
-			<input type="button" value="작성" id="addBtn"/>
-		</c:if> --%>
+	
+      		<div class="Cpage"><h4>공지사항 > 고객의 소리함 > 작성페이지</h4></div>
+      		<div class="title">
+      			<h1>고객의 소리함</h1>
+      		</div>
+      		
+			<form id="fileForm" action="fileUploadAjax" method="post" enctype="multipart/form-data">
+				<input type="file" name="att" id="att" />
+			</form>
+			<form action="MOpinion" id="backForm" method="post">
+				<input type="hidden" name="searchGbn" value="${param.searchGbn}" />
+				<input type="hidden" name="searchTxt" value="${param.searchTxt}" />
+				<input type="hidden" name="page" value="${param.page}" />
+				<input type="hidden" name="no" value="${param.no}" />					
+			</form>
+		<form action="#" id="updateForm" method="post">
+		<input type="hidden" name="no" value="${param.no}" />	
+	제목 <input type="text" id="title" name="title" value="${data.TITLE}" /><br>
+	작성자 : ${data.ID}<input type="hidden" name="id" value="${sMNo}" /><br>
+	<textarea rows="5" cols="5" id="con" name="con">${data.CON}</textarea>
+	첨부파일 :
+	<c:choose>
+		<c:when test="${!empty data.ATACH}">
+		<!-- 첨부파일이 있는경우 버튼을 숨긴다 -->
+			<input type="button" value="첨부파일선택" id="fileBtn" class="hide_btn" />
+		</c:when>
+		<c:otherwise>
+			<input type="button" value="첨부파일선택" id="fileBtn" />
+		</c:otherwise>
+	</c:choose>
+	<c:set var="len" value="${fn:length(data.ATACH)}"></c:set>
+	<span id="fileName">${fn:substring(data.ATACH, 20, len)}</span><!-- 현재 등록되어있는 파일명 -->
+	<c:if test="${!empty data.ATACH}">
+		<input type="button" value="첨부파일삭제" id="fileDelBtn" />
+	</c:if> 
+	<input type="hidden" name="atach" id="atach" value="${data.ATACH}" /><!-- DB저장용 -->	
 	</form>
-</div>
-<div align="center">
-            <table style="text-align:center;">
-            	<thead>
-			<tr>
-				<th>번호</th>
-				<th>공원이름</th>
-				<th>공원 주소</th>
-				<th>전화번호</th>
-				<th>상세보기</th>
-			</tr>
-		</thead>
-               <colgroup><col width="200"/><col width="200"/></colgroup>
-               <tbody id="table">
-               
-               </tbody>   
-            </table>
-</div>
+		<br>
+		<input type="button" value="수정" id="updateBtn" />
+		<input type="button" value="취소" id="cancelBtn" />
+				
 
-<div class="paging_wrap"></div>
     </main>
     
     

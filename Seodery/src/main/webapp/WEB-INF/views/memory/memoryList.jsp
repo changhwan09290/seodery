@@ -1,33 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>자전거 수리문의</title>
+<title>Insert title here</title>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <style type="text/css">
- 
-/* 웹 폰트 적용 */
-@font-face {
-	font-family: 'Cafe24Ssurround';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'twayair';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
+ /* 웹 폰트 적용 */
+ @font-face {
+    font-family: 'Cafe24Ssurround';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+} 
+   
+   @font-face {
+    font-family: 'twayair';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+} 
+    
 #wrapper { /*85%로 너비값*/
 	width: 85%;
 	margin: 0 auto;
@@ -101,119 +95,118 @@ header { /*헤더 %로 단위변경*/
 	font-size: 1.4rem;
 }
 /* 메뉴바 세로선 */
-.navi>li.sub {
-	text-align: center;
+.navi > li.sub{
+	text-align: center;	
 	border-top: 2px solid silver;
-	border-bottom: 2px solid rgb(150, 210, 90);
-} /* 텍스트 정렬 */
+	border-bottom: 2px solid rgb(150, 210, 90); 
+}		/* 텍스트 정렬 */ 	
+
 
 /* 관리자 메뉴 없애기 */
-.navi>#manager {
-	display: none;
+.navi > #manager{
+	display: none;	
 }
 
 /* 메뉴바에 커서 올렸을때 호버이벤트 */
-.navi>.Park:hover {
+.navi > .Park:hover{
 	background: rgb(150, 210, 90);
 	color: white;
 }
 
-.navi>.WalkT:hover {
+.navi > .WalkT:hover{
 	background: rgb(150, 210, 90);
 	color: white;
 }
 
-.navi>.Bike:hover {
+.navi > .Bike:hover{
+	background: rgb(150, 210, 90);
+	color: white;
+}
+.navi > .FDust:hover{
 	background: rgb(150, 210, 90);
 	color: white;
 }
 
-.navi>.FDust:hover {
+.navi > .Memory:hover{
+	background: rgb(150, 210, 90);
+	color: white;
+}
+.navi > .Notice:hover{
 	background: rgb(150, 210, 90);
 	color: white;
 }
 
-.navi>.Memory:hover {
-	background: rgb(150, 210, 90);
-	color: white;
-}
-
-.navi>.Notice:hover {
-	background: rgb(150, 210, 90);
-	color: white;
-}
 
 /* 하위메뉴 글씨 */
-.gnb_sub>li>a {
-	color: black;
+.gnb_sub > li> a{
+	color : black;
 	font-size: 0.9em;
 }
 
 /* 네비메뉴에 있는 a태그 */
-.navi a {
-	text-decoration: none;
+.navi a{
+	text-decoration:none; 
 }
 
 /* dv box */
-.dvbox {
+.dvbox{
 	border-top: 2px solid silver;
-	border-bottom: 2px solid rgb(150, 210, 90);
+	border-bottom: 2px solid rgb(150, 210, 90); 
 }
 
 /* 메뉴 모양 표시 */
 .dv {
-	width: 35px;
-	height: 5px;
-	background-color: rgb(121, 55, 55);
-	margin: 6px 0;
+  width: 35px;
+  height: 5px;
+  background-color: rgb(121,55,55);
+  margin: 6px 0;
 }
 
 /* 메뉴 글씨체 */
-.gnb>.navi>.sub {
+.gnb > .navi > .sub{
 	font-family: 'Cafe24Ssurround';
 }
 
 /* gnb(네비게이션바)의 하위메뉴 */
 .gnb_sub {
-	display: none;
+	 display: none; 
 	list-style-type: none;
 	padding-left: 0px;
 }
 
-.navcon {
-	padding-top: 193px;
-	position: absolute;
-	left: 20px;
-	right: 20px;
+.navcon{
+	padding-top: 193px; 
+	position: absolute; 
+	left:20px; 
+	right:20px;
 	margin-left: 12px;
 	margin-right: 12px;
 }
 /* 네비게이션바 */
-#nav {
+#nav{
 	margin-left: 5.6%;
-	margin-right: 5.3%;
+   	margin-right: 5.3%;
 }
 /* 공지사항,공원 best5 목록 글씨 */
-main .li {
+main .li{
 	font-size: 1.4rem;
-	font-family: 'twayair';
+	font-family:'twayair';
 }
 
 /* 현재페이지 나타내기 */
-main>.Cpage {
+main > .Cpage {
+	/* border: 1px solid black; */
 	width: 100%;
-	/* padding-top: 3%;
-	padding-left: 8%; */
 	margin-top: 5.5%;
-	margin-left:5.5%;
+	margin-left: 1.5%;
 	font-family: '고딕';
 	font-weight: 900;
 }
 
-main>table>tr, td {
-	border-bottom: 1px solid black;
-    border-right: 1px solid black;
+main > table > tr,td {
+	border: 1px solid black;
 }
+
 
 /* body 전체 */
 /* #wrap{
@@ -222,6 +215,46 @@ main>table>tr, td {
 	width: 86%;
 } */
 
+/* 표 */
+#table {
+	width: 85%;
+	height : 50%;
+	border-collapse: collapse;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: '고딕';
+	font-size: 1.1rem;
+}
+
+#table > th,td{
+	border : 1px solid black;
+	padding: 5px;
+	text-align: center;
+}
+
+th {
+	border : 1px solid black;
+	padding: 5px;
+	background-color: rgb(212,212,212);
+}
+td img {
+	width: 15px;
+}
+
+/* 페이징 div */
+.page{
+	display: flex;
+	justify-content: center;
+	margin-top: 25px;
+}
+
+.paging{
+	margin-right: 7px;
+}
+/* 1번째 페이지 */
+#one{
+	color: red;
+}
 /* footer */
 footer {
 	width: 85%;
@@ -235,181 +268,198 @@ footer {
 	margin: 0 auto;
 	border-top: 1px solid black;
 }
+/* footer div */
+.foot{
+	border-top: 1px solid black;
+	
+}
 
-footer>.foot>nav>a {
+footer > .foot > nav > a{
 	text-decoration: none;
 	color: black;
 }
 
-.title {
-	padding-left: 10%;
+.cont{
+  width:720px;
+}
+.container{
+  display:flex;
+  flex-wrap:wrap;
+  width:720px;
+  justify-content:flex-start;
+  text-align: center;
+  top: 45%;
+  left: 50%;
+  transform:translate(-50%, -30%); 
+  position: absolute;
+}
+.single-item{
+  width:200px;
+  height:200px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background-color:#f3f3f3;
+  margin: 20px;
+  border-radius: 10px;
+  color:#888;
+}
+.topbox {
+	display: flex;
+	height: 50px;
+	margin-bottom: 10px; 
+	margin-left: 10px;
 }
 
-#actionForm {
-	float: right;
-	padding-right: 10%;
+
+#addBtn{
+	border : none;
+	border-radius: 5px;
+	width: 55px;
+	height: 28px;
+	background-color: rgb(3, 104, 115);
+	color: white;
+	font-family: '고딕';	
+	cursor: pointer;
+	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
+	white-space : nowrap;
+	position: absolute;
+	right: 14%;
+	top: 255px;
 }
 
-.tabled {
-	padding-top: 30px;
-	padding-bottom: 30px;
-}
-
-.table {
-	border-collapse: separate;
-	border-spacing: 0;
-	text-align: center;
-	line-height: 1.2;
-	border-top: 1.5px solid #000;
-    border-left: 1.5px solid #000;
-    border-right: 0.5px solid #000;
-    border-bottom: 0.5px solid #000;
-	width: 80%;
-}
-
-.table > thead {
-	padding: 10px;
-	font-weight: bold;
-	text-align: center;
-	background: #eee;
-}
-
-.table > thead > tr > th {
-	padding: 10px;
-	border-right: 1px solid #000;
-	border-bottom: 1px solid #000;
-}
-
-#PagingWrap {
-	text-align: center;
-	margin: 10px;
-}
-
-/* #PagingWrap > span {
-	text-align: center;
-	border: 1px solid;
-	padding: 5px;
-} */
 
 </style>
-
 <script type="text/javascript"
 		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-	//페이징 처리
-	$("#PagingWrap").on("click", "span", function() {
-		$("#page").val($(this).attr("page"));		
-		reloadList();
-	});
+ $(document).ready(function(){
+	 
+	reloadList();
 	
-	//작성 버튼
-	$("#addBtn").on("click", function() {
-		$("#actionForm").attr("action", "ASAdd");
+	//글작성
+	 $("#addBtn").on("click",function(){
+		//취소했을시 검색어유지
+		
+		$("#actionForm").attr("action","memoryAdd");
 		$("#actionForm").submit();
-	});
+	}); 
 	
-	//상세보기로 이동(제목 누르면)
-	$("tbody").on("click", "tr", function() {
-		$("#title").val($(this).attr("title"));
+		//로그인
+		$("#LoginBtn").on("click", function() {
+			location.href = "login";
+		});
+		
+		//로그아웃
+		$("#LogoutBtn").on("click", function() {
+			location.href = "logout";
+		});
+	
+	
+	//페이징
+	 $(".paging_wrap").on("click","span",function(){
+		$("#page").val($(this).attr("page"));
 		$("#searchTxt").val($("#oldTxt").val());
-		$("#actionForm").attr("action", "ASDtl");
+		
+		reloadList();
+	}); 
+	
+	//tr을 클릭했을 때 이벤트 
+	 $("tbody").on("click", "tr", function(){
+		$("#no").val($(this).attr("no"));
+		
+		$("#actionForm").attr("action","memory");
 		$("#actionForm").submit();
-	});
-	
-	//로그인
-	$("#LoginBtn").on("click", function() {
-		location.href = "login";
-	});
-	
-	//로그아웃
-	$("#LogoutBtn").on("click", function() {
-		location.href = "logout";
-	});
-
-	 reloadList();
+	});  
+	 
 });
-function reloadList() {
-	var params = $("#actionForm").serialize();
-	$.ajax({
-		url: "AfterServiceListAjax",
-		type: "post",
-		dataType: "json",
-		data: params,
-		success: function(res) {
 
-			console.log(res);
-			drawList(res.list);
-			drawPaging(res.pb);
+
+
+//데이터 취득
+function reloadList() {
+	var params = $("#actionForm").serialize();//form의 데이터를 문자열로 변환
+	
+	$.ajax({ //jquery의 ajax함수 호츨
+		url: "memoryLists", //접속 주소
+		type: "post", //전송 방식
+		dataType: "json",//받오올 데이터 형태
+		data: params, //보낼 데이터(문자열 형태)
+		success: function(res) { //성공(ajax통신 성공) 시 다음 함수 실행
+			 drawList(res.list);
+			 drawPaging(res.pb);
 		},
-		error: function(request, status, error) {
-			console.log(error);
+		error: function(request, status, error) {//실패 시 다음 함수 실행
+			console.log(request);	
+			console.log(error);	
 		}
 	});
 }
+
+//목록 그리기 
 
 function drawList(list) {
-	var html = "";
+	var html ="";
 	
 	for(var data of list) {
-		html += "<tr title=\"" + data.TITLE + "\"> ";
-		html += "<td>" + data.QS_NUM + "</td>		";
-		html += "<td>";		
+		html += "<tr no=\"" +  data.MY_NUM + "\">       " ;
+		html += "<td>";
 		html += data.TITLE;
+
+		
 		if(data.ATACH != null) {
-	    	html += "<img src=\"resources/images/bicycle/attach_icon.png\" />";
-	    }
-	    html += "</td>";
-		html += "<td>" + data.ID + "</td>		";
-		html += "<td>" + data.WRDATE + "</td>		";
-		html += "<td>" + data.AWER + "</td>	";
-		/* if 관리자가 답을 달면 처리완료, 안달면 null? */
-		html += "</tr>						";
-	}
+			html += "<img src=\"resources/images/attFile.png\" />";	
+		} 
+		
+		html += "</td>";
+		html += "<td>" + data.PLACE + "</td>       " ;
+		html += "</tr>              " ;
+	}   
 	
 	$("tbody").html(html);
-}
+}	
 
-function drawPaging(pb) {
+
+
+ /* 페이징 */
+ function drawPaging(pb){
+	console.log("pb", pb);
+	 
 	var html ="";
-		
-		if($("#page").val() == "1") {
-			html += "<span page=\"1\">이전</span>    ";
-		} else {
-			html += "<span page=\"" +($("#page").val() * 1 - 1) + "\">이전</span>    ";
+	
+	html += "<span page=\"1\">처음</span>      " ;
+	
+	//현재페이지가 1인지 확인
+	if($("#page").val()=="1"){
+		html +=  "<span page=\"1\">이전</span>";
+	}else{
+		html += "<span page=\""+($("#page").val()*1-1)+"\">이전</span>";
+	}
+	
+	
+	for(var i = pb.startPcount; i<= pb.endPcount ; i++){
+		if($("#page").val()==i){
+			html += "<span page=\""+ i + "\"><b>"+i+"</b></span>";
+		}else{
+			html += "<span page=\""+ i + "\">"+ i + "</span>";
 		}
-		
-		for(var i = pb.startPcount; i <= pb.endPcount; i++) {
-			if($("#page").val() == i) {
-				html += "<span page=\"" + i + "\"><b>" + i + "</b></span>    ";
-			} else {
-				html += "<span page=\"" + i + "\">" + i + "</span>    ";
-			}
-		}
-		
-		if($("#page").val() == pb.maxPcount) {
-			html += "<span page=\"" + pb.maxPcount + "\">다음</span>    ";
-		} else {
-			html += "<span page=\"" +($("#page").val() * 1 + 1) + "\">다음</span>    ";
-		}
-
-		$("#PagingWrap").html(html);
+	}
+	
+	if($("#page").val()== pb.maxPcount){
+		html += "<span page=\""+pb.maxPcount +"\">다음</span>      ";
+	}else {
+		html += "<span page=\""+ ($("#page").val()*1 +1) +"\">다음</span>      ";
+	}
+	
+	html += "<span page=\""+pb.maxPcount +"\">마지막</span>      ";
+	
+	$(".paging_wrap").html(html);
 }
+
 </script>
 </head>
 <body>
-<%-- <div>
-	<c:choose>
-		<c:when test="${empty sMNo}">
-			<input type="button" value="로그인" id="LoginBtn" />
-		</c:when>
-		<c:otherwise>
-			${sMNm}님 어서오세요.<input type="button" value="로그아웃" id="LogoutBtn" />
-		</c:otherwise>
-	</c:choose>
-</div> --%>
 
-<!-- 기본테마 -->
 <div id="wrapper">
         <header id="header">
 			<div id="logo">
@@ -439,41 +489,41 @@ function drawPaging(pb) {
 								<div class="dv"></div>
 								<div class="dv"></div>
 							</div>
-							<li class="sub Park">공원
+							<li class="sub Park">공원</a>	
 								<ul class="gnb_sub">
-									<li><a href="parkList">공원 찾기</a></li>
-									<li><a href="parkMap">길 찾기</a></li>
+									<li><a href="#">공원 찾기</a></li>
+									<li><a href="#">길 찾기</a></li>
 								</ul>
 							</li>
-							<li class="sub WalkT">산책로
+							<li class="sub WalkT">산책로</a>
 								<ul class="gnb_sub">
-									<li><a href="walkList">산책로 찾기</a></li>
+									<li><a href="#">산책로 찾기</a></li>
 								</ul>
 							</li>
-							<li class="sub Bike">자전거
+							<li class="sub Bike">자전거</a>
 								<ul class="gnb_sub">
-									<li><a href="RentalShop">실시간 대여정보</a></li>
-									<li><a href="use_info">자전거 이용안내</a></li>
-									<li><a href="AfterServiceList">자전거 수리문의</a></li>
+									<li><a href="#">실시간 대여정보</a></li>
+									<li><a href="#">자전거 이용안내</a></li>
+									<li><a href="#">자전거 수리문의</a></li>
 								</ul>
 							</li>
-							<li class="sub FDust">미세먼지
+							<li class="sub FDust">미세먼지</a>
 								<ul class="gnb_sub">
-									<li><a href="dust">미세먼지 현황</a></li>
+									<li><a href="#">미세먼지 현황</a></li>
 								</ul>
 							</li>
-							<li class="sub Memory">추억저장
+							<li class="sub Memory">추억저장</a>
 								<ul class="gnb_sub">
 									<li><a href="#">추억저장</a></li>
 								</ul>
 							</li>
-							<li class="sub Notice">공지사항
+							<li class="sub Notice">공지사항</a>
 								<ul class="gnb_sub">
 									<li><a href="#">고객의 소리</a></li>
 									<li><a href="#">공지사항</a></li>
 								</ul>
 							</li>
-							<li class="sub Manager" id="manager">관리자
+							<li class="sub Manager" id="manager">관리자</a>
 								<ul class="gnb_sub">
 									<li><a href="#">공원댓글</a></li>
 									<li><a href="#">산책로댓글</a></li>
@@ -489,42 +539,34 @@ function drawPaging(pb) {
 				</nav>	
 			</div>
 	</header>
+		
+	<main>
+      		<div class="Cpage"><h4>추억저장</h4></div>
+      		<form action="#" id="actionForm" method="post">
+	      	<div class="topbox">
+	      		<div class="menuBox"><h2>추억저장</h2></div>
+				<input type="hidden"  name="page" id="page" value="${page}" />
+				<input type="hidden" name="no" id="no" />
+				<input type="button" value="작성" id="addBtn"/>
+	      	</div>
+	      	</form>
+	      	<table id="table">
+	      		<thead>
+	      			<tr>
+		      			<th>제목</th>
+		      			<th>장소</th>
+	      			</tr>	      			
+	      		</thead>
+	      		<tbody></tbody>	
+	      	</table><br>
+	      	
+		      		
 
-<main>
-		<div class="Cpage">
-			<h4>자전거 > 자전거 수리문의</h4>
-		</div>
-		<div class="title">
-	<h1>자전거 수리문의</h1>
-</div>
-<form action="#" id="actionForm" method="post">
-	<input type="hidden" name="page" id="page" value="${page}" />
-	<input type="hidden" name="title" id="title" />
-	<input type="button" value="작성" id="addBtn" />
-</form>
-<div class="tabled" align="center">
-<table class="table">
-	<colgroup>
-	<col width="10%" />
-	<col width="40%" />
-	<col width="10%" />
-	<col width="20%" />
-	<col width="20%" />
-	<thead>
-		<tr>
-			<th>번호</th>
-			<th>제목</th>
-			<th>아이디</th>
-			<th>작성일</th>
-			<th>처리상태</th>
-		</tr>
-	</thead>
-	<tbody class="tbody"></tbody>
-</table>
-</div>
-<div id="PagingWrap"></div>
-</main>
-<footer>
+<div class="paging_wrap" align="center"></div>
+    </main>
+    
+    
+    <footer>
        <div class="foot">
 			<nav>
 			<br/>
@@ -539,7 +581,10 @@ function drawPaging(pb) {
 				</p>
 		</div>
     </footer>
-</div> 
+    </div>
+    
+    
+    
     <script>
 	/* 네비게이션 바 마우스 포커스 이벤트 */
 	$(function(){
@@ -577,5 +622,6 @@ function drawPaging(pb) {
 	} 
 	
 </script>
+    
 </body>
 </html>

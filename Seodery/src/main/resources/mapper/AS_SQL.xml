@@ -4,17 +4,17 @@
 	<select id="getASCnt" parameterType="hashmap" resultType="integer">
 		SELECT COUNT(*) AS CNT
 		FROM (
-			SELECT B.QS_NUM, B.TITLE, U.ID, B.WRDATE, B.AWER
+			SELECT B.QS_NUM, B.MBER_NUM, B.TITLE, U.ID, B.WRDATE, B.AWER
 			FROM BAS B INNER JOIN UR U
 							ON B.MBER_NUM = U.MBER_NUM
 			) 
-		WHERE DELC = 1
+		WHERE 1 = 1
 	</select>
 	
 	<select id="getASList" parameterType="hashmap" resultType="hashmap">
-		SELECT B.QS_NUM, B.TITLE, B.ID, B.WRDATE, B.AWER
+		SELECT B.QS_NUM, B.MBER_NUM, B.TITLE, B.ID, B.WRDATE, B.AWER
    		FROM (
-            SELECT B.QS_NUM, B.TITLE, U.ID, TO_CHAR(B.WRDATE, 'YYYY-MM-DD') AS WRDATE, B.AWER,
+            SELECT B.QS_NUM, U.MBER_NUM, B.TITLE, U.ID, TO_CHAR(B.WRDATE, 'YYYY-MM-DD') AS WRDATE, B.AWER,
                 ROW_NUMBER() OVER(ORDER BY B.QS_NUM DESC) AS RNUM
             FROM BAS B INNER JOIN UR U
                         ON B.MBER_NUM = U.MBER_NUM
@@ -29,11 +29,11 @@
 	</insert>
 	
 	<select id="getASDtl" parameterType="hashmap" resultType="hashmap">
-		SELECT B.TITLE, B.BK_SERIAL_NUM, B.RENTSH_LOC, U.ID, B.CON, B.ATACH
+		SELECT B.TITLE, B.MBER_NUM, B.BK_SERIAL_NUM, B.RENTSH_LOC, U.ID, B.CON, B.ATACH
 		FROM BAS B INNER JOIN UR U
                         ON B.MBER_NUM = U.MBER_NUM
 		WHERE 1 = 1
-		AND B.QS_NUM = #{qnum}
+		AND B.MBER_NUM = #{m_num}
 	</select>
 		
 	<update id="getASUpdate" parameterType="hashmap">

@@ -21,6 +21,7 @@ public class ParkDao implements IParkDao{
 
 	@Override
 	public int addP(HashMap<String, String> params) throws Throwable {
+		System.out.println("add P params>>>>>> " + params);
 		return sqlSession.insert("park.addP",params);
 	}
 
@@ -43,8 +44,17 @@ public class ParkDao implements IParkDao{
 
 	@Override
 	public int addPK(HashMap<String, String> params) throws Throwable {
-		System.out.println("params >>>>>>>>>>>>" + params);
 		return sqlSession.insert("park.addPK", params);
+	}
+
+	@Override
+	public int updatePCON(HashMap<String, String> params) throws Throwable {
+		return sqlSession.update("park.updatePCON", params);
+	}
+
+	@Override
+	public int deletePCON(HashMap<String, String> params) throws Throwable {
+		return sqlSession.update("park.deletePCON", params);
 	}
 
 }

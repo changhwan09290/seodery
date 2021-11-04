@@ -109,7 +109,6 @@ public class ParkController {
 //		  		System.out.println(">>>" + vStringBuilder.toString());
 				vStringLine = vStringBuilder.toString();
 				modelMap.put("resData", vStringLine);
-
 			} else {
 				System.out.println("요청실패");
 //	  			System.out.println(">>>" + vHttpURLConnection.getResponseCode());
@@ -117,6 +116,7 @@ public class ParkController {
 //		  		System.out.println(">>>" + vStringBuilder.toString());
 				vStringLine = vStringBuilder.toString();
 			}
+			vHttpURLConnection.disconnect();
 
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -181,7 +181,7 @@ public class ParkController {
 //		  		System.out.println(">>>" + vStringBuilder.toString());
 				vStringLine = vStringBuilder.toString();
 			}
-
+			vHttpURLConnection.disconnect();
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -200,20 +200,20 @@ public class ParkController {
 		if (params.get("page") != null) { // 넘어오는 현재 p데이터가 존재 시 page =
 			page = Integer.parseInt(params.get("page"));
 		}
-		//글 개수
 		
-		//int cnt = iParkService.getPDCnt(params); 
-		//PagingBean pb = iPagingService.getPagingBean(page, cnt, 10,5);
+		//글 개수
+		int cnt = iParkService.getPDCnt(params); 
+		PagingBean pb = iPagingService.getPagingBean(page, cnt, 10,5);
 		
 		
 	// 조회 시작 및 종료번호 할당
-		 //params.put("startCnt",Integer.toString(pb.getStartCount()));
-		// params.put("endCnt",Integer.toString(pb.getEndCount()));
+		 params.put("startCnt",Integer.toString(pb.getStartCount()));
+		 params.put("endCnt",Integer.toString(pb.getEndCount()));
 		
-		// List<HashMap<String, String>> list = iParkService.getPDList(params);
-		 //System.out.println("list >>>>>>>> " + list);
+		 List<HashMap<String, String>> list = iParkService.getPDList(params);
+		 System.out.println("list >>>>>>>> " + list);
 		
-		HashMap<String, String> data = new HashMap<String, String>();
+		//HashMap<String, String> data = new HashMap<String, String>();
 		
 		 //상세보기 목록 번호 받아오기
 			/*
@@ -225,11 +225,9 @@ public class ParkController {
 		String addr = request.getParameter("addr");
 		String phon = request.getParameter("phon");
 		mav.addObject("page",page); 
-		/*
-		 * mav.addObject("pb",pb); mav.addObject("list",list);
-		 */
+		mav.addObject("pb",pb); 
+		mav.addObject("list", list);
 		
-		 
 		//list.add(data);
 
 		
@@ -247,7 +245,7 @@ public class ParkController {
 	
 	
 	@RequestMapping(value="/parkadd")
-	public ModelAndView testOadd(
+	public ModelAndView parkadd(
 			@RequestParam HashMap<String, String> params,HttpServletRequest request,
 			ModelAndView mav) throws Throwable {
 		
@@ -261,49 +259,92 @@ public class ParkController {
 		System.out.println("isExists >>>>>"+ isExists);
 		if(isExists == null || isExists.equals("N")) { // 'N'
 			// insert(PK)
-			int addPK = iParkService.addPK(params);	//공원번호,이름,주소,번호 추가하기
+			int addPK = iParkService.addPK(params);	//공원번호
 		} else if(isExists.equals("Y")){ // 'Y'
 			int update = iParkService.updateP(params);
 		}
-		int add = iParkService.addP(params);
+		int cnt = iParkService.addP(params);
 		// comment save
 		
-		
-//		int cnt = iParkService.addP(params);
-//		
-//		if(cnt > 0) { //추가 성공했을 경우 
-//			mav.setViewName("redirect:parkDtl"); 	//상세보기로 이동 
-//		}else {
-//			mav.addObject("msg","작성에 실패하였습니다.");
-//			mav.setViewName("park/failedAction");		//저장에 실패하면 이 페이지로 이동 
-//		}
+		if(cnt > 0) { //추가 성공했을 경우 
+			mav.setViewName("redirect:parkDtl"); 	//상세보기로 이동 
+		}else {
+			mav.addObject("msg","작성에 실패하였습니다.");
+			mav.setViewName("park/failedAction");		//저장에 실패하면 이 페이지로 이동 
+		}
 		return mav;
 	}
 	
 	
-	/*
-	 * @RequestMapping(value ="/testO") public ModelAndView testO(@RequestParam
-	 * HashMap<String, String> params, ModelAndView mav) throws Throwable{
-	 * 
-	 * List<HashMap<String, String>> list = iTestOService.getO1List(params);
-	 * System.out.println("list >>>>>>>> " + list);
-	 * 
-	 * // HashMap<String, String> data = new HashMap<String, String>();
-	 * 
-	 * 
-	 * data.put("O_NO","1"); data.put("M_NO","18"); data.put("M_NM","test");
-	 * data.put("CON","가나다라");
-	 * 
-	 * 
-	 * //list.add(data);
-	 * 
-	 * mav.addObject("page",page); mav.addObject("pb",pb);
-	 * mav.addObject("list",list);
-	 * 
-	 * mav.setViewName("testO/testO");
-	 * 
-	 * return mav; }
-	 */
+	//수정
+		@RequestMapping(value = "/parkupdate")
+		public ModelAndView parkupdate(@RequestParam HashMap<String, String> params,
+										ModelAndView mav) throws Throwable{
+			
+			int cnt = iParkService.updatePCON(params);
+			
+			if(cnt > 0) {
+				mav.setViewName("redirect:parkDtl");
+			} else {
+				mav.addObject("msg", "수정중 문제가 발생했습니다.");
+				mav.setViewName("park/failedAction");
+			}
+			
+			return mav;
+		}
+		
+		//댓글 삭제 ajax
+		@RequestMapping(value = "/parkDelete",method = RequestMethod.POST,
+				produces = "text/json;charset=UTF-8")
+		@ResponseBody
+		public String parkDelete(@RequestParam HashMap<String, String>params) throws Throwable{
+			
+			ObjectMapper mapper = new ObjectMapper();
+			
+			Map<String, Object> modelMap = new HashMap<String, Object>();
+			
+			
+			String result = "success";
+			
+			try {
+				int cnt = iParkService.deletePCON(params);	//댓글 삭제하기
+				
+				if(cnt ==0) {
+					result = "failed";
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+				result = "error";
+			}
+			
+			// 댓글 조회
+			int page = 1;
+
+			if (params.get("page") != null) { // 넘어오는 현재 p데이터가 존재 시 page =
+				page = Integer.parseInt(params.get("page"));
+			}
+			
+			//글 개수
+			int cnt = iParkService.getPDCnt(params); 
+			PagingBean pb = iPagingService.getPagingBean(page, cnt, 10,5);
+			
+			
+			// 조회 시작 및 종료번호 할당
+			 params.put("startCnt",Integer.toString(pb.getStartCount()));
+			 params.put("endCnt",Integer.toString(pb.getEndCount()));
+			
+			 List<HashMap<String, String>> commentList = iParkService.getPDList(params);
+			 System.out.println("list >>>>>>>> " + commentList);
+			
+			modelMap.put("result", result);
+			modelMap.put("commentList", commentList);
+			
+			
+			return mapper.writeValueAsString(modelMap);
+		}
+		
+		
 
 	@RequestMapping(value = "/apiDtl", method = RequestMethod.GET, produces = "text/json;charset=UTF-8")
 	@ResponseBody
@@ -374,6 +415,7 @@ public class ParkController {
 //		  		System.out.println(">>>" + vStringBuilder.toString());
 				vStringLine = vStringBuilder.toString();
 			}
+			vHttpURLConnection.disconnect();
 
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -457,7 +499,7 @@ public class ParkController {
 //		  		System.out.println(">>>" + vStringBuilder.toString());
 				vStringLine = vStringBuilder.toString();
 			}
-
+			vHttpURLConnection.disconnect();
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
