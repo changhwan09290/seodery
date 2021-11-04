@@ -106,11 +106,6 @@ public class WalkController {
         
         String urlStr = "http://openapi.seoul.go.kr:8088/534b517a6f6e617931307348487965/json/SeoulGilWalkCourse/";
         urlStr += params.get("startCnt") + "/" + params.get("endCnt");
-        /*
-       * if (searchTxt != null && !searchTxt.isEmpty()) { //urlStr +=
-       * (URLEncoder.encode(searchTxt, "utf-8") + "/"); urlStr +=
-       * ((searchTxt.replace(" ", "%20")) + "/"); }
-       */
         
         //URL url = new URL("http://openapi.seoul.go.kr:8088/534b517a6f6e617931307348487965/json/SeoulGilWalkCourse/1/13/");  
         StringBuilder sb = new StringBuilder();
@@ -212,8 +207,6 @@ public class WalkController {
               }
               br.close();
               
-              //Map<String, String> map = mapper.readValue(json, new TypeReference<List<Map<String, Object>>(){});
-              // model.addAttribute("listMap", listMap);
               System.out.println("요청성공");
               line = sb.toString();
            } else {
@@ -245,9 +238,9 @@ public class WalkController {
         
         String nmExists = iWalkService.getWalkNmExists(params);
         
-        if(nmExists == null || nmExists.equals("N")) { // 'N'
+        if(nmExists == null || nmExists.equals("N")) {
           // insert(PK)
-          int addPK = iWalkService.addWK(params);   //공원번호,이름,주소,번호 추가하기
+          int addPK = iWalkService.addWK(params);   
        } else if(nmExists.equals("Y")){ // 'Y'
           int update = iWalkService.updateWK(params);
        }

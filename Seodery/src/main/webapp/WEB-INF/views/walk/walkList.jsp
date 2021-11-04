@@ -273,7 +273,7 @@ footer { /*푸터 %로 단위변경*/
    /* position: fixed;
    right: 90px;
    top: 100px; */
-}
+} 
 
  /* 로그인버튼, 유저 로그인정보 div */
 .logout {
@@ -567,9 +567,8 @@ footer>.foot>nav>a {
 </head>
 <body>
    <div id="wrapper">
-      <header id="header">
+     <header id="header">
          <div id="logo">
-               <!-- <div class="logout"> -->
                <c:choose>
                   <c:when test="${empty sMNo}">
                   	<input type="button" value="로그인" id="LoginBtn"/>
@@ -579,9 +578,9 @@ footer>.foot>nav>a {
                   <div class="pencil"></div>
                   <input type="button" value="로그아웃" id="LogoutBtn" />
                  </c:otherwise>
-               </c:choose>   
-             <!-- </div> -->
-         </div>
+               </c:choose>            
+            </div>
+
 
          <div class="navcon">
             <nav id="nav">
@@ -644,20 +643,14 @@ footer>.foot>nav>a {
          </div>
 
 
-      </header>
+    </header>
 
       <main>
          <div class="Cpage">
             <h4>산책로 > 산책로 찾기</h4>
          </div>
          <form action="#" id="actionForm" method="post"></form>
-         <select name="searchGbn" id="searchGbn">
-            <option value="0">코스명</option>
-         </select> 
-         <input type="text" class="search_txt" name="searchTxt"  id="searchTxt" placeholder="지역명을 입력해주세요" value="${param.searchTxt}">
-         <input type="hidden" id="oldTxt" value="${param.searchTxt}">
          <input type="hidden" id="page" name="page" value="${page}" /> 
-         <input type="button" value="검색" class="action_btn" id="searchBtn">
          </form>
          <div align="center">
             <table id="table">
