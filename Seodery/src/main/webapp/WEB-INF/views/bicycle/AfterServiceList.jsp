@@ -370,7 +370,7 @@ function drawList(list) {
 	    html += "</td>";
 		html += "<td>" + data.ID + "</td>		";
 		html += "<td>" + data.WRDATE + "</td>		";
-		html += "<td>" + data.AWER;
+		html += "<td>" ;
 		if(data.AWER != null) {
 			html += "처리완료";
 		} else {
