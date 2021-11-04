@@ -300,6 +300,10 @@ footer>.foot>nav>a {
 	cursor: pointer;
 }
 
+img {
+	width: 18px;
+}
+
 </style>
 
 <script type="text/javascript"
