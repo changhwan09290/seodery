@@ -585,20 +585,6 @@ $(document).ready(function(){
 		location.href = "logout";
 	}); 
 	
-	/* 페이징 */
-	 if("${page}" > "${pb.maxPcount}"){
-			$("#page").val("${pb.maxPcount}");
-			$("#wcform").attr("action","parkDtl");
-			$("#wcform").submit();
-		};
-		
-		$(".paging_wrap").on("click", "span", function(){
-			$("page").val($(this).attr("page"));
-			$("#wcform").attr("action", "parkDtl");
-			$("#wcform").submit();
-		});
-	
-	
 	
 	//목록에서 수정버튼을 클릭했을 때 
 		$(".pc_list_wrap").on("click","#updateBtn",function(){
@@ -635,7 +621,6 @@ $(document).ready(function(){
 				} else {
 					$("#wcform").attr("action", "parkupdate");
 					$("#wcform").submit();
-					makeCommentList(list);
 			};
 		});
 	
@@ -644,8 +629,8 @@ $(document).ready(function(){
 	
 	var strHtml = "";
 	
-	var sMNm =  '<%=(String)session.getAttribute("sMNm")%>';
-	var sMNo =  '<%=session.getAttribute("sMNo").toString()%>';
+	var sMNm =  '${sMNm}';
+	var sMNo =  '${sMNo}';
 	
 	for(var i=0; i<list.length; i++) {
 		var data = list[i];
@@ -722,33 +707,26 @@ $(".pc_list_wrap").on("click","#deleteBtn",function(){
 }); 
 	
 	
-	//페이징
-	// $(".paging_wrap").on("click","span",function(){
-	//	 $("#page").val($(this).attr("page"));
-		 /* $("#searchTxt").val($("#oldTxt").val());  */
+	/* $("#pagingWrap").on("click","span",function(){
+		//기존의 값을 #oldTxt에 저장해놓고 페이지를 넘기면 searchTxt에 값이 기존에 값이라서 페이지만 넘어가는것
+		//$("#searchTxt").val($("#oldTxt").val()); 	
+		$("#page").val($(this).attr("page"));
 		
-	//	reloadList();
-	//}); 
-	
-	
+		$("#wcform").attr("action", "parkDtl");
+		$("#wcform").submit();
+	}); */
+		
 	//addBtn
 	$(".write_area").on("click","#addBtn",function(){
 		 if(checkVal("#con")) {
 				alert("내용을 입력해 주세요.");
 				$(".write_con").focus();
 			} else {
-// 				var no = $(this).parent().attr("no");
-// 				$("#no").val(no);
-// 				$("#actionForm").attr("action", "parkadd");
-// 				$("#actionForm").submit();
 				var starNum = $("#rateBox")[0].innerText;
 				console.log("별점 값>>>>>>>>" + starNum);
 				
 				
 				console.log("addr>>" + $(this).parents('tr').find('td[name="paddr"]').text());
-				
-				alert("Cnum>>" + $(this));
-				
 				
 				$("input[name='srating']").val(starNum.substr(0,1));
 				$("#wcform").attr("action", "parkadd");
@@ -1107,7 +1085,7 @@ function reloadMap(){
 								</c:when>
 								<c:otherwise>
 								<input type="hidden" id="mo" name="mo" value="${sMNo}"/>
- 								<input type="hidden" id="page" name="page" value="${page}"/> 
+ 								<%-- <input type="hidden" id="page" name="page" value="${page}"/>  --%>
 								<input type="hidden" name="page"  value="${param.page}"/>
 								<input type="hidden" name="no"  value="${param.no}"/>
 								<input type="hidden" name="name"  value="${param.name}"/>
@@ -1171,34 +1149,7 @@ function reloadMap(){
 					     </c:otherwise>
 					</c:choose>
 					</div>
-						<div class="paging_wrap">
-						<c:choose>
-							<c:when test="${page eq 1}">
-								<span page="1">이전</span>
-							</c:when>
-							<c:otherwise>
-								<span page="${page - 1}">이전</span>
-							</c:otherwise>
-						</c:choose>
-						<c:forEach var="i" begin="${pb.startPcount}" end="${pb.endPcount}" step="1">
-							<c:choose>
-								<c:when test="${page eq i}">
-									<span page="${i}"><b>${i}</b></span>
-								</c:when>
-								<c:otherwise>
-									<span page="${i}">${i}</span>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-						<c:choose>
-							<c:when test="${page eq pb.maxPcount}">
-								<span page="${pb.maxPcount}">다음</span>
-							</c:when>
-							<c:otherwise>
-								<span page="${page + 1}">다음</span>
-							</c:otherwise>
-						</c:choose>
-					</div>
+						<div class="paging_wrap"></div>
 				</section>
 				
 				
