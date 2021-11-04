@@ -65,6 +65,13 @@
    top: 100px; */
 } 
 
+.dtlbtn{
+	  background-color:rgb(3, 104, 115);
+	  box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
+	  color: white;
+	  border-radius: 5px;
+}
+
 /* 로그인버튼, 유저 로그인정보 div */
 .logo{
 	white-space : nowrap;
@@ -215,6 +222,16 @@ main > .Cpage {
 	margin-left: 1.5%;
 	font-family: '고딕';
 	font-weight: 900;
+}
+
+.map-container{
+	border: 1px solid green;
+	padding: 50px;
+	border-radius: 5px;
+	width:800px;
+	height:400px;
+	margin-left:auto;
+	margin-right:auto;
 }
 
 table{
@@ -405,7 +422,6 @@ $(document).ready(function(){
 			url : "http://openAPI.seoul.go.kr:8088/58446e7a71616b643239487a427157/json/SearchParkInfoService/1/200", 
 			type: "get",	//전송 방식
 			dataType:"json",	//받아올 데이터 형태 
-			async: false,
 			data: params,
 	// 		data : sendData,	//보낼 데이터(문자열 형태)
 			success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
@@ -429,7 +445,6 @@ function reloadList(){
 		url : "apitest", 
 		type: "get",	//전송 방식
 		dataType:"json",	//받아올 데이터 형태 
-		async: false,
 		data: params,
 		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
 			makeTable(JSON.parse(res.resData)); // 목록 만듬
@@ -449,7 +464,7 @@ function makeTable(jsonData) {
     
     for (var idx in rows) {
        $data += '<tr><td name="pIdx">'+ rows[idx].P_IDX + '</td><td>' + rows[idx].P_PARK + '</td><td>'+ rows[idx].P_ADDR 
-       		+ '</td><td>'+ rows[idx].P_ADMINTEL + '</td><td>' + '<input type="button" value="상세보기" id="DtlBtn">' + '</td></tr>';
+       		+ '</td><td>'+ rows[idx].P_ADMINTEL + '</td><td>' + '<input type="button" value="상세보기" id="DtlBtn class="dtlbtn">' + '</td></tr>';
     }
     
     $("#table").html($data);
@@ -577,14 +592,12 @@ function drawPaging(pb){
 	<main>
       	<div class="Cpage"><h4>공원 > 길 찾기</h4></div>
       	<form action="#" id="actionForm" method="get">
-			<input type="text" name="searchTxt" id="searchTxt" value="${param.searchTxt}" placeholder="검색어를 입력해주세요"/>
-			<input type="hidden" name="oldTxt" value="${param.searchTxt}"/>
 			<input type="hidden" name="page" id="page" value="${page}"/>
 			<input type="hidden" name="no" id="no"/>
-			<input type="button" value="검색" id="searchBtn"/>
 		</form>
-		
+		<div class="map-container">
       	<div id="map" style="width:800px;height:400px;margin-left:auto;margin-right:auto;"></div>
+    	</div>	
     		<div align="center">
             <table style="text-align:center;">
             	<thead>

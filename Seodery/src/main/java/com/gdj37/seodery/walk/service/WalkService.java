@@ -1,5 +1,7 @@
 package com.gdj37.seodery.walk.service;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,4 +12,28 @@ public class WalkService implements IWalkService {
 	
 	@Autowired
 	public IWalkDao iWalkDao;
+
+	@Override
+	public String getWalkNmExists(HashMap<String, String> params) throws Throwable {
+		// TODO Auto-generated method stub
+		return iWalkDao.getWalkNmExists(params);
+	}
+
+	@Override
+	public int addWK(HashMap<String, String> params) throws Throwable {
+		// TODO Auto-generated method stub
+		return iWalkDao.addWK(params);
+	}
+
+	@Override
+	public int updateWK(HashMap<String, String> params) throws Throwable {
+		// TODO Auto-generated method stub
+		return iWalkDao.updateWK(params);
+	}
+
+	@Override
+	public int addWalk(HashMap<String, String> params) throws Throwable {
+		// TODO Auto-generated method stub
+		return iWalkDao.addWalk(params);
+	}
 }

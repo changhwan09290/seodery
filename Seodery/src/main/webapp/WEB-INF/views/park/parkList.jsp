@@ -287,9 +287,13 @@ footer > .foot > nav > a{
 
 .paging_wrap{
 	margin-top : 5%;;
-	margin-left: 40%;
+	margin-left: 35%;
 }
-
+.paging_wrap span{
+	margin-right: 10px;
+	cursor: pointer;
+	font-size: 20px;
+}
 </style>
 <script type="text/javascript"
 		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
@@ -331,9 +335,10 @@ footer > .foot > nav > a{
 	 $(".paging_wrap").on("click","span",function(){
 		 $("#page").val($(this).attr("page"));
 		 /* $("#searchTxt").val($("#oldTxt").val());  */
-		
+			
 		reloadList();
 	}); 
+	
 	
 	//상세보기 버튼을 클릭했을 때 이벤트 
 	 $("tbody").on("click", "input", function(){
@@ -358,18 +363,18 @@ footer > .foot > nav > a{
 
 //데이터 취득
  function reloadList(){
-	var params = $("#actionForm").serialize();
+	console.log("ddddd>>>");
+	 var params = $("#actionForm").serialize();
  	$.ajax({	//jquery의 ajax함수 호출  
 //  		url: "http://data.seoul.go.kr/dataList/OA-394/S/1/datasetView.do?"
 // 					+"KEY=58446e7a71616b643239487a427157&TYPE=json&SERVICE=SearchParkInfoService&START_INDEX=1&END_INDEX=10", //접속 주소
 		url : "apitest", 
 		type: "get",	//전송 방식
  		dataType:"json",	//받아올 데이터 형태 
- 		async: false,
  		data: params,
 //  		data : sendData,	//보낼 데이터(문자열 형태)
  		success : function(res){	//성공(ajax통신 성공) 시 다음 함수 실행 
- 			console.log(res);
+ 			console.log("res>>>>>"+res);
  			makeTable(JSON.parse(res.resData));
  			console.log(makeTable(JSON.parse(res.resData)));
  			//drawList(res.list);
@@ -522,7 +527,7 @@ footer > .foot > nav > a{
 		<select name="searchGbn" id="searchGbn">
 			<option value="0">지역</option>
 		</select>
-		<input type="text" name="searchTxt" id="searchTxt" value="${param.searchTxt}"/>
+		<input type="text" class="search_txt" name="searchTxt" id="searchTxt" value="${param.searchTxt}" placeholder="지역명을 입력해주세요"/>
 		<input type="hidden" name="oldTxt" value="${param.searchTxt}"/>
 		<input type="hidden" name="page" id="page" value="${page}"/>
 		<input type="hidden" name="no" id="no"/>
