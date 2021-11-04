@@ -425,12 +425,12 @@ function checkVal(sel) {
 							<li class="sub Manager" id="manager">관리자
 								<ul class="gnb_sub">
 									<li><a href="#">공원댓글</a></li>
-									<li><a href="walkComm">산책로댓글</a></li>
-									<li><a href="AfterServiceList">수리문의</a></li>
+									<li><a href="#">산책로댓글</a></li>
+									<li><a href="#">수리문의</a></li>
 									<li><a href="#">회원관리</a></li>
-									<li><a href="memoryList">추억저장</a></li>
-									<li><a href="NoticeList">공지사항</a></li>
-									<li><a href="MOpinionList">고객의 소리함</a></li>
+									<li><a href="#">추억저장</a></li>
+									<li><a href="#">공지사항</a></li>
+									<li><a href="#">고객의 소리함</a></li>
 								</ul>
 							</li>
 						</ul>

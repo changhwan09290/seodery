@@ -476,13 +476,13 @@ function drawPaging(pb) {
 							</li>
 							<li class="sub Memory">추억저장
 								<ul class="gnb_sub">
-									<li><a href="#">추억저장</a></li>
+									<li><a href="memoryList">추억저장</a></li>
 								</ul>
 							</li>
 							<li class="sub Notice">공지사항
 								<ul class="gnb_sub">
-									<li><a href="#">고객의 소리</a></li>
-									<li><a href="#">공지사항</a></li>
+									<li><a href="MOpinionList">고객의 소리</a></li>
+									<li><a href="NoticeList">공지사항</a></li>
 								</ul>
 							</li>
 							<li class="sub Manager" id="manager">관리자
