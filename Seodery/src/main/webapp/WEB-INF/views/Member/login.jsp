@@ -18,9 +18,6 @@
 			$("#loginForm").attr("action","logins")
 			$("#loginForm").submit()
 		})
-		$(fubction({
-			$("#find_id_")
-		}))
 	})
 </script>
 </head>
