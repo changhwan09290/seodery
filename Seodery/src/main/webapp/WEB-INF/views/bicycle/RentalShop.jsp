@@ -261,6 +261,12 @@ footer > .foot > nav > a{
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
+	
+	//로고 누르면 메인으로 이동(로고가 아니라 헤더 전체,,)
+	$("#header").on("click", function() {
+		location.href = "mainpage";
+	});
+	
 	var container = document.getElementById('map');
 	var options = {
 		center: new kakao.maps.LatLng(37.55564880, 126.91062927), //생성자는 위도, 경도순으로 넣기
@@ -327,6 +333,7 @@ $(document).ready(function() {
 		    	position: positions[i].latlng,
 		    	title: positions[i].title,
 		       	image: redMarkerImage, // 마커이미지 설정 
+		        name: positions[i].name,
 		        clickable: true
 			});
     	} else if (5 < bikeLeft && bikeLeft <= 20) { 
@@ -336,6 +343,7 @@ $(document).ready(function() {
 		    	position: positions[i].latlng,
 		    	title: positions[i].title,
 		       	image: yellowMarkerImage, // 마커이미지 설정 
+		        name: positions[i].name,
 		        clickable: true
 			});
     	} else {
@@ -346,6 +354,7 @@ $(document).ready(function() {
 		    	position: positions[i].latlng,
 		    	title: positions[i].title,
 		       	image: greenMarkerImage, // 마커이미지 설정
+		        name: positions[i].name,
 		        clickable: true
 			});
     	}
@@ -378,10 +387,10 @@ $(document).ready(function() {
           infowindow.open(map, yellowMarker);  
     });
  // 마커에 클릭이벤트를 등록합니다
-   /*  kakao.maps.event.addListener(greenMarker, 'click', function() {
+  	kakao.maps.event.addListener(greenMarker, 'click', function() {
           // 마커 위에 인포윈도우를 표시합니다
           infowindow.open(map, greenMarker);  
-    }); */
+    });
  
 		// 마커가 지도 위에 표시되도록 설정합니다
 	    /* marker.setMap(map);   */
@@ -450,13 +459,13 @@ $(document).ready(function() {
 							</div>
 							<li class="sub Park">공원
 								<ul class="gnb_sub">
-									<li><a href="#">공원 찾기</a></li>
-									<li><a href="#">길 찾기</a></li>
+									<li><a href="parkList">공원 찾기</a></li>
+									<li><a href="parkMap">길 찾기</a></li>
 								</ul>
 							</li>
 							<li class="sub WalkT">산책로
 								<ul class="gnb_sub">
-									<li><a href="#">산책로 찾기</a></li>
+									<li><a href="walkList">산책로 찾기</a></li>
 								</ul>
 							</li>
 							<li class="sub Bike">자전거
@@ -468,18 +477,18 @@ $(document).ready(function() {
 							</li>
 							<li class="sub FDust">미세먼지
 								<ul class="gnb_sub">
-									<li><a href="#">미세먼지 현황</a></li>
+									<li><a href="dust">미세먼지 현황</a></li>
 								</ul>
 							</li>
 							<li class="sub Memory">추억저장
 								<ul class="gnb_sub">
-									<li><a href="#">추억저장</a></li>
+									<li><a href="memoryList">추억저장</a></li>
 								</ul>
 							</li>
 							<li class="sub Notice">공지사항
 								<ul class="gnb_sub">
-									<li><a href="#">고객의 소리</a></li>
-									<li><a href="#">공지사항</a></li>
+									<li><a href="MOpinionList">고객의 소리</a></li>
+									<li><a href="NoticeList">공지사항</a></li>
 								</ul>
 							</li>
 							<li class="sub Manager" id="manager">관리자
@@ -507,7 +516,7 @@ $(document).ready(function() {
 	</div>
 	
 	<!-- 지도 크기 -->
-	<div id="map" style="width:740px;height:500px;"></div>
+	<div id="map" style="width:850px;height:500px;"></div>
 	</main>
 	<footer>
        <div class="foot">
