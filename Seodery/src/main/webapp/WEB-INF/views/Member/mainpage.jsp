@@ -23,6 +23,12 @@
       }
       </style>
 <script type="text/javascript">
+$(document).ready(function() {
+//연필 누르면 마이페이지
+$(".logout .pencil").on("click", function() {
+	location.href = "mypage";
+});
+});
    function linkGo(url) {
       location.href = url
    }
@@ -131,10 +137,10 @@
             <br/>
             <h2>공원 BEST 5</h2>
                <ul>
-                  <li class="li">1. 공원명 : 하늘공원</li>
-                  <li class="li">2. 공원명 : 보라매공원</li>
-                  <li class="li">3. 공원명 : 호수공원</li>
-                  <li class="li">4. 공원명 : 서울숲</li>
+                  <li class="li"><a href="http://localhost:8090/Seodery/parkDtl?page=1&no=1&mo=&name=%EB%82%A8%EC%82%B0%EB%8F%84%EC%8B%9C%EC%9E%90%EC%97%B0%EA%B3%B5%EC%9B%90&addr=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C+%EC%A4%91%EA%B5%AC+%EC%82%BC%EC%9D%BC%EB%8C%80%EB%A1%9C+231%28%EC%98%88%EC%9E%A5%EB%8F%99%29&phon=02-3783-5900"></a>1. 공원명 : 하늘공원</li>
+                  <li class="li"><a href="http://localhost:8090/Seodery/parkDtl?page=1&no=3&mo=&name=%EC%84%9C%EC%9A%B8%EB%8C%80%EA%B3%B5%EC%9B%90&addr=%EA%B2%BD%EA%B8%B0%EB%8F%84+%EA%B3%BC%EC%B2%9C%EC%8B%9C+%EB%8C%80%EA%B3%B5%EC%9B%90%EA%B4%91%EC%9E%A5%EB%A1%9C+102&phon=02-500-7032"></a>2. 공원명 : 보라매공원</li>
+                  <li class="li"><a href="http://localhost:8090/Seodery/parkDtl?page=1&no=5&mo=&name=%EC%9B%94%EB%93%9C%EC%BB%B5%EA%B3%B5%EC%9B%90&addr=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C+%EB%A7%88%ED%8F%AC%EA%B5%AC+%ED%95%98%EB%8A%98%EA%B3%B5%EC%9B%90%EB%A1%9C+84%28%EC%9B%94%EB%93%9C%EC%BB%B5%EA%B3%B5%EC%9B%90%29&phon=02-300-5500"></a>3. 공원명 : 호수공원</li>
+                  <li class="li"><a href="http://localhost:8090/Seodery/parkDtl?page=1&no=4&mo=&name=%EC%84%9C%EC%9A%B8%EC%88%B2&addr=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C+%EC%84%B1%EB%8F%99%EA%B5%AC+%EB%9A%9D%EC%84%AC%EB%A1%9C+273+%28%EC%84%B1%EC%88%98%EB%8F%991%EA%B0%80%29+&phon=02-460-2905+"></a>4. 공원명 : 서울숲</li>
                </ul>
          </div>
         </aside>

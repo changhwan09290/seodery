@@ -64,7 +64,7 @@
  
 
 /* 로그인버튼, 유저 로그인정보 div */
- .logo{
+ .logout{
    white-space : nowrap;
     display : flex;
     position : absolute;
@@ -460,10 +460,9 @@ footer > .foot > nav > a{
                         </div>
                      </c:when>
                   <c:otherwise>
-                  <div class="pencil"></div>
-                     <div class="logout">
-                     
+                     <div class="logout">                    
                         ${sMNm}님 환영합니다.
+                  <div class="pencil"></div>
                         <input type="button" value="로그아웃" id="LogoutBtn"/>
                      </div>
                   </c:otherwise>
