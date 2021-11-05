@@ -50,7 +50,7 @@
         location.href = "login";   
      });    
       
-      $(".logout").on("click",function(){
+      $(".logout .pencil").on("click",function(){
           location.href = "mypage";   
        });    
       

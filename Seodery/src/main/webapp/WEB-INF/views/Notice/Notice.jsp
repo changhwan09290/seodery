@@ -327,8 +327,8 @@ footer > .foot > nav > a{
 <script type="text/javascript">
  $(document).ready(function(){
 	 
-	//연필 누르면 마이페이지
-	   $(".logout").on("click", function() {
+		//연필 누르면 마이페이지
+	   $(".logout .pencil").on("click", function() {
 	      location.href = "mypage";
 	   });
 	 

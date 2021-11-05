@@ -22,7 +22,7 @@ $(document).ready(function() {
 	loadMyPage();
 	
 	//연필 누르면 마이페이지
-	$(".logout").on("click", function() {
+	$(".logout .pencil").on("click", function() {
 		location.href = "mypage";
 	});
 	

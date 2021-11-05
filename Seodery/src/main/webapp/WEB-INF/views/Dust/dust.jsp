@@ -79,6 +79,8 @@
 	margin-right: 9px;
 	margin-left: 7px;
 	background-size: contain;
+	cursor: pointer;
+   	z-index: 9999;
 }
 
 /* 네비게이션바 전체 */
@@ -401,7 +403,7 @@ footer > .foot > nav > a{
 		     location.href= "logout";		  
 			});
 		
-		   $("#pencil").on("click", function(){
+		   $(".logout .pencil").on("click", function(){
 			 location.href = "mypage";
 		    });
 
