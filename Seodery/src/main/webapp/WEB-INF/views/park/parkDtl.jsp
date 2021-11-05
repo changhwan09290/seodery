@@ -86,6 +86,8 @@
 	margin-right: 9px;
 	margin-left : 7px;
 	background-size: contain;
+	cursor: pointer;
+   	z-index: 9999;
 }
 
 /* 네비게이션바 전체 */
@@ -642,6 +644,11 @@ $(document).ready(function(){
 	gnbSlideInit();
 	reloadList();
 	reloadMap();
+	
+	//연필 누르면 마이페이지
+	   $(".logout").on("click", function() {
+	      location.href = "mypage";
+	   });
 	
 	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	var options = { //지도를 생성할 때 필요한 기본 옵션
