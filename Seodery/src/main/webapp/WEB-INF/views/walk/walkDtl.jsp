@@ -73,26 +73,12 @@
              }
          });  
           
-          $("#LogoutBtn").on("click",function(){
-              location.href= "logout";        
+          $(".LoginBtn").on("click",function(){
+           
+            location.href = "login";
            });
-            
-            $("#LoginBtn").on("click",function(){
-              location.href = "login";   
-           });  
-            
-            $(".LoginBtn").on("click",function(){
-                location.href = "login";   
-             }); 
-            
-            $(".pencil").on("click", function(){
-          	  location.href = "mypage";  
-            });
           
-        //로고 누르면 메인으로 이동(로고가 아니라 헤더 전체,,)
-      	/* $("#header").on("click", function() {
-      		location.href = "mainpage";
-      	}); */
+          
           
           $(".topbox #writeBtn").on("click",function(){
               if(checkVal("#con")){
@@ -301,21 +287,21 @@ footer { /*푸터 %로 단위변경*/
    text-align: center;
 }
 
-#LoginBtn,#LogoutBtn,.LoginBtn {
-	z-index: 9999;
-   border : none;
+/* 로그인 버튼 */
+#LogoutBtn {
+   border: none;
    border-radius: 5px;
-   background-color:rgb(3, 104, 115);
+   background-color: rgb(3, 104, 115);
    font-size: 1.1rem;
-   color : white;
+   color: white;
    font-family: '고딕';
    cursor: pointer;
    padding: 4px 17px 4px 17px;
-   box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
+   box-shadow: 0 1px 1px 0 rgb(3, 104, 115);
    /* position: fixed;
    right: 90px;
    top: 100px; */
-} 
+}
 
 /* 로그인버튼, 유저 로그인정보 div */
 .logout {
@@ -440,7 +426,7 @@ footer { /*푸터 %로 단위변경*/
 }
 
 .navcon {
-   padding-top: 36px;
+   padding-top: 193px;
    position: absolute;
    left: 20px;
    right: 20px;
@@ -637,11 +623,11 @@ ul {
 }
 
 #rateBox {
-	display: inline-block;
+   display: inline-block;
 }
 
 .login_req_wrap {
-	display: inline-block;
+   display: inline-block;
 }
 
 </style>
@@ -649,84 +635,77 @@ ul {
 </head>
 <body>
    <div id="wrapper">
-        <header id="header">
-			<div class="logo">
-						<div class="pencil"></div>
-						<c:choose>
-							<c:when test="${empty sMNo}">
-								<div class="login">
-									<input type="button" value="로그인" id="LoginBtn"/>
-								</div>
-							</c:when>
-						<c:otherwise>
-							<div class="logout">
-								${sMNm}님 환영합니다.
-								<input type="button" value="로그아웃" id="LogoutBtn"/>
-							</div>
-						</c:otherwise>
-						</c:choose>
-			</div>
-	</header>
-			
-			<div class="navcon">
-				<nav id="nav">
-					<div class="gnb_subbox"></div>
-					<div class="gnb">
-						<ul class="navi">
-							<div class="dvbox">
-								<div class="dv"></div>
-								<div class="dv"></div>
-								<div class="dv"></div>
-							</div>
-							<li class="sub Park">공원
-								<ul class="gnb_sub">
-									<li><a href="parkList">공원 찾기</a></li>
-									<li><a href="parkMap">길 찾기</a></li>
-								</ul>
-							</li>
-							<li class="sub WalkT">산책로
-								<ul class="gnb_sub">
-									<li><a href="walkList">산책로 찾기</a></li>
-								</ul>
-							</li>
-							<li class="sub Bike">자전거
-								<ul class="gnb_sub">
-									<li><a href="RentalShop">실시간 대여정보</a></li>
-									<li><a href="use_info">자전거 이용안내</a></li>
-									<li><a href="AfterServiceList">자전거 수리문의</a></li>
-								</ul>
-							</li>
-							<li class="sub FDust">미세먼지
-								<ul class="gnb_sub">
-									<li><a href="dust">미세먼지 현황</a></li>
-								</ul>
-							</li>
-							<li class="sub Memory">추억저장
-								<ul class="gnb_sub">
-									<li><a href="memoryList">추억저장</a></li>
-								</ul>
-							</li>
-							<li class="sub Notice">공지사항
-								<ul class="gnb_sub">
-									<li><a href="MOpinionList">고객의 소리</a></li>
-									<li><a href="NoticeList">공지사항</a></li>
-								</ul>
-							</li>
-							<li class="sub Manager" id="manager">관리자
-								<ul class="gnb_sub">
-									<li><a href="#">공원댓글</a></li>
-									<li><a href="#">산책로댓글</a></li>
-									<li><a href="#">수리문의</a></li>
-									<li><a href="#">회원관리</a></li>
-									<li><a href="#">추억저장</a></li>
-									<li><a href="#">공지사항</a></li>
-									<li><a href="#">고객의 소리함</a></li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</nav>	
-			</div>
+      <header id="header">
+         <div id="logo">
+            <form action="#" method="post">
+               <div class="logout">
+                  {000}님 환영합니다.
+                  <div class="pencil"></div>
+                  <input type="button" value="로그아웃" id="LogoutBtn" />
+               </div>
+            </form>
+         </div>
+
+         <div class="navcon">
+            <nav id="nav">
+               <div class="gnb_subbox"></div>
+               <div class="gnb">
+                  <ul class="navi">
+                     <div class="dvbox">
+                        <div class="dv"></div>
+                        <div class="dv"></div>
+                        <div class="dv">${param.SOUTH_NORTH_DIV}</div>
+                     </div>
+                     <li class="sub Park">공원</a>
+                        <ul class="gnb_sub">
+                           <li><a href="#">공원 찾기</a></li>
+                           <li><a href="#">길 찾기</a></li>
+                        </ul>
+                     </li>
+                     <li class="sub WalkT">산책로</a>
+                        <ul class="gnb_sub">
+                           <li><a href="#">산책로 찾기</a></li>
+                        </ul>
+                     </li>
+                     <li class="sub Bike">자전거</a>
+                        <ul class="gnb_sub">
+                           <li><a href="#">실시간 대여정보</a></li>
+                           <li><a href="#">자전거 이용안내</a></li>
+                           <li><a href="#">자전거 수리문의</a></li>
+                        </ul>
+                     </li>
+                     <li class="sub FDust">미세먼지</a>
+                        <ul class="gnb_sub">
+                           <li><a href="#">미세먼지 현황</a></li>
+                        </ul>
+                     </li>
+                     <li class="sub Memory">추억저장</a>
+                        <ul class="gnb_sub">
+                           <li><a href="#">추억저장</a></li>
+                        </ul>
+                     </li>
+                     <li class="sub Notice">공지사항</a>
+                        <ul class="gnb_sub">
+                           <li><a href="#">고객의 소리</a></li>
+                           <li><a href="#">공지사항</a></li>
+                        </ul>
+                     </li>
+                     <li class="sub Manager" id="manager">관리자</a>
+                        <ul class="gnb_sub">
+                           <li><a href="#">공원댓글</a></li>
+                           <li><a href="#">산책로댓글</a></li>
+                           <li><a href="#">수리문의</a></li>
+                           <li><a href="#">회원관리</a></li>
+                           <li><a href="#">추억저장</a></li>
+                           <li><a href="#">공지사항</a></li>
+                           <li><a href="#">고객의 소리함</a></li>
+                        </ul>
+                     </li>
+                  </ul>
+               </div>
+            </nav>
+         </div>
+      </header>
       
       <div>
                <form action="#" id="actionForm" method="get">
