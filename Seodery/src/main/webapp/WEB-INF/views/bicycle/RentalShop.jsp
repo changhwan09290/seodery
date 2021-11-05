@@ -235,6 +235,7 @@ footer {
 	bottom: 0;
 	margin: 0 auto;
 	border-top: 1px solid black;
+	margin-top: 15px;
 }
 
 footer > .foot > nav > a{
@@ -247,8 +248,7 @@ footer > .foot > nav > a{
 	}
 	
 	#map {
-		margin-left: 15%;
-		margin-bottom: 3%;
+		margin: 0 auto;
 		/* z-index: -1; */
 		z-index: auto;
 	}
