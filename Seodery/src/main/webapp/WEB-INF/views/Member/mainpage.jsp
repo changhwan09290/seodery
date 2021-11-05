@@ -44,7 +44,7 @@
                <c:otherwise>
                   <div class="logout">
                      ${sMNm }님 환영합니다.
-                     <div class="pencil"></div>
+                     <div class="pencil"><img src="resources/images/login/pencil.png" style="height:30px;"></div>
                      <input type="button" value="로그아웃" id="LogoutBtn" onclick="linkGo('logout')"/>
                   </div>
                </c:otherwise>
@@ -55,11 +55,11 @@
                <div class="gnb_subbox"></div>
                <div class="gnb">
                   <ul class="navi">
-                     <!-- <div class="dvbox">
+                  <div class="dvbox">
                         <div class="dv"></div>
                         <div class="dv"></div>
                         <div class="dv"></div>
-                     </div> -->
+                     </div>
                      <li class="sub Park">공원</a>   
                         <ul class="gnb_sub">
                            <li><a href="parkList">공원 찾기</a></li>

@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="resources/css/login/default.css">
 <link rel="stylesheet" href="resources/css/login/mainpage.css">
 <link rel="stylesheet" href="resources/css/login/mypage.css">
-<link rel="stylesheet" href="resources/css/login/member.css">>
+<link rel="stylesheet" href="resources/css/login/member.css">
 
 
 <style>
@@ -61,41 +61,41 @@
 								<div class="dv"></div>
 								<div class="dv"></div>
 							</div>
-							<li class="sub Park">공원</a>	
+							<li class="sub Park">공원
 								<ul class="gnb_sub">
-									<li><a href="#">공원 찾기</a></li>
-									<li><a href="#">길 찾기</a></li>
+									<li><a href="parkList">공원 찾기</a></li>
+									<li><a href="parkMap">길 찾기</a></li>
 								</ul>
 							</li>
-							<li class="sub WalkT">산책로</a>
+							<li class="sub WalkT">산책로
 								<ul class="gnb_sub">
-									<li><a href="#">산책로 찾기</a></li>
+									<li><a href="walkList">산책로 찾기</a></li>
 								</ul>
 							</li>
-							<li class="sub Bike">자전거</a>
+							<li class="sub Bike">자전거
 								<ul class="gnb_sub">
-									<li><a href="#">실시간 대여정보</a></li>
-									<li><a href="#">자전거 이용안내</a></li>
-									<li><a href="#">자전거 수리문의</a></li>
+									<li><a href="RentalShop">실시간 대여정보</a></li>
+									<li><a href="use_info">자전거 이용안내</a></li>
+									<li><a href="AfterServiceList">자전거 수리문의</a></li>
 								</ul>
 							</li>
-							<li class="sub FDust">미세먼지</a>
+							<li class="sub FDust">미세먼지
 								<ul class="gnb_sub">
-									<li><a href="#">미세먼지 현황</a></li>
+									<li><a href="dust">미세먼지 현황</a></li>
 								</ul>
 							</li>
-							<li class="sub Memory">추억저장</a>
+							<li class="sub Memory">추억저장
 								<ul class="gnb_sub">
-									<li><a href="#">추억저장</a></li>
+									<li><a href="memoryList">추억저장</a></li>
 								</ul>
 							</li>
-							<li class="sub Notice">공지사항</a>
+							<li class="sub Notice">공지사항
 								<ul class="gnb_sub">
-									<li><a href="#">고객의 소리</a></li>
-									<li><a href="#">공지사항</a></li>
+									<li><a href="MOpinionList">고객의 소리</a></li>
+									<li><a href="NoticeList">공지사항</a></li>
 								</ul>
 							</li>
-							<li class="sub Manager" id="manager">관리자</a>
+							<li class="sub Manager" id="manager">관리자
 								<ul class="gnb_sub">
 									<li><a href="#">공원댓글</a></li>
 									<li><a href="#">산책로댓글</a></li>
@@ -133,7 +133,7 @@
                     <td id="title">아이디</td>
                     <td>
                         <input type="text" name="id" maxlength="50">   
-                        <input type="button" value="중복확인" id="btnId" onclick="linkGo('idCheckForm')"></td>
+                        <input type="button" value="중복확인" id="btnId" onclick="linkGo('IdCheckForm')">
                     </td>
                 </tr>
                         
@@ -209,26 +209,24 @@
                     </td>
                 </tr>
 				<tr>
-					<td id="title">주소</th>
+					<td id="title">주소</td>
 					<td><input type="text" id="address_kakao" name="address"
 						readonly maxlength="50"/></td>
-					</td>
+					
 				</tr>
 				<tr>
-					<td id="title">상세 주소</th>
+					<td id="title">상세 주소</td>
 					<td><input type="text" name="address_detail" maxlength="50"/></td>
 				</tr>
+				</form>
 			</table>
             <br>
             
             <div class="wp2">
             	<input type="submit" value="가입"/>  
             	<input type="button" value="취소" onclick="location='login.jsp'">
-            	
-
-
             </div>
-        </form>
+        
     </div>
     </main>
      <footer>
@@ -247,7 +245,7 @@
 		</div>
     </footer>
     
-    
+</div>   
 </body>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -262,5 +260,42 @@ window.onload = function(){
         }).open();
     });
 }
+</script>
+    <script>
+	/* 네비게이션 바 마우스 포커스 이벤트 */
+	$(function(){
+		gnbSlideInit();
+	});
+	
+	
+	function gnbSlideInit() {
+		//gnb (상위메뉴에 마우스 포커스)
+	    var current = false;
+		
+	    $('.gnb>ul>li').on('mouseenter focusin',function(){
+	       current = true;
+	       liObj = $(this)
+	       setTimeout(function() {
+	             if(current == true) {
+	                 $('.gnb>ul>li').removeClass('on'); 
+	                 //liObj.addClass('on');
+	             //alert();
+	             $('.gnb_sub, .gnb_subbox').stop().slideDown();
+	             }
+	         }, 50);
+	    });
+	    
+	    
+	    $('.gnb>ul>li').on('mouseleave focusout',function(){
+	       current = false;
+	       setTimeout(function() {
+	          if(current == false) {
+	             $('.gnb>ul>li').removeClass('on');
+	             $('.gnb_sub, .gnb_subbox').stop().slideUp();
+	          }
+	       }, 50); 
+	    });
+	} 
+	
 </script>
 </html>
