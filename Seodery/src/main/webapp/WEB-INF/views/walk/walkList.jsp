@@ -50,7 +50,7 @@
         location.href = "login";   
      });    
       
-      $(".pencil").on("click",function(){
+      $(".logout").on("click",function(){
           location.href = "mypage";   
        });    
       
@@ -310,6 +310,8 @@ footer { /*푸터 %로 단위변경*/
    margin-right: 9px;
    margin-left: 7px;
    background-size: contain;
+   cursor: pointer;
+   z-index: 9999;
 }
 /* 네비게이션바 전체 */
 .navi {
