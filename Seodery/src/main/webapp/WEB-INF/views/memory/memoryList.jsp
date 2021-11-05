@@ -70,6 +70,8 @@ header { /*헤더 %로 단위변경*/
 	background-repeat: no-repeat;
 	margin-right: 9px;
 	margin-left: 7px;
+	cursor: pointer;
+   	z-index: 9999;
 	background-size: contain;
 }
 
@@ -309,6 +311,11 @@ footer > .foot > nav > a{
  $(document).ready(function(){
 	 
 	reloadList();
+	
+	//연필 누르면 마이페이지
+	   $(".logout").on("click", function() {
+	      location.href = "mypage";
+	   });
 	
 	//글작성
 	 $("#addBtn").on("click",function(){
