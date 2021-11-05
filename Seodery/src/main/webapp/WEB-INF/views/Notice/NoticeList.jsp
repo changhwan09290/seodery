@@ -71,6 +71,8 @@ header { /*헤더 %로 단위변경*/
 	margin-right: 9px;
 	margin-left: 7px;
 	background-size: contain;
+	cursor: pointer;
+   	z-index: 9999;
 }
 
 /* 네비게이션바 전체 */
@@ -337,6 +339,11 @@ footer > .foot > nav > a{
  $(document).ready(function(){
 	 
 	reloadList();
+	
+	//연필 누르면 마이페이지
+	   $(".logout").on("click", function() {
+	      location.href = "mypage";
+	   });
 	
 	//글작성
 	 $("#addBtn").on("click",function(){

@@ -79,6 +79,8 @@
 	margin-right: 9px;
 	margin-left: 7px;
 	background-size: contain;
+	cursor: pointer;
+   	z-index: 9999;
 }
 
 
@@ -270,6 +272,12 @@ $(document).ready(function(){
 		language : "ko",
 		enterMode : "2"
 	});
+	
+	//연필 누르면 마이페이지
+	   $(".logout").on("click", function() {
+	      location.href = "mypage";
+	   });
+	
 	//취소버튼
 	$("#cancelBtn").on("click", function(){
 		$("#backForm").submit();
