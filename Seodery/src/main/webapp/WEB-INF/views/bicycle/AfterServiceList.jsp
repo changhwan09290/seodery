@@ -76,6 +76,8 @@ header { /*헤더 %로 단위변경*/
 	margin-right: 9px;
 	margin-left: 7px;
 	background-size: contain;
+	cursor: pointer;
+   	z-index: 9999;
 }
 
 /* 네비게이션바 전체 */
@@ -306,9 +308,6 @@ footer>.foot>nav>a {
     cursor: pointer;
     box-shadow: 0 1px 1px 0 rgb(3 104 115);
     white-space: nowrap;
-    position: absolute;
-    right: 14%;
-    top: 255px;
 }
 
 img {
@@ -356,6 +355,11 @@ $(document).ready(function() {
 		location.href = "logout";
 	});
 
+	//연필 누르면 마이페이지
+	$(".logout").on("click", function() {
+		location.href = "mypage";
+	});
+	
 	 reloadList();
 });
 function reloadList() {

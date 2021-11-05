@@ -1,4 +1,4 @@
-/* 웹 폰트 적용 */
+/* �쎒 �룿�듃 �쟻�슜 */
 @font-face {
     font-family: 'Cafe24Ssurround';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
@@ -13,11 +13,11 @@
     font-style: normal;
 } 
     
-        #wrapper { /*85%로 너비값*/
+        #wrapper { /*85%濡� �꼫鍮꾧컪*/
             width: 85%;
             margin: 0 auto;
         }
-       header { /*헤더 %로 단위변경*/
+       header { /*�뿤�뜑 %濡� �떒�쐞蹂�寃�*/
             width: 100%;
             height: 155px;
             /* background-image :url("../../images/login/logo.png"); */
@@ -27,7 +27,7 @@
            /*  border-bottom: 2px solid black; */
     }
 
-        .content { /*본문 %로 단위변경*/
+        .content { /*蹂몃Ц %濡� �떒�쐞蹂�寃�*/
             float: left;
             width: 50%;
             height: 200px;
@@ -38,28 +38,28 @@
         	width: 100%;
         	height: 400px;
         }
-        .right-side { /*사이드바 %로 단위변경*/
+        .right-side { /*�궗�씠�뱶諛� %濡� �떒�쐞蹂�寃�*/
             float: right;
             width: 45%;
             height: 200px;
             padding: 0.5625%;
             background-color: #F5F5F5;
         }
-/*         footer{ 푸터 %로 단위변경
+/*         footer{ �뫖�꽣 %濡� �떒�쐞蹂�寃�
             clear: both; 
             width: 85%;
             height: 120px;
             text-align: center;
         }
          */
- /* 로그아웃 버튼 */
+ /* 濡쒓렇�븘�썐 踰꾪듉 */
 #LogoutBtn {
 	border : none;
 	border-radius: 5px;
 	background-color:rgb(3, 104, 115);
 	font-size: 1.1rem;
 	color : white;
-	font-family: '고딕';
+	font-family: '怨좊뵓';
 	cursor: pointer;
 	padding: 4px 17px 4px 17px;
 	box-shadow:  0 1px 1px 0 rgb(3, 104, 115);
@@ -69,7 +69,7 @@
 }
 
 
-/* 로그인버튼, 유저 로그인정보 div */
+/* 濡쒓렇�씤踰꾪듉, �쑀�� 濡쒓렇�씤�젙蹂� div */
 .logout{
 	white-space : nowrap;
  	display : flex;
@@ -79,22 +79,24 @@
 	align-items: flex-end;
 	
 }
-/* 마이페이지 연필 이미지 */
+/* 留덉씠�럹�씠吏� �뿰�븘 �씠誘몄� */
 .pencil{
 	width: 30px;
 	height: 30px;
-	background-image: url("../images/pencil.png");
+	background-image: url("resources/images/park/pencil.png");
 	background-repeat: no-repeat;
 	margin-right: 9px;
 	margin-left : 7px;
 	background-size: contain;
+	z-index:9999;
+	cursor: pointer;
 }
-/* 네비게이션바 전체 */
+/* �꽕鍮꾧쾶�씠�뀡諛� �쟾泥� */
 .navi{
 	list-style-type: none;
    	margin-top : -55px;
     padding: 0px; 
-    display: flex;		/* 가로정렬 */
+    display: flex;		/* 媛�濡쒖젙�젹 */
      background: white;   
    /*  background : rgb(150, 210, 90);   */
     width: 100%;
@@ -102,12 +104,12 @@
 }
 
 
-/* 관리자 메뉴 없애기 */
+/* 愿�由ъ옄 硫붾돱 �뾾�븷湲� */
 .navi > #manager{
 	display: none;	
 }
 
-/* 메뉴바에 커서 올렸을때 호버이벤트 */
+/* 硫붾돱諛붿뿉 而ㅼ꽌 �삱�졇�쓣�븣 �샇踰꾩씠踰ㅽ듃 */
 .navi > .Park:hover{
 	background: rgb(150, 210, 90);
 	color: white;
@@ -136,31 +138,31 @@
 	color: white;
 }
 
-/* 메뉴 */
+/* 硫붾돱 */
 .navi > li{
-	line-height: 30px;   	/* 줄간격 */
-	/*text-align: center;		 텍스트 정렬 */ 	
+	line-height: 30px;   	/* 以꾧컙寃� */
+	/*text-align: center;		 �뀓�뒪�듃 �젙�젹 */ 	
 	padding: 13px;
 	color: black;
 	text-decoration: none;
 	width: 25%; 
  	font-size: 1.4rem;
 }
-/* 메뉴바 세로선 */
+/* 硫붾돱諛� �꽭濡쒖꽑 */
 .navi > li.sub{
-	text-align: center;		/* 텍스트 정렬 */ 	
+	text-align: center;		/* �뀓�뒪�듃 �젙�젹 */ 	
 	border-top: 2px solid silver;
 	border-bottom: 2px solid rgb(150, 210, 90); 
 }
 
 
-/* 하위메뉴 글씨 */
+/* �븯�쐞硫붾돱 湲��뵪 */
 .gnb_sub > li> a{
 	color : black;
 	font-size: 0.9em;
 }
 
-/* 네비메뉴에 있는 a태그 */
+/* �꽕鍮꾨찓�돱�뿉 �엳�뒗 a�깭洹� */
 .navi a{
 	text-decoration:none; 
 }
@@ -172,7 +174,7 @@
 }
 
 
-/* 메뉴 모양 표시 */
+/* 硫붾돱 紐⑥뼇 �몴�떆 */
 .dv {
   width: 35px;
   height: 5px;
@@ -180,12 +182,12 @@
   margin: 6px 0;
 }
 
-/* 메뉴 글씨체 */
+/* 硫붾돱 湲��뵪泥� */
 .gnb > .navi > .sub{
 	font-family: 'Cafe24Ssurround';
 }
 
-/* gnb(네비게이션바)의 하위메뉴 */
+/* gnb(�꽕鍮꾧쾶�씠�뀡諛�)�쓽 �븯�쐞硫붾돱 */
 .gnb_sub {
 	 display: none; 
 	list-style-type: none;
@@ -206,19 +208,19 @@
 	margin-left: 12px;
 	margin-right: 12px;
 } */
-/* 네비게이션바 */
+/* �꽕鍮꾧쾶�씠�뀡諛� */
 #nav{
 	margin-left: 5.6%;
    	margin-right: 5.3%;
 }
-/* 공지사항,공원 best5 목록 글씨 */
+/* 怨듭��궗�빆,怨듭썝 best5 紐⑸줉 湲��뵪 */
 main .li{
 	font-size: 1.6rem;
 	font-family:'twayair';
 }
 
 
-/* body 전체 */
+/* body �쟾泥� */
 /* #wrap{
 	min-height: 100vh;
  	position: relative;
@@ -229,7 +231,7 @@ main .li{
 /* footer { 
 	width: 85%;
 	height: 110px;
-	position: fixed;				화면 스크롤올리면 화면에서 안보임
+	position: fixed;				�솕硫� �뒪�겕濡ㅼ삱由щ㈃ �솕硫댁뿉�꽌 �븞蹂댁엫
 	padding-top: 15px;
 	color: gray;
 	font-size: 0.8em;
@@ -250,7 +252,7 @@ footer > .foot > nav > a{
 	color: black;
 }
 
-/* 슬라이드 컨테이너 */
+/* �뒳�씪�씠�뱶 而⑦뀒�씠�꼫 */
 .swiper-container {
     margin-top:30px;
 	width : 97%;
@@ -265,22 +267,22 @@ footer > .foot > nav > a{
 }
 .swiper-slide {
 	text-align:center;
-	display:flex; /* 내용을 중앙정렬 하기위해 flex 사용 */
-	align-items:center; /* 위아래 기준 중앙정렬 */
-	justify-content:center; /* 좌우 기준 중앙정렬 */
+	display:flex; /* �궡�슜�쓣 以묒븰�젙�젹 �븯湲곗쐞�빐 flex �궗�슜 */
+	align-items:center; /* �쐞�븘�옒 湲곗� 以묒븰�젙�젹 */
+	justify-content:center; /* 醫뚯슦 湲곗� 以묒븰�젙�젹 */
 }
 .swiper-slide img {
 	box-shadow:0 0 5px #555;
-	max-width:100%;/* 이미지 최대너비를 제한, 슬라이드에 이미지가 여러개가 보여질때 필요 */
+	max-width:100%;/* �씠誘몄� 理쒕��꼫鍮꾨�� �젣�븳, �뒳�씪�씠�뱶�뿉 �씠誘몄�媛� �뿬�윭媛쒓� 蹂댁뿬吏덈븣 �븘�슂 */
 }
 
 /* .swiper-wrapper{
 	margin-bottom: 90px;
 } */
-/* 초기화 */  
+/* 珥덇린�솕 */  
 
 
-/* 보여줄 구간의 높이와 넓이 설정 */ 
+/* 蹂댁뿬以� 援ш컙�쓽 �넂�씠�� �꼻�씠 �꽕�젙 */ 
 /*  #slideShow{ 
 	width: 500px; 
 	height: 400px; 

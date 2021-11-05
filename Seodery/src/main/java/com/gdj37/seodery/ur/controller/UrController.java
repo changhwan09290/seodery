@@ -65,8 +65,8 @@ public class UrController {
 		}
 		return mav;
 	}
-	
-	@RequestMapping(value="/join")
+	//회원가입 join
+	@RequestMapping(value="/member")
 	public ModelAndView join (ModelAndView mav) {
 		mav.setViewName("Member/member");
 		return mav;

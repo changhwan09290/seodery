@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +21,10 @@
 $(document).ready(function() {
 	loadMyPage();
 	
-	
+	//연필 누르면 마이페이지
+	$(".logout").on("click", function() {
+		location.href = "mypage";
+	});
 	
 	
 	$(function(){
@@ -60,7 +64,7 @@ function loadMyPage() {
 			$("member_no").val(result.MEMBER_NO);
 			$("member_no").val(result.MEMBER_NO);
 		},
-		error(request, status, error): function() {
+		error: function(request, status, error) {
 			console.log(error);
 		}
 	});
@@ -85,7 +89,7 @@ function loadMyPage() {
                <c:otherwise>
                   <div class="logout">
                      ${sMNm }님 환영합니다.
-                     <div class="pencil"></div>
+                     <div class="pencil"><img src="resources/images/login/pencil.png" style="height:30px;"></div>
                      <input type="button" value="로그아웃" id="LogoutBtn" onclick="linkGo('logout')"/>
                   </div>
                </c:otherwise>
