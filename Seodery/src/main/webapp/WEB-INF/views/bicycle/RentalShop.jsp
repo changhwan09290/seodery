@@ -249,8 +249,8 @@ footer > .foot > nav > a{
 	
 	#map {
 		margin: 0 auto;
-		/* z-index: -1; */
-		z-index: auto;
+		z-index: -1;
+		/* z-index: auto; */
 	}
 	
  	div .customOverlay {
